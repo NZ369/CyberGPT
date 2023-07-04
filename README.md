@@ -1,7 +1,7 @@
 # CyberGPT
 Cybersecurity specialized AI application.
 
-## [Large Language Model Threats] ([GeekWeek 5.2])
+## Introduction
 
 Large Language Models (LLMs) can be integrated into cybersecurity services to provide better user interfaces and analysis help for security analysts.  Team 5.2 proposes to create an application similar to ChatGPT but enhanced with cybersecurity knowledge and tools, named CyberGPT.  The project's primary focus is to extract contextual knowledge from various organizational sources, including research documents and information, as well as open source API endpoints, to create an effective AI assistant for cybersecurity analysts. Additionally, the project will demonstrate CyberGPT's capabilities in performing actions such as IP or MD5 lookup by calling the relevant custom built tools, conducting web searches for latest cybersecurity research, conducting analysis with question answering on databases, among other useful features. The project will leverage specialized cybersecurity tools and foundational LLM models to achieve its goals. Ultimately, the project seeks to develop an artificial general intelligence that can automate analysts' tasks and reasoning procedures, while streamlining the cybersecurity analysis process through the capabilities of generative AI.
 
