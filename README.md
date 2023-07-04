@@ -50,7 +50,14 @@ The potential impacts resulting from this work include:
 
 In addition, the project could lead to further innovation in the field of cybersecurity by demonstrating the power and potential of generative AI.
 
-### Technical Requirements
+## Dependencies & Installation
 
-- Access to OpenAI API
-- Access to Pinecone vector DB subscription
+To install the CyberGPT App, please follow these steps:
+
+- Clone the repository to your local machine.
+
+- Install the required dependencies by running the following command:
+
+  pip install -r requirements.txt
+
+- Update any additional API keys in the .env file in the project directory.
