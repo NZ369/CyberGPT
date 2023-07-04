@@ -54,10 +54,30 @@ In addition, the project could lead to further innovation in the field of cybers
 
 To install the CyberGPT App, please follow these steps:
 
-- Clone the repository to your local machine.
+1. Clone the repository to your local machine.
 
-- Install the required dependencies by running the following command:
+2. Install the required dependencies by running the following command:
 
-  pip install -r requirements.txt
+  `pip install -r requirements.txt`
 
-- Update any additional API keys in the .env file in the project directory.
+3. Update any additional API keys in the .env file in the project directory.
+
+## Usage
+
+To use the CyberGPT App, follow these steps:
+
+1. Ensure that you have installed the required dependencies and added the necessary API keys to the .env file.
+
+2. Run the app.py file using the Streamlit CLI. Execute the following command:
+
+`streamlit run app.py`
+
+3. The application will launch in your default web browser, displaying the user interface.
+
+4. Load any PDF documents into the app by following the provided instructions.
+
+5. Ask questions in natural language about the loaded PDFs using the chat interface.
+
+## Contributing
+
+This repository is intended for participants of GeekWeek Team 5.2 only and does not accept further contributions. It serves as the base CyberGPT application starting point.
