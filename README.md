@@ -50,6 +50,11 @@ The potential impacts resulting from this work include:
 
 In addition, the project could lead to further innovation in the field of cybersecurity by demonstrating the power and potential of generative AI.
 
+## Architectural Diagrams
+
+![image info](./diagrams/1.png)
+![image info](./diagrams/2.png)
+
 ## Dependencies & Installation
 
 To install the CyberGPT App, please follow these steps:
