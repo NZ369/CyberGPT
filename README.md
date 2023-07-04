@@ -52,8 +52,8 @@ In addition, the project could lead to further innovation in the field of cybers
 
 ## Architectural Diagrams
 
-![image info](./diagrams/1.png)
-![image info](./diagrams/2.png)
+![image info](./diagrams/1.jpg)
+![image info](./diagrams/2.jpg)
 
 ## Dependencies & Installation
 
