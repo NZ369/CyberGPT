@@ -4,6 +4,8 @@ python-dotenv
 streamlit
 openai
 faiss-cpu
+wikipedia
+duckduckgo
 cohere
 
 # uncomment to use huggingface llms
