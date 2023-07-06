@@ -8,6 +8,7 @@ faiss-cpu
 wikipedia
 duckduckgo-search
 cohere
+tiktoken
 
 # uncomment to use huggingface llms
 # huggingface-hub
