@@ -15,6 +15,7 @@ from langchain.callbacks.manager import (
 )
 
 qa: Any
+vectorstore: None
 
 def create_qa_retriever(docs, type="azure", database="FAISS"):
     global qa
@@ -35,11 +36,15 @@ class qa_retrieval_tool(BaseTool):
         self, query: str, run_manager: Optional[CallbackManagerForToolRun] = None
     ) -> str:
         """Use the tool."""
-        global vectorstore
-        docs = vectorstore.similarity_search(query)
-        chain = load_qa_chain(tool_llm, chain_type="stuff")
-        #vectorstore.similarity_search(query)[0].page_content
-        return chain.run(input_documents=docs, question=query)
+        try:
+            global vectorstore
+            docs = vectorstore.similarity_search(query)
+            chain = load_qa_chain(tool_llm, chain_type="stuff")
+            #vectorstore.similarity_search(query)[0].page_content
+            return chain.run(input_documents=docs, question=query)
+        except:
+            return "Tool not available for use."
+
 
     async def _arun(
         self, query: str, run_manager: Optional[AsyncCallbackManagerForToolRun] = None
