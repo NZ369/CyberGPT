@@ -9,6 +9,8 @@ wikipedia
 duckduckgo-search
 cohere
 tiktoken
+tabulate
+boto3
 
 # uncomment to use huggingface llms
 # huggingface-hub
