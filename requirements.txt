@@ -5,7 +5,7 @@ streamlit
 openai
 faiss-cpu
 wikipedia
-duckduckgo
+duckduckgo-search
 cohere
 
 # uncomment to use huggingface llms
