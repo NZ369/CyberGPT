@@ -1,18 +1,15 @@
-from typing import Any, Optional
+from typing import Any, Optional, List
 
 from llms.azure_llms import create_llm
 
-from aws import sts_client;
+import requests;
+import json;
+
+from langchain.schema.document import Document;
 
 from langchain.tools import BaseTool, Tool
 
-from langchain.chains import RetrievalQA
 from langchain.chains.question_answering import load_qa_chain
-
-from langchain.chains.conversation.memory import ConversationBufferWindowMemory
-
-import boto3
-from langchain.retrievers import AmazonKendraRetriever
 
 tool_llm = create_llm()
 
@@ -21,10 +18,8 @@ from langchain.callbacks.manager import (
     CallbackManagerForToolRun,
 )
 
-import os;
-
 # initializing Amazon kendra retriever
-
+'''
 mfa_serial_number = None
 retriever = None
 
@@ -51,6 +46,11 @@ if retriever is None:
         region_name="ca-central-1",
         client=initialize_client()
     )
+'''
+
+def get_relevant_documents(query: str) -> List[Document]:
+    raise NotImplementedError()
+
 
 # setting up kendra tool class
 class KendraTool(BaseTool):
@@ -58,7 +58,7 @@ class KendraTool(BaseTool):
     description = "use for getting contextually relevant information for answers"
 
     def _run(self, query: str, run_manager: Optional[CallbackManagerForToolRun] = None) -> str:
-        docs = retriever.get_relevant_documents(query);
+        docs = get_relevant_documents(query);
 
         chain = load_qa_chain(tool_llm, chain_type="stuff");
 
