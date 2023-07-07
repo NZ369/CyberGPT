@@ -12,9 +12,10 @@ tiktoken
 shodan
 
 #kedra stuff
-boto3
-aws
-aws-sts
+requests
+#boto3
+#aws
+#aws-sts
 
 # uncomment to use huggingface llms
 # huggingface-hub
