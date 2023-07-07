@@ -17,7 +17,7 @@ st.write(
 
 # PJ - function to check for valid python code
 def is_valid_python(code):
-   if code.strip() = "":
+   if code.strip() == "":
        return False
    try:
        ast.parse(code)
