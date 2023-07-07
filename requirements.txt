@@ -10,6 +10,11 @@ duckduckgo-search
 cohere
 tiktoken
 
+#kedra stuff
+boto3
+aws
+aws-sts
+
 # uncomment to use huggingface llms
 # huggingface-hub
 
