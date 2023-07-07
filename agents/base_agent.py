@@ -8,7 +8,9 @@ from tools.get_tools import tools
 
 llm = create_llm()
 memory = ConversationBufferWindowMemory(memory_key="chat_history", k=3, return_messages=True)
-base_agent = initialize_agent(tools, llm, agent=AgentType.CHAT_CONVERSATIONAL_REACT_DESCRIPTION, max_iterations=4, verbose=True, memory=memory)
+
+base_agent = initialize_agent(tools, llm, agent=AgentType.CHAT_CONVERSATIONAL_REACT_DESCRIPTION, max_iterations=4, verbose=True, memory=memory, handle_parsing_errors=True)
+
 base_agent.agent.llm_chain.prompt.messages[0].prompt.template = """
 CyberGPT is an intelligent AI trained by Canadian Center for Cyber Security
 

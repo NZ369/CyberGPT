@@ -5,10 +5,11 @@ from llms.azure_llms import create_llm
 from langchain.agents import create_csv_agent
 from langchain.agents.agent_types import AgentType
 
-llm = create_llm()
+llm = create_llm(temp=0)
 
 print("Creating CSV Agent.")
 combined_data = os.path.join("data", "combined.csv")
+df = pd.read_csv(combined_data)
 
 # mitre_dir = "../data"
 # mitre_data = [os.path.join(mitre_dir, fn) for fn in ["software.csv", "groups.csv", "mitigations.csv"]]
@@ -46,7 +47,7 @@ mitre_csv_agent = create_csv_agent(
     llm,
     combined_data,
     verbose=True,
-    agent_type=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
+    agent_type=AgentType.CHAT_ZERO_SHOT_REACT_DESCRIPTION, # Added CHAT_
 )
 print("Finished Creating CSV Agent.")
 
