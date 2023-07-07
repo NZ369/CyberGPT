@@ -27,7 +27,7 @@ def response_mapper(file_data):
         # Extract text from the PDF using textract
         text_content = file_data["DocumentExcerpt"]["Text"]
         
-        return file_data["Id"], text_content
+        return [file_data["DocumentTitle"]["Text"], text_content]
     except Exception as e:
         print(e)
         raise e

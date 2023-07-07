@@ -7,7 +7,7 @@ from tools.kendra.tool import kendra_retrieval_tool;
 tool_llm = create_llm()
 tools=[]
 
-tools.append(python_tool)
-tools.append(wikipedia_tool)
-tools.append(duckduckgo_tool)
+#tools.append(python_tool)
+#tools.append(wikipedia_tool)
+#tools.append(duckduckgo_tool)
 tools.append(kendra_retrieval_tool)
