@@ -6,6 +6,8 @@ from langchain.chains.question_answering import load_qa_chain
 from llms.azure_llms import create_llm
 from uploaders.main import get_pdf_text, get_text_chunks, get_vectorstore
 from langchain.chains.conversation.memory import ConversationBufferWindowMemory
+from langchain.chains.router import MultiRetrievalQAChain
+from uploaders.main import load_pdfs_from_folder
 
 tool_llm = create_llm()
 
@@ -42,8 +44,8 @@ class qa_retrieval_tool(BaseTool):
             chain = load_qa_chain(tool_llm, chain_type="stuff")
             #vectorstore.similarity_search(query)[0].page_content
             return chain.run(input_documents=docs, question=query)
-        except:
-            return "Tool not available for use."
+        except Exception as e:
+            return f"Tool not available for use. ({e})"
 
 
     async def _arun(

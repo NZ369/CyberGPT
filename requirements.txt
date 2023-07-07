@@ -9,6 +9,8 @@ wikipedia
 duckduckgo-search
 cohere
 tiktoken
+pinecone-client
+pypdf
 
 # uncomment to use huggingface llms
 # huggingface-hub

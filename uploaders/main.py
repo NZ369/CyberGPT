@@ -3,6 +3,15 @@ from langchain.text_splitter import CharacterTextSplitter
 from llms.azure_llms import create_azure_embedder
 from llms.cohere_llms import create_cohere_embedder
 from langchain.vectorstores import FAISS
+from langchain.document_loaders import DirectoryLoader, PyPDFDirectoryLoader
+import os
+import io
+
+from databases.pinecone_db import pinecone_from_documents
+
+def load_pdfs_from_folder(folder_path):
+    loader = PyPDFDirectoryLoader(folder_path)
+    return loader.load()
 
 def get_pdf_text(pdf_docs):
     text = ""
@@ -17,7 +26,7 @@ def get_text_chunks(text):
         separator="\n",
         chunk_size=1000,
         chunk_overlap=200,
-        length_function=len
+        length_function=len 
     )
     chunks = text_splitter.split_text(text)
     return chunks
@@ -28,7 +37,8 @@ def get_vectorstore(text_chunks, type="azure", database="FAISS"):
     else:
         embeddings = create_cohere_embedder()
     if database == "FAISS":
-        vectorstore = FAISS.from_texts(texts=text_chunks, embedding=embeddings)
+        return FAISS.from_texts(texts=text_chunks, embedding=embeddings)
+    if database == "pinecone":
+        return pinecone_from_documents(docs=text_chunks, embeddings=embeddings, index_name="test-index")
     else:
-        vectorstore = FAISS.from_texts(texts=text_chunks, embedding=embeddings)
-    return vectorstore
+        return FAISS.from_texts(texts=text_chunks, embedding=embeddings)

@@ -2,6 +2,7 @@ import streamlit as st
 from streamlit_extras.add_vertical_space import add_vertical_space
 from tools.qa_tools import create_qa_retriever
 from agents.base_agent import base_agent
+from tools.db_retrievers import create_qa_chain
 
 # Define function to get user input
 def get_text():
@@ -66,6 +67,8 @@ with st.sidebar:
     st.button("New Chat", on_click = new_chat, type='primary')
     add_vertical_space(2)
     st.write('Made with ❤️ by GeekWeek Team 5.2')
+    add_vertical_space(3)
+    st.button("Push PDFs", on_click=create_qa_chain, type='secondary')
 
 # Get the user input
 user_input = get_text()
