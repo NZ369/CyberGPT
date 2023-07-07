@@ -1,8 +1,10 @@
 import streamlit as st
 import time
 import numpy as np
+import matplotlib.pyplot as plt
+import ast
 from streamlit_extras.add_vertical_space import add_vertical_space
-from agents.csv_agent import mitre_csv_agent
+from agents.csv_agent import mitre_csv_agent, df
 from tools.qa_tools import create_qa_retriever
 
 st.set_page_config(page_title="Mitre CSV Demo", page_icon="📈")
@@ -10,8 +12,19 @@ st.set_page_config(page_title="Mitre CSV Demo", page_icon="📈")
 st.markdown("# Mitre CSV")
 st.sidebar.header("Mitre CSV")
 st.write(
-    """This page loads informatiom from MITRE ATT&CK for the LLM to query."""
+    """This page loads information from MITRE ATT&CK for the LLM to query."""
 )
+
+# PJ - function to check for valid python code
+def is_valid_python(code):
+   if code.strip() = "":
+       return False
+   try:
+       ast.parse(code)
+   except SyntaxError as e:
+       print(e)
+       return False
+   return True
 
 # Define function to get user input
 def get_text():
@@ -20,9 +33,9 @@ def get_text():
     Returns:
         (str): The text entered by the user
     """
-    input_text = st.text_input("You: ", st.session_state["input"], key="input",
-                            placeholder="Ask me anything ...", 
-                            label_visibility='hidden')
+    input_text = st.text_area("You: ", st.session_state["input"], key="input",
+                            placeholder="Ask me anything about the MITRE data...", 
+                            label_visibility='hidden', height=100)
     return input_text
 
 # Function for starting a new chat
@@ -50,8 +63,6 @@ if "input" not in st.session_state:
 if "stored_session" not in st.session_state:
     st.session_state["stored_session"] = []
 
-
-
 with st.sidebar:
     st.title('CyberGPT')
     st.markdown('''
@@ -68,7 +79,7 @@ with st.sidebar:
     # Add a button to start a new chat
     st.button("New Chat", on_click = new_chat, type='primary')
     add_vertical_space(2)
-    st.write('Made with ❤️ by GeekWeek Team 5.2')
+    st.write('Made with ❤️  by GeekWeek Team 5.2')
 
 # Get the user input
 user_input = get_text()
@@ -93,7 +104,43 @@ download_str = []
 with st.expander("Conversation", expanded=True):
     for i in range(len(st.session_state['generated'])-1, -1, -1):
         st.info(st.session_state["past"][i],icon="🙂")
-        st.success(st.session_state["generated"][i], icon="🤖")
+#        st.success(st.session_state["generated"][i], icon="🤖")
+        st.write(st.session_state["generated"][i])
+
+#        ai_content = """
+#import numpy as np
+#import matplotlib.pyplot as plt
+#arr = np.random.normal(1, 1, size=100)
+#fig, ax = plt.subplots()
+#ax.hist(arr, bins=20)
+#"""
+
+        ai_content=st.session_state["generated"][i]
+        print(ai_content)
+
+        # PJ - remove first and last lines (which are triple quotes)
+        ai_content=ai_content[ai_content.find('\n')+1:ai_content.rfind('\n')]
+
+        if is_valid_python(ai_content):
+            ai_content = "\n".join([f"    {line}" for line in ai_content.split("\n")])
+            print(ai_content)
+            with open('plt_tmp.py', 'w') as f:
+                f.write(f"""
+def plot_code(df):
+{ai_content}
+    return fig
+"""
+                       )
+
+            print("About to load plot.")
+            from plt_tmp import plot_code
+            fig=plot_code(df)
+            st.pyplot(fig.figure)
+            print("Should have plotted.")
+
+        else:
+            print("Invalid python.")
+
         download_str.append("User: "+st.session_state["past"][i])
         download_str.append("AI: "+st.session_state["generated"][i])
     

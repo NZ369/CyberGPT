@@ -12,6 +12,7 @@ llm = create_llm(temp=0)
 
 print("Creating CSV Agent.")
 combined_data = os.path.join("data", "combined.csv")
+df = pd.read_csv(combined_data)
 
 
 CODE_SUFFIX_WITH_DF = """
