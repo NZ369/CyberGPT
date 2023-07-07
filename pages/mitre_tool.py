@@ -22,7 +22,7 @@ def is_valid_python(code):
    try:
        ast.parse(code)
    except SyntaxError as e:
-       print(e)
+       #print(e)
        return False
    return True
 
@@ -107,6 +107,7 @@ with st.expander("Conversation", expanded=True):
 #        st.success(st.session_state["generated"][i], icon="🤖")
         st.write(st.session_state["generated"][i])
 
+# PJ - example plot
 #        ai_content = """
 #import numpy as np
 #import matplotlib.pyplot as plt
@@ -116,7 +117,7 @@ with st.expander("Conversation", expanded=True):
 #"""
 
         ai_content=st.session_state["generated"][i]
-        print(ai_content)
+        #print(ai_content)
 
         # PJ - remove first and last lines (which are triple quotes)
         ai_content=ai_content[ai_content.find('\n')+1:ai_content.rfind('\n')]
@@ -132,14 +133,14 @@ def plot_code(df):
 """
                        )
 
-            print("About to load plot.")
+            print("Valid python - about to load plot.")
             from plt_tmp import plot_code
             fig=plot_code(df)
             st.pyplot(fig.figure)
             print("Should have plotted.")
 
         else:
-            print("Invalid python.")
+            print("Empty or invalid python - didn't plot anything.")
 
         download_str.append("User: "+st.session_state["past"][i])
         download_str.append("AI: "+st.session_state["generated"][i])
