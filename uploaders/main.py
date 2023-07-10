@@ -31,7 +31,7 @@ def get_text_chunks(text):
     chunks = text_splitter.split_text(text)
     return chunks
 
-def get_vectorstore(text_chunks, type="azure", database="FAISS"):
+def get_vectorstore(text_chunks, type="azure", database="FAISS", index="test-index"):
     if type == "azure":
         embeddings = create_azure_embedder()
     else:
@@ -39,6 +39,6 @@ def get_vectorstore(text_chunks, type="azure", database="FAISS"):
     if database == "FAISS":
         return FAISS.from_texts(texts=text_chunks, embedding=embeddings)
     if database == "pinecone":
-        return pinecone_from_documents(docs=text_chunks, embeddings=embeddings, index_name="test-index")
+        return pinecone_from_documents(docs=text_chunks, embeddings=embeddings, index_name=index)
     else:
         return FAISS.from_texts(texts=text_chunks, embedding=embeddings)

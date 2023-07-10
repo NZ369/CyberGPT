@@ -24,23 +24,17 @@ vectorstore: None
 tool_name = "Database Document Retrieval"
 tool_description = "useful for getting contextually relevant and accurate information on various specialized topics including user guides and technical documentation"
 
-def create_qa_chain():
-    # TODO: get docs from front-end
+def load_indexes():
     global qa_retrievers
-    global browser_pdf_docs
-    qa_retrievers = [
-        {
-            "name": "user guide retrieval",
-            "description": "useful for getting contextually relevant and accurate information on how to use Spark, Airflow, OAuth, NBGallery, Spellbook, JupyterLab, Superset, Trino, Fission Functions, Unifi, and DataHub.",
-            "retriever": create_qa_retriever(path='./guides', type="azure", database="pinecone")
-        }
-    ]
+    qa_retrievers = {
+        "test-index": create_qa_retriever(path='./guides', type="azure", database="pinecone", index="test-index")
+    }
 
-def create_qa_retriever(path, type, database):
+def create_qa_retriever(path, type, database, index):
     # Split data into text chunks
     text_chunks = load_pdfs_from_folder(path)
     # Create vector store
-    return get_vectorstore(text_chunks, type=type, database=database)
+    return get_vectorstore(text_chunks, type=type, database=database, index=index)
 
 class db_retrieval_tool(BaseTool):
     name = tool_name
@@ -51,10 +45,12 @@ class db_retrieval_tool(BaseTool):
     ) -> str:
         """Use the tool."""
         try:
+            if 'qa_retrievers' not in globals():
+                load_indexes()
             global qa_retrievers
-            default_chain=ConversationChain(llm=tool_llm, prompt=prompt_default, input_key='query', output_key='result')
-            chain = MultiRetrievalQAChain.from_retrievers(tool_llm, qa_retrievers, verbose=True)
-            return chain.run(query)
+            docs = qa_retrievers["test-index"].similarity_search(query)
+            chain = load_qa_chain(tool_llm, chain_type="stuff")
+            return chain.run(input_documents=docs, question=query)
         except Exception as e:
             traceback.print_exc()
             return f"Tool not available for use."
@@ -65,11 +61,9 @@ class db_retrieval_tool(BaseTool):
         """Use the tool asynchronously."""
         raise NotImplementedError("custom_search does not support async")
 
-create_qa_chain()
 qa_retrieve = db_retrieval_tool()
 db_retrieval_tool = Tool(
     name = tool_name,
     description = tool_description,
-    # description = "use for getting contextually relevant and accurate information on various specialized topics",
     func= qa_retrieve.run
     )

@@ -20,4 +20,4 @@ def pinecone_init():
 
 def pinecone_from_documents(docs, embeddings, index_name):
     pinecone_init()
-    return Pinecone.from_documents(documents=docs, embedding=embeddings, index_name=index_name).as_retriever()
+    return Pinecone.from_documents(documents=docs, embedding=embeddings, index_name=index_name)
