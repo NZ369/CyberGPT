@@ -1,0 +1,97 @@
+Connections & Variables
+This guide aims to inform you, the user, on how to create and manage your Airflow Connections & Variables.
+ 
+What are Connections & V ariables?
+Connections
+Variables
+What are Connections & Variables?
+Connections and Variables allow users to create predefined resources which may be accessed in their DAGs at runtime. These resources 
+are stored in Airflow’s metadata DB and can only be viewed/created by users with the required permission level.
+Connections are typically used by Hooks and Sensors but can also be used to generate a resource URI.  Variables however, are most 
+commonly used as a medium for storing sensitive key/values which are then injected as environment variables or parameters for the task 
+operator.
+Connections
+List Airflow Connections:
+1 - Navigate to Airflow
+2 - Under the navigation > Admin > ConnectionsPlease note the following
+Airflow Connections & Variables cannot be restricted and are open to all users. If created properly, the secret values won’t be visible 
+but they can still be overwritten by any user.
+The Hogwarts team is currently working on a better secret management system to replace this functionality. Stay tuned.3 - You should now see the following interface
+ 
+Create an Airflow connection:
+1. Under Admin > Connections, click 
+2. Enter the ‘Conn Id’ - make sure its unique but descriptive as this will be referenced in your DAG.
+3. Enter the ‘Conn type’ that matches the Connection you want.
+4. Enter the necessary connection information for your Connection type.
+ 
+Edit/delete an Airflow connection:
+1. Under Admin > Connections, find your connection in the list
+2. Click the appropriate icon to edit or delete your connection
+a. Note: Inputs such as password will need to be re-entered as they are encrypted on submit and cannot changed like other inputs.
+ 
+Using Connections in your DAG
+The following code will extract the full URI, the login, and the password from the stored connection and pass these values as environment 
+variables to the BashOperator.
+1
+2
+3
+4
+5
+6from airflow .hooks.base_hook import BaseHook
+...
+# Connection type for this test is "http"
+connection = BaseHook .get_connection ("<connection_id>" )
+t1 = BashOperator (
+    dag=dag,Variables
+List Airflow Variables:
+1 - Navigate to Airflow
+2 - Under the navigation > Admin > Variables
+3 - You should now see the following interface
+7
+8
+9
+10
+11
+12
+13
+14    task_id ='<task_id>' ,
+    bash_command ='env | grep CONNECTION' ,
+    env={
+        "CONNECTION_URI" : connection .get_uri(),
+        "CONNECTION_LOGIN" : connection .login,
+        "CONNECTION_PASSWORD" : connection .password
+    }
+)
+ 
+Create an Airflow Variable :
+1. Under Admin > Variables, click 
+2. Enter the ‘Key’ - make sure it’s unique and it contains the word ‘secret’. This is how Airflow knows to encrypt the value.
+3. Enter your ‘Value’.
+Edit/delete your Airflow Variable:
+1. Under Admin > Variables, find your variable in the list
+2. Click the appropriate icon to edit or delete your variable
+a. Note: Inputs such as password will need to be re-entered as they are encrypted on submit and cannot changed like other inputs.
+ 
+Using Variables in your DAG
+The following code will extract the Variable’s value, decrypt it, and pass it as an environment variable to the BashOperator.
+ 
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10from airflow .models import Variable
+...
+t1 = BashOperator (
+    dag=dag,
+    task_id ='<task_id>' ,
+    bash_command ='env | grep SECRET' ,
+    env={
+        "SECRET_VARIABLE" : Variable .get("<variable_secret_id>" )
+    }
+)
+As always, the code for these examples can be found in the Hogwarts examples repository.

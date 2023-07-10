@@ -1,0 +1,30 @@
+Disable Jedi in IPython
+According to the jupyter-lsp project it is recommended to disable the Jedi auto completer.
+GitHub - krassowski/jupyterlab-lsp: Coding assistance for JupyterLab (code navigation + hover suggestions + linters + autocompletion + 
+rename) using Language Server Protocol 
+ 
+(Optional, IPython users only) to improve the performance of autocompletion, disable Jedi in IPython (the LSP servers for Python use Jedi 
+too). You can do that temporarily with:
+%config Completer.use_jedi = False
+or permanently by setting c.Completer.use_jedi = False in your ipython_config.py file. You will also benefit from using experimental version 
+of python-language-server as described in the Note 2 (above).
+ 
+I modified the following configuration file
+I then check in JupyterLab Notebook if the configuration took effect.
+ 
+This returned
+ 
+This works fine for the kernel Python 3 (ipykernel)
+However it does not for Python 3.8 (XPython)
+ 
+1
+2vi ~/.ipython/profile_default/ipython_config.py
+c.Completer.use_jedi = False
+1%config IPCompleter
+1
+2
+3
+4IPCompleter.use_jedi=<Bool>
+Experimental: Use Jedi to generate autocompletions. Default to True if jedi
+is installed.
+Current: False

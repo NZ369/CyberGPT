@@ -1,0 +1,22 @@
+Job Editor Changes
+Introduction
+Coming to SPELLBOOK in version 1.7.0 are a couple new changes to the job editor including a Markdown editor and a Diff editor.
+Markdown Editor
+The new markdown editor will allow users to save a markdown file alongside their DAG files in order to provide additional documentation on 
+the specific job. This new editor comes with the ability to render the markdown in browser for easier viewing. Whenever a new job is created 
+or a DAG is adopted, a markdown file will be created and saved alongside the DAG. For existing jobs, a markdown file will be created the 
+first time the user navigates to the job editor. This markdown can then be viewed and edited by switching to the markdown view tab on the 
+job editor.
+Similar to the DAG editor, a markdown file can be uploaded to the editor by switching into edit mode and drag-and-dropping the file into the 
+editor. Also, the file can be downloaded by clicking the download button. In order to view the rendered markdown, simply click the View 
+Rendered Markdown button.
+Diff Editor
+Also coming in SPELLBOOK version 1.7.0 is the Diff editor. This view allows users to compare their unsaved changes to the original DAG 
+or markdown file. This can be easily toggled on and off by using the view changes button while in edit mode.
+Tabs for switching between the DAG view and Markdown V iew
+View Rendered Markdown button
+The V iew Changes buttonWhile in the diff view, the original file will be rendered on the left and the current version of the file on the right. The right editor is editable 
+and users can make changes to their current file while in the diff view.
+Questions?
+Any questions about this feature can be asked in the HOGWARTS support chat. If you have any other suggestions, please let us know 
+there. Thanks!
