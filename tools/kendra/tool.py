@@ -18,10 +18,15 @@ from langchain.callbacks.manager import (
     CallbackManagerForToolRun,
 )
 
+
 def get_relevant_documents(query: str) -> List[Document]:
     # request
-    print(json.dumps({"query":query}))
-    response = requests.get('https://nc6toszo09.execute-api.ca-central-1.amazonaws.com/dev', headers={"content-type":"application/json"}, data = json.dumps({"query":query}))
+    response = requests.get(
+        'https://nc6toszo09.execute-api.ca-central-1.amazonaws.com/dev',
+        headers= {"content-type":"application/json"},
+        data = json.dumps({"query":query})
+    )
+    
     #parse json
     print(response.text)
 
@@ -42,7 +47,7 @@ def get_relevant_documents(query: str) -> List[Document]:
 # setting up kendra tool class
 class KendraTool(BaseTool):
     name = "Kendra Document Retrieval"
-    description = "use for getting contextually relevant information for answers"
+    description = "Use to query relevant & contextual information related to technical documents, research papers and similar relevant data"
 
     def _run(self, query: str, run_manager: Optional[CallbackManagerForToolRun] = None) -> str:
         docs = get_relevant_documents(query);
@@ -55,10 +60,4 @@ class KendraTool(BaseTool):
         raise NotImplementedError()
         pass
 
-kendra_tool = KendraTool()
-
-kendra_retrieval_tool = Tool(
-    name = "Kendra Document Retrieval",
-    description = "use for getting contextually relevant information for answers",
-    func = kendra_tool.run
-)
+kendra_retrieval_tool = KendraTool()
