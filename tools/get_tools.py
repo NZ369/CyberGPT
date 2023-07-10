@@ -9,14 +9,14 @@ from tools.ipapi_tools import ipapi_tool
 from tools.kendra.tool import kendra_retrieval_tool;
 
 tool_llm = create_llm()
-tools=[]
-
-tools.append(python_tool)
-tools.append(wikipedia_tool)
-tools.append(duckduckgo_tool)
-tools.append(qa_retrieval_tool)
-tools.append(borealis_tool)
-tools.append(openCTI_tool)
-tools.append(shodan_ip_lookup_tool)
-tools.append(ipapi_tool)
-tools.append(kendra_retrieval_tool)
+tools=[
+    python_tool,
+    wikipedia_tool,
+    duckduckgo_tool,
+    qa_retrieval_tool,
+    borealis_tool,
+    openCTI_tool,
+    shodan_ip_lookup_tool,
+    ipapi_tool,
+    kendra_retrieval_tool
+]
