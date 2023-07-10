@@ -60,15 +60,32 @@ def lambda_handler(event, context):
         QueryText=query_json["query"]
     )
 
-    response = filter(
-        lambda r: r["ScoreAttributes"]["ScoreConfidence"] in ["HIGH", "MEDIUM"], #replace list with item in input json
+    high_responses = list(filter(
+        lambda r: r["ScoreAttributes"]["ScoreConfidence"] == "HIGH", #replace list with item in input json
         response['ResultItems']
-    );
+    ));
+    
+    medium_response = list(filter(
+        lambda r: r["ScoreAttributes"]["ScoreConfidence"] == "MEDIUM", #replace list with item in input json
+        response['ResultItems']
+    ));
+
+    low_response = list(filter(
+        lambda r: r["ScoreAttributes"]["ScoreConfidence"] == "LOW", #replace list with item in input json
+        response['ResultItems']
+    ));
+
+    search_data = []
+
+    if len(high_responses) != 0:
+        search_data = high_responses
+    elif len(medium_response) != 0:
+        search_data = medium_response
+    elif len(low_response) != 0:
+        search_data = low_response
 
     # return data
-
-
     return {
         'statusCode': 200,
-        'body': json.dumps([response_mapper(r) for r in response])
+        'body': json.dumps([response_mapper(r) for r in search_data])
     }
