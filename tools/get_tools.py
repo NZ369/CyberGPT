@@ -9,7 +9,8 @@ from tools.ipapi_tools import ipapi_tool
 from tools.kendra.tool import kendra_retrieval_tool;
 
 tool_llm = create_llm()
-tools=[
+
+base_tools=[
     python_tool,
     wikipedia_tool,
     duckduckgo_tool,
@@ -18,5 +19,9 @@ tools=[
     openCTI_tool,
     shodan_ip_lookup_tool,
     ipapi_tool,
+    kendra_retrieval_tool
+]
+
+qa_tools=[
     kendra_retrieval_tool
 ]

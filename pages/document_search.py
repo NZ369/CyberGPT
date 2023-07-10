@@ -3,7 +3,7 @@ from streamlit_extras.add_vertical_space import add_vertical_space
 
 from llms.azure_llms import create_llm
 
-from tools.kendra import get_relevant_documents, kendra_retrieval_tool;
+from tools.kendra.tool import get_relevant_documents, kendra_retrieval_tool;
 
 from langchain.chains import RetrievalQA
 from langchain.document_loaders import TextLoader
@@ -11,6 +11,7 @@ from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.llms import OpenAI
 from langchain.text_splitter import CharacterTextSplitter
 from langchain.vectorstores import Chroma
+from agents.qa_agent import qa_chain
 
 # Define function to get user input
 def get_text():
@@ -78,27 +79,13 @@ with st.sidebar:
 # Get the user input
 user_input = get_text()
 
-embeddings = OpenAIEmbeddings()
-
-qa = RetrievalQA.from_chain_type(
-    llm=OpenAI(),
-    chain_type="map_reduce",
-    retriever=docsearch.as_retriever()
-)
-
-qa.run(user_input)
-
-chain = load_qa_chain([], chain_type="stuff");
-
-qa = RetrievalQA.from_chain_type(llm=OpenAI(), chain_type="stuff", retriever=docsearch.as_retriever())
-
 # Processes the user input
 if user_input:
     st.session_state.past.append(user_input)
     # Try block handles any error with not parsing LLM output
     try:
         # Calls the base agent
-        output = agent.run(input=user_input)
+        output = qa_chain.run(input=user_input)
         st.session_state.generated.append(output)
     except Exception as e:
         st.session_state.generated.append(str(e))
