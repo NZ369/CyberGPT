@@ -15,7 +15,7 @@ def convert_pdfs_to_text(folder_path):
                 file_content = BytesIO(file)
                 text = get_pdf_text([file_content])
 
-                print("content: ", text)
+                print("content: ", text[:min(len(text), 100)])
             
                 text_filename = os.path.splitext(filename)[0] + '.txt'
                 
