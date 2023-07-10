@@ -1,0 +1,11 @@
+Running a second JupyterLab to test new configurations
+<When you change JupyterLab configurations you need to restart JupyterLab load these new settings. This can be difficult in a JupyterHub 
+environment running inside kubernetes PODs since it means restarting the POD every time you want to test a configuration change.
+ 
+A way around this limitation is to launch a second jupyterlab instance inside your lab environment. You can launch a second instance like 
+this
+You can then use kubectl to port forward 8989 to your client machine.
+Then all you have to do is point your browser at http://localhost:8989
+To test new configurations all you have to do is stop this second lab instance and restart it. Making sure to also restart the port forwarding.
+1$ jupyter lab --debug --port 8989
+1kubectl -n jupyhub port-forward jupyter-<your-name>  8989:8989

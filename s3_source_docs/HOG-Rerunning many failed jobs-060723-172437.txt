@@ -1,0 +1,31 @@
+Rerunning many failed jobs
+Step-by-step
+1. Navigate to the DAG run list page
+From any Airflow page, click on the Menu tab “Browse” then select “DAG runs”
+You should now see a page that looks like this:
+2. Select the DAG runs you wish to re-run by using filters
+First, click on the “Search” button at the top left of the page, then click “Add Filter” to start filtering your DAG runs.
+Add the following filters:
+Dag Id → “Equal to” → <insert_your_dag_id_here>
+State → “Equal to” → “failed”
+If you want to target a specific date range, use the following filters:
+Execution Date → “Greater than” → <execution_date_min>
+Execution Date → “Smaller than” → <execution_date_max>
+Note: You must click “Add filter” each time you want to add a new filter to your select.
+ 
+Here is what your screen should look like before searching:As always, if you run into any issues while following this guide, please let us know in our Hogwarts support channel!
+When you’re ready, click the “Search” button to select your DAG runs.
+3. Clearing the states of selected DAG runs
+Now that you’ve successfully selected your DAG runs, you must clear their state. Be warned though, this will rerun every task for these 
+DAG runs.
+To clear their state, do the following:
+Select all DAG runs in the list. You can easily do this by clicking the top left square of the list.
+click on the “Actions” button on the list toolbar and select “Clear the state”
+If you have a large amount of DAG runs to rerun, make sure to change the page size to 100! You can do so by using the “Page size” 
+button in the toolbar.
+ 
+Tada! Airflow will swing into action and rerun all of these jobs.
+ 
+Note: If your DAG runs very often, it can be hard to see the progress of old DAG runs as they might be hidden from the Tree & 
+Graph views. 
+We suggest that you reuse the filters used above without the State=failed criteria to monitor their progress!

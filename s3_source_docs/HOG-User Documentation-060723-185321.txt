@@ -1,0 +1,15 @@
+User Documentation
+This section contains Superset documentation for users. The documentation is available from the Superset website. This page categorize 
+the various use case users might have as well as a link to the proper documentation. 
+The Superset documentation goes through instructions on how to install Superset and connect it to a database. Fortunately, users do not 
+need to perform those steps, since our instance of Superset is already available and database connections are already defined. 
+The Superset tool can be found here:
+Unclassified: https://superset.hogwarts.u.azure.chimera.cyber.gc.ca/login/
+Protected B: https://superset.hogwarts.pb.azure.chimera.cyber.gc.ca/login/
+ Creating Charts in Explore View Creating Your First Dashboard | Superset 
+Registering a New Table New Table Registration 
+Table Visualization Table Visualization 
+Basic of Dashboards Exploring Data in Superset | Superset 
+Create a New Chart Pivot Table 
+Line Chart 
+Advanced Analytic Exploring Data in Superset | Superset Use Cases Documentation links
