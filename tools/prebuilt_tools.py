@@ -21,5 +21,5 @@ search = DuckDuckGoSearchRun()
 duckduckgo_tool = Tool(
     name='DuckDuckGo Search',
     func= search.run,
-    description="Useful for when you need to do a search on the internet. be specific with your input."
+    description="Useful for when you need to do a search on the internet. be specific with your input. This is the least reliable tool."
 )
