@@ -4,15 +4,15 @@ import numpy as np
 import matplotlib.pyplot as plt
 import ast
 from streamlit_extras.add_vertical_space import add_vertical_space
-from agents.csv_agent import mitre_csv_agent, df
+from agents.json_agent import stix_json_agent, df
 from tools.qa_tools import create_qa_retriever
 
-st.set_page_config(page_title="Mitre CSV Demo", page_icon="📈")
+st.set_page_config(page_title="STIX JSON Demo", page_icon="📈")
 
-st.markdown("# Mitre CSV")
-st.sidebar.header("Mitre CSV")
+st.markdown("# STIX JSON")
+st.sidebar.header("STIX JSON")
 st.write(
-    """This page loads information from MITRE ATT&CK for the LLM to query."""
+    """This page loads information from STIX for the LLM to query."""
 )
 
 # PJ - function to check for valid python code
@@ -34,7 +34,7 @@ def get_text():
         (str): The text entered by the user
     """
     input_text = st.text_area("You: ", st.session_state["input"], key="input",
-                            placeholder="Ask me anything about the MITRE data...", 
+                            placeholder="Ask me anything about the STIX data...", 
                             label_visibility='hidden', height=100)
     return input_text
 
@@ -91,7 +91,7 @@ if user_input:
     try:
         # Calls the base agent
         print("Calling Agent:")
-        output = mitre_csv_agent.run(input=user_input)
+        output = stix_json_agent.run(input=user_input)
         print(f"Output: {output}")
         st.session_state.generated.append(output)
     except Exception as e:
@@ -134,18 +134,9 @@ def plot_code(df):
                        )
 
             print("Valid python - about to load plot.")
-
             from plt_tmp import plot_code
             fig=plot_code(df)
-
-            try:
-                st.pyplot(fig.figure)
-            except:
-                try:
-                    st.pyplot(fig.figure_)
-                except:
-                    st.pyplot(fig)
-            
+            st.pyplot(fig.figure)
             print("Should have plotted.")
 
         else:
