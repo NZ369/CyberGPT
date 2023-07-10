@@ -7,7 +7,7 @@ python_repl = PythonREPL()
 python_tool = Tool(
         name = "python repl",
         func=python_repl.run,
-        description="Useful for when you need to use python to process a CSV or to build a machine learning model. You should input python code."
+        description="Useful for when you need to use python to process a CSV or JSON, or to build a machine learning model. You should input python code."
 )
 
 wikipedia = WikipediaAPIWrapper()
