@@ -17,15 +17,29 @@ def badRequest(code: int, reason = None):
 #BUCKET_NAME = "kendra-test-bucket-5-2";
 def response_mapper(file_data):
     try:
-        uri = file_data["DocumentURI"].replace("http://", "").replace("https://", "")
+        #uri = file_data["DocumentURI"].replace("http://", "").replace("https://", "")
         
         # Extract text from the PDF using textract
-        text_content = file_data["DocumentExcerpt"]["Text"]
+        text_content = file_data["Content"]
+        id = file_data["DocumentId"]
         
-        return [file_data["DocumentId"], text_content]
+        return [id, text_content]
     except Exception as e:
         print(e)
         raise e
+
+def optimize_partition_result(high, medium = [], low = []):
+    MIN_SIZE = 10
+
+    result = high
+
+    i = 0
+    potential_result_queue = medium + low
+    while i < MIN_SIZE and len(potential_result_queue) > 0:
+        result.append(potential_result_queue.pop(0))
+        i+=1
+
+    return result
 
 def lambda_handler(event, context):
     
@@ -55,37 +69,15 @@ def lambda_handler(event, context):
     if 'query' not in query_json:
         return badRequest(400, reason="No query");
 
-    response = kendra_client.query(
+    response = kendra_client.retrieve(
         IndexId='81dec93a-0c04-4fa3-9bee-7db0da2c2d98',
-        QueryText=query_json["query"]
+        QueryText=query_json["query"],
     )
 
-    high_responses = list(filter(
-        lambda r: r["ScoreAttributes"]["ScoreConfidence"] == "HIGH", #replace list with item in input json
-        response['ResultItems']
-    ));
-    
-    medium_response = list(filter(
-        lambda r: r["ScoreAttributes"]["ScoreConfidence"] == "MEDIUM", #replace list with item in input json
-        response['ResultItems']
-    ));
-
-    low_response = list(filter(
-        lambda r: r["ScoreAttributes"]["ScoreConfidence"] == "LOW", #replace list with item in input json
-        response['ResultItems']
-    ));
-
-    search_data = []
-
-    if len(high_responses) != 0:
-        search_data = high_responses
-    elif len(medium_response) != 0:
-        search_data = medium_response
-    elif len(low_response) != 0:
-        search_data = low_response
+    #search_data = optimize_partition_result(high_responses, medium = medium_response, low = low_response)
 
     # return data
     return {
         'statusCode': 200,
-        'body': json.dumps([response_mapper(r) for r in search_data])
+        'body': json.dumps([response_mapper(r) for r in response["ResultItems"]])
     }
