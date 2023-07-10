@@ -35,7 +35,7 @@ def get_relevant_documents(query: str) -> List[Document]:
     # map to document
     documents = list(
         map(
-            lambda doc: Document(page_content = doc[1], metadata={}),
+            lambda doc: Document(page_content = doc[1], metadata={'source': doc[0]}),
             response
         )
     )
