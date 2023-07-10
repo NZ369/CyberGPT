@@ -7,7 +7,7 @@ from langchain.document_loaders import DirectoryLoader, PyPDFDirectoryLoader
 import os
 import io
 
-from databases.pinecone_db import pinecone_from_documents
+from databases.pinecone_db import pinecone_from_documents, pinecone_from_index
 
 def load_pdfs_from_folder(folder_path):
     loader = PyPDFDirectoryLoader(folder_path)

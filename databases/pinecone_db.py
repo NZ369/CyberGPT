@@ -21,3 +21,10 @@ def pinecone_init():
 def pinecone_from_documents(docs, embeddings, index_name):
     pinecone_init()
     return Pinecone.from_documents(documents=docs, embedding=embeddings, index_name=index_name)
+
+def pinecone_from_index(docs, embeddings, index_name):
+    pinecone_init()
+    if index_name not in pinecone.list_indexes():
+        pinecone.create_index(name=index_name, metric='cosine', dimension=1536)
+    index = pinecone.Index(index_name)
+    return Pinecone(index, embeddings, "text")
