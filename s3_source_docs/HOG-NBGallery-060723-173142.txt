@@ -1,0 +1,30 @@
+NBGallery
+Can be found at https://nbgallery.hogwarts.u.azure.chimera.cyber.gc.ca or https://nbgallery.hogwarts.pb.azure.chimera.cyber.gc.ca
+ 
+To use the integration with jupyterhub you need to go to jupyterhubs tree view
+Go to jupyterlab, in the url replace lab (and everything after) with tree
+Everything that’s needed should have happened.
+Go to nbgallery, then click the little person in the top right corner:
+ go to Jupyter Environments : 
+and you should see your jupyterhub has been linked.  
+To import starred/recently executed notebooks from nbgallery you must delete the corresponding directory and refresh the page. 
+On first run, it’ll download fine, but after that if you need it refreshed you will have to delete the matching directory for which you want to 
+be refreshed. 
+ 
+With the nbgallery integration you can push/pull/review/fork and unlink notebooks between jupyterhub and nbgallery.
+ 
+Finding the UUID of a notebook
+There are a few ways of finding it:
+In JupyterHub
+Using the property inspector
+With the notebook open in jupyterhub, open the property inspector, it should be on the right side of the screen
+In that drawer that opens, look for the section Notebook Metadata which should contain JSON. There should be an element called 
+Gallery, which will have a uuid field. That is the uuid.
+Opening in NBGallery
+On the notebook that you want the uuid for, click the ‘Go To NBGallery’ buttonIf you do not see jupyterhub linked, you probably need to add it manually. The url to put in would be https://jupyhub.hogwarts.
+<u/pb>.azure.chimera.cyber.gc.ca/user/<your username> . You can see this in the url for jupyterhub and just copy and paste 
+it. 
+Then in the tab that opens, the uuid will be in the search bar: 
+In NBGallery
+On the notebook that you want the uuid for, click the gear, and then click ‘Get Notebook UUID’
+That will open up a modal with the UUID inside. 

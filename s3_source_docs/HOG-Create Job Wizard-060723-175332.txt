@@ -1,0 +1,28 @@
+Create Job Wizard
+ 
+Introduction
+New to SPELLBOOK in 1.7.0 is the new Job Wizard, which allows you to create jobs in spellbook with ease. This feature improves upon 
+existing job creation in spellbook, providing a number of new features that provide a faster, more convenient job creation experience.
+Previously, the create job form did not provide any sort of template to build your job from, and required you to either manually copy an 
+existing job, or write one from scratch. This led to a higher barrier of entry to users wanting to schedule a job.
+Creating a Job
+In order to create a job, you press the same button as before:
+From here, instead of the old drawer, a new dialog will appear:
+ 
+Similarly to before, you can specify the name of your job, the DAG ID, an optional description, and the classification of the job (if working in 
+a multi-classification deployment). You can also expand the extra fields to add tags and external references, as before.
+Next is the optional DAG Template/Upload page. This will allow you to pre-fill the DAG Configuration before editing it, either with a DAG 
+Template provided by spellbook, or a file from your computer.
+If you choose a DAG template, the Job Wizard will automatically prefill a number of the fields that a user had to manually fill out previously. 
+Pressing next will move to the DAG Configuration Step.
+It isn’t necessary to select a template or upload a file. If you want to write a DAG completely from scratch, simply press “Next”.Once you proceed to the DAG configuration step, you’ll note that there are a number of highlighted keys you will need to fill out before 
+submitting your DAG. These include things like the crontab schedule, or the task names of the job’s tasks. Note that some of these fields 
+are automatically pre-filled, but can be edited, such as the owner, start date and email arguments.
+Once you have filled out all of the required fields, you can proceed to the Preview and Submit step. Here, the wizard validates your job and 
+ensures there are no outstanding issues. If there are none, you should see the following:
+If there are outstanding issues, they will be listed here. Clicking on them will return you to the related page so you can fix them:
+Once any issues are resolved, you can submit the job. Congrats, you’ve successfully used the Job Wizard for the first time!
+Questions?
+Any questions about this feature can be asked in the HOGWARTS support chat. If you have a DAG template you’d like to add, or any other 
+suggestions, please let us know there. Thanks!
+ 
