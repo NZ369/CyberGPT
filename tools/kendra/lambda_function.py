@@ -4,12 +4,7 @@
 from typing import Tuple, Optional
 import json
 import boto3
-'''
-from pdfminer.converter import TextConverter
-from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
-from pdfminer.pdfpage import PDFPage
-import io
-'''
+
 kendra_client = boto3.client('kendra')
 s3_client = boto3.client('s3')
 
