@@ -6,11 +6,11 @@ from langchain.chains.conversation.memory import ConversationBufferWindowMemory
 from llms.azure_llms import create_llm
 from tools.get_tools import qa_tools
 from langchain.chains import ConversationalRetrievalChain
-from tools.kendra import retriever
+from tools.kendra.retriever import KendraRetriever
 
 llm = create_llm()
 memory = ConversationBufferWindowMemory(memory_key="chat_history", k=3, return_messages=True)
-qa_chain = ConversationalRetrievalChain.from_llm(llm, retriever=retriever, memory=memory)
+qa_chain = ConversationalRetrievalChain.from_llm(llm, retriever=KendraRetriever(), memory=memory)
 
 
 # qa_agent = initialize_agent(qa_tools, llm, agent=AgentType.CHAT_CONVERSATIONAL_REACT_DESCRIPTION, max_iterations=4, verbose=True, memory=memory)
