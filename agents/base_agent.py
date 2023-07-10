@@ -4,11 +4,11 @@ from langchain.memory import ConversationBufferMemory
 from langchain.chains.conversation.memory import ConversationBufferWindowMemory
 
 from llms.azure_llms import create_llm
-from tools.get_tools import tools
+from tools.get_tools import base_tools
 
 llm = create_llm()
 memory = ConversationBufferWindowMemory(memory_key="chat_history", k=3, return_messages=True)
-base_agent = initialize_agent(tools, llm, agent=AgentType.CHAT_CONVERSATIONAL_REACT_DESCRIPTION, max_iterations=4, verbose=True, memory=memory)
+base_agent = initialize_agent(base_tools, llm, agent=AgentType.CHAT_CONVERSATIONAL_REACT_DESCRIPTION, max_iterations=4, verbose=True, memory=memory)
 base_agent.agent.llm_chain.prompt.messages[0].prompt.template = """
 CyberGPT is an intelligent AI trained by Canadian Center for Cyber Security
 
