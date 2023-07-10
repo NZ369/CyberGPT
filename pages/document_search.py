@@ -3,7 +3,7 @@ from streamlit_extras.add_vertical_space import add_vertical_space
 
 from llms.azure_llms import create_llm
 
-from tools.kendra.tool import get_relevant_documents, kendra_retrieval_tool;
+#from tools.kendra.tool import get_relevant_documents, kendra_retrieval_tool;
 
 from langchain.chains import RetrievalQA
 from langchain.document_loaders import TextLoader
