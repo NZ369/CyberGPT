@@ -85,7 +85,7 @@ if user_input:
     # Try block handles any error with not parsing LLM output
     try:
         # Calls the base agent
-        output = qa_chain.run(input=user_input)
+        output = qa_chain.run(question=user_input)
         st.session_state.generated.append(output)
     except Exception as e:
         st.session_state.generated.append(str(e))
