@@ -18,36 +18,6 @@ from langchain.callbacks.manager import (
     CallbackManagerForToolRun,
 )
 
-# initializing Amazon kendra retriever
-'''
-mfa_serial_number = None
-retriever = None
-
-def initialize_client():
-    if mfa_serial_number is not None:
-        response = sts_client.get_session_token(
-            SerialNumber=mfa_serial_number, TokenCode=mfa_totp)
-    else:
-        response = sts_client.get_session_token()
-    temp_credentials = response['Credentials']
-
-    client = boto3.client(
-        "kendra",
-        aws_access_key_id=temp_credentials['AccessKeyId'],
-        aws_secret_access_key=temp_credentials['SecretAccessKey'],
-        aws_session_token=temp_credentials['SessionToken']
-    )
-    
-    return client
-
-if retriever is None:
-    retriever = AmazonKendraRetriever(
-        index_id=os.environ.get('KENDRA_INDEX_ID'),
-        region_name="ca-central-1",
-        client=initialize_client()
-    )
-'''
-
 def get_relevant_documents(query: str) -> List[Document]:
     # request
     print(json.dumps({"query":query}))
