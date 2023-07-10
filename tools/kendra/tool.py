@@ -47,7 +47,7 @@ def get_relevant_documents(query: str) -> List[Document]:
 # setting up kendra tool class
 class KendraTool(BaseTool):
     name = "Kendra Document Retrieval"
-    description = "Use to query relevant & contextual information related to technical documents, research papers and similar relevant data"
+    description = "Use to query relevant & contextual information related to technical documents, research papers and similar relevant data. Query this tool before others to check for relevant data."
 
     def _run(self, query: str, run_manager: Optional[CallbackManagerForToolRun] = None) -> str:
         docs = get_relevant_documents(query);
