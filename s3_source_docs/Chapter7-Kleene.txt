@@ -1,0 +1,505 @@
+1Chap ter7: Kleene ’s Theorem
+●Method of proof
+Theorem :LetA,B,C be setssuch that AB, BC, CA.  
+Then A=B=C.
+Proof:Letx be an element of B. xC (because BC).  Also
+xA (because CA). Thus BA, and we can conclude A=B.  
+By analogy , B=C and thus all the sets are equal .
+Remar k:Regular expressions, finite automata, and transition 
+graphs each define a set of languages.2Kleene ’s Theorem
+Lemm a1:Every language that can be defined by a finite 
+automaton can also be defined by a transition graph.
+Lemm a2:Every language that can be defined by a 
+transition graph can also be defined by a regular expression.
+Lemm a3:Every language that can be defined by a regular 
+expression can also be defined by a finite automaton .
+Kleene ’s Theorem
+Any language that can be defined by a regular expression, or 
+finite automaton, or transition graph can be defined by all 
+three methods.
+Proof:By the lemmas above, and the theorem on the 
+previous page.  (It remains to prove the lemmas.)FATG
+TGRE
+REFA3Kleene ’s Theorem
+Kleene ’s Theorem
+Any language that can be defined by a regular expression, or 
+finite automaton, or transition graph can be defined by all 
+three methods.
+“This theorem is the 
+most important and 
+fundamental result 
+in the theory of finite 
+automata.”
+“…the importance of 
+this chapter lies in 
+its value as an 
+illustration of 
+thorough theoretical 
+thinking in this field. ”4Kleene ’s Theorem
+Lemm a1:Every language that can be defined by a finite 
+automaton can also be defined by a transition graph.
+Proof:By definition , every finite automaton is a transition 
+graph.
+Lemm a 2:Every language that can be defined by a transition 
+graph can also be defined by a regular expression.
+Proof:Byconstructi ve algorithm , which works
+1.for every transition graph
+2.in a finite number of steps5Step 1a :transform to a transition graph with a single start state .
+3–1
+–
+4ab
+5
+–b
+aa2
+……
+–1L
+5 aa3
+LL 4b
+ab2
+……
+only 
+outgoing 
+edges (no 
+incoming)6Step 1b:and a single final state
+…9
++
+baa
+aba12Lb
+L…9+
+aa
+aba 12
++b
+b
+Result is an equivalent transition graph , of the form :
++LL
+L … –LL
+L
+only 
+incoming 
+edges (no 
+outgoing)7Transform to a GTG
+2. Transform every label (sequence of letters or L) to bold (regular
+expression).
+Combine edges that have the same starting and ending state.
+… x
+r3…
+r2r1
+x…r1+ r2+ r3
+…
+3 7r1
+… …
+r23 7r1 + r2 … …83. Eliminate states one by one 
+bypass and state elimination operation
+3 1 2r1 r3r2
+… …3 1 2r1 r3 … …
+1 3r1r2*r3 … …1 3r1r3 … …9Bypass state 2
+5… 23
+r3
+……14…
+r4r2
+r5r1
+5… 13r1r2*r3
+…… 4…
+r1r2*r4
+r1r2*r510–1
+2
+3ab
+bbb4
++ba
+b5LaL
+L L
+bypass state 2,
+paths through state 2:  1 →2→4,  1→2→5,   3→2→4,   3→2→511–1
+2
+3ab
+bbb4
++ba
+b5LaL
+L L
+–1
+34
++
+5L L
+L Laba*ba
+aba*b
+bbba*b
+bbba*babypass state 2,
+paths through state 2:  1 →2→4,  1→2→5,   3→2→4,   3→2→512Even with many paths through state 2, always an equivalent GTG.7
+2
+911
+54… …r1
+r6r5r4
+r2r3
+7
+911
+54… …r1r3*r4
+r1r3*r5r1r3*r6
+r2r3*r4
+r2r3*r5
+r2r3*r613Special cases
+3 →2→1,   1→2→1… …1 3r42r3
+r1r2
+… …3r4 r2*r31r1 r2*r3143 →2→1,   3→2→3, 1 →2→1,   1→2→32r5
+3
+r61r2
+r3r7r4
+r1
+r9r8
+3 1 r7+r6 r4*r5 r1+r2 r4*r3
+r9+r6 r4*r3r8+r2 r4*r5154. Combine edges from start to end state
+– +r2
+r35r1
+…
+– +r1+r2+…+r3516Example 1
+++
+aa
+–a,b
+bbaa,bb17Example 2:  EVEN -EVEN
++ab,baaa,bb aa,bb
+ab,ba1 2ab+baaa+bb aa+bb
+ab+ba–
++LL
+aa+bb
+1 – +
+(ab+ba)(aa+bb)*(ab+ba)L L
+1 – +
+(aa+bb)+( ab+ba)(aa+bb)*(ab+ba)L L
+– +[(aa+bb)+( ab+ba)(aa+bb)*(ab+ba)]*18Example 3
+1
+34
+5r4
+2r1 r2
+r3r8
+r9r6r10
+r5
+r719Transition Graph →Regular Expression
+●Algorithm (and proof)
+1.Add (if necessary) a unique start state without incoming 
+edges and a unique final state without outgoing edges.
+For each state that is not a start state or a final state, repeat steps
+2 and 3.
+2.Do a bypass and state elimination operation.
+3.Combine edges that have the same starting and ending state.
+4.Combine the edges between the start state and the final state.  
+The label on the only remaining edge is the regular 
+expression result.  If there is none, the language is .20Kleene ’s Theorem
+Lemm a3:Every language that can be defined by a regular 
+expression can also be defined by a finite automaton .
+Proof:By constructive algorithm starting from the recursive 
+definition of regular expressions .
+●Remember: Given an alphabet S, the set of regular expressions is defined 
+by the following rules.
+1.For every letter in S, the letter written in bold is a regular expression.  
+Lis a regular expression.
+2.If r1and r2are regular expressions, so is r1+r2.
+3.If r1and r2are regular expressions, so is r1 r2.
+4.If r1is a regular expression, so is r1*.
+5.If r1is a regular expression, so is (r1).
+6.Nothing else is a regular expression.21Example: (a+b)*(aa+bb)(a+b)*
+Build a finite automaton that accepts this language:              Rule:
+1.The letter a 1
+2.The letter b 1
+3.The word aa(using 1)                                                             3
+4.The word bb(using 2)                                                            3
+5.The expression aa+bb (using 3 and 4)                                   2
+6.The expression a+b (using 1 and 2)                                       2
+7.The expression (a+b)*(using 6)                                            5,4
+8.The expression (a+b)*(aa+bb )(using 7 and 5)                     5,3
+9.The expression (a+b)*(aa+bb )(a+b)*(using 8 and 7)          322Rule 1: Land the letters in S
++all Sall S+all S
+–x all Sexcept x
+all SRule 1:
+There is an FA that accepts any particular letter in S.
+There is an FA that accepts only the word L.23Rule 2: r1+r2, Example 1
+All words containing aa
+EVEN -EVEN–
+x1+x3a
+ba,b b
+x2a
++y1 y2b
+b
+a
+y3 y4b
+ba a aa   b
+–x1      x2x1
+x2      x3  x1
++x3      x3x3
+a   b
++y1      y3y2
+y2      y4  y1
+y3      y1y4
+y4y2y3   24Result: r1+r2
+1+ 9 6b
+b3a
+b
+1012
++2b
+a5b
+b11+
+7+ 4+8+
+bb bb
+aaaa
+a aa a
+aa
+bb25Example 2
+x1
+–x2
++a
+ba b
+y1
+–y2
++b
+ab aa   b
+–x1      x2x1
++x2     x2  x1
+a   b
+–y1     y1y2
++y2     y1  y2(words ending in a)
+(words ending in b)26Lemm a 3:Every language that can be defined by a regular 
+expression can also be defined by a finite automaton .
+Proof:By constructive algorithm starting from the recursive 
+definition of regular expressions 
+1.There is an FA that accepts only the empty word ( L) and an 
+FA that accepts only a single letter.
+2.If there is an FA that accepts the language defined by r1and 
+an FA that accepts the language defined by r2, then there is 
+an FA that accepts the language r1+r2.
+3.If there is an FA that accepts the language defined by r1and 
+an FA that accepts the language defined by r2, then there is 
+an FA that accepts the language defined by their 
+concatenation r1r2.
+4.If there is an FA that accepts the language defined by rthen 
+there is an FA that accepts the language defined by r*.
+5.If there is an FA that accepts the language defined by rthen 
+there is an FA that accepts the language defined by ( r).
+Thus for every regular expression, we can construct an FA.✔️
+✔️
+✔️27Algorithm 1 for r1+r2
+Input:
+FA 1: alphabet: Sstates: x1, x2, x3,…     start state: x1
+FA 2: alphabet: Sstates: y1, y2, y3,…     start state: y1
+plus final states and transitions
+The new FA:
+alphabet: Sstates: z1, z2, z3,…     start state: x1or y1
+transitions: if zi= (xjor yk) and xjxnewand ykynew
+then znew= (xnewor ynew) for input p.
+If xnewor ynewis a final state, then znewis a final state.p p28Algorithm 2: Put all pairs (xior xj) in the transition table
+x1or y1 
+–
+x2or y2 
++x2or y1 
++x1or y2 
++
++ +–
+b
+ax1or y2ba
+x2or y1x1or y1
+abalgorithm 1
+algorithm 2x1or y1 
+–
+x2or y2 
++x2or y1
++x1or y2 
++a
+aaa
+b
+bbb29Rule 3: r1r2, Example 1
+second letter is b
+– +a
+ab b
+odd number of a ’sa
+a,ba,b+b
+–a,b30a
+a,ba,b+b
+–a,b– +a
+ab b
+ab|abbaa ab|abbab
+abab|bab aba|bbab
+need an odd 
+number of a’s
+in second 
+factor31Example 2
+r1: all words with aax1
+–x3
++a
+ba,b b
+x2a
+y1
+–y2
++b
+ab a
+r2: words ending in b32r1r2
+z1
+–a
+bb
+z2az3 z4+b
+ab a33Rule 3: Concatenation: Summary of Algorithm
+1.Add a state z for every state of the first automaton that is 
+possible to go through before arriving at a final state.
+2.For each final state, add a state z = (x or y1), where y1is the 
+start state of the second automaton.
+3.Starting from the states added at step 2, add states:
+x (state such that execution continues on 1stautomaton)
+z =    y1if x a final state of the first automaton
+{y | execution continues on 2ndautomaton}
+4.   Label every state that contains a final state from the second 
+automaton as a final state.34Example 3
+r1: no double ax1+ x3a
+ba,b b
+x2+a
+y1
+–y2
++a,b
+a,br2: odd number of letters35r1r2: all words except Lz1 
+–
+z4 
++z3+z2 +a
+b
+a,bb
+bax1or y1 x2or y2 or y1
+x3or y1 or y2 x1or y2 or y1a36Example 4
+r1: words starting with b
+y1
+–y2
++b
+ab a
+r2: words ending in bx2x3
++a,b
+a,bx1–b
+a37r1r2z1
+–z3
+z2 z4+b
+b a
+a,ba
+a
+b
+z4
++z6
++
+z5 z7+a
+b a
+aa
+bz1
+–
+z3z2
+babb
+b
+ab
+ar2r138Rule 4: r*, Example 1
+r:   a* + aa*b
+r*: (a* + aa*b)*
+words without double b, and that do not start with b.x4 a,bx3
++x2
++bx1+a
+a,b ba39r*
+z2
++a
+z1+
+ba
+z3a,bz4
++z5+aa
+bbb40Example 2
+Words ending in ax1
+–x2
++a
+ba b41x1
+–x1or x2 
++a
+ba b
++x1
+b
+a x1or x2 
++ab
+b a42Rule 4: Kleene Star: Algorithm
+Given: an FA whose states are {x1, x2, x3, …}
+●For every nonempty subset of states, create a state of the new 
+FA.  Remove any subset that contains a final state but not the 
+start state.
+●Make the transition table for all the new states.
+●Add a +state.  Connect it to the same states as the original 
+start state was connected to using the same transitions.
+●The final states must be those that contain at least one final 
+state from the original FA.43Example 3
+Words with an odd number of b ’s.x1
+–x2
++b
+ba a44Land words with at least one b.z1+ z2
+z3+a
+a,ba
+b b45Nondeterministic Finite Automata
+●A nondeterministic finite automaton (NFA) is:
+1.a finite set of states, one of which is designated as the start 
+state, and some (maybe none) of which are designated as 
+the final states
+2.an alphabetSof input letters
+3.a finite set of transitions that show how to go to a new 
+state, for some pairs of state and letters
+Remarks:
+●Each pair is one state and one letter (no L).
+●Can have 0, 1, or more transitions for a single pair.
+●Every finite automaton is a nondeterministic finite automaton.  
+Every nondeterministic finite automaton is a transition graph.46Examples of Nondeterministic Finite Automata 
+(a+b)*aaa(a+b)*bbb(a+b)*–a+a a b b ba,b a,b a,b
+x1
+–x2b x4
++bx3bb
+bb+bbb47Theorem: Every language that can be defined by a 
+nondeterministic finite automaton can also be defined by a 
+deterministic finite automaton.
+Proof ( 1):Every nondeterministic finite automaton is a transition 
+graph.
+By lemma 2: transition graph →regular expression
+By lemma 3: regular expression →finite automaton
+Proof ( 2):By constructive algorithm48Algorithm: nondeterministic automaton →deterministic 
+automaton (FA)
+Given: a nondeterministic automaton whose states are
+{x1, x2, x3, …}
+1.For every subset of states, create a state of the new FA.
+2.Make the transition table for all the new states (or just the 
+new states that can be entered).
+3.Add a state .  Add transitions that loop back to itself for all 
+letters of the alphabet.  For each new state, if there is no 
+transition for letter p, add one that goes to the state.
+4.The final states must be those that contain at least one final 
+state from the original nondeterministic finite automaton.49bb+bbb a,bx3or x4 
++x2bx1–b
+a ax4
++
+a,bb
+a50Lemm a 3:Every language that can be defined by a regular 
+expression can also be defined by a finite automaton .
+Proof:By constructive algorithm starting from the recursive
+definition of regular expressions, we build a nondeterministic
+finite automaton.  Then, by the most recent theorem, it is
+possible to then build a finite automaton.51Rule 1: Land the letters in S
+– +a
+– +b
++52Rule 2: r1+r2
+x2b
+x1–a
+x4+bx3a
+a ab
+by1
+–y2
++a,b a
+b
+y1y2
++a,b a
+b
+–x2b
+x1a
+x4+bx3a
+a ab
+b
+aa
+bb53Rule 3: r1r2
+w1–w2
++a
+ba b
+x2x3
++bx1 –a
+aa,b b
+w2ax3+ x1 x2b bba a,b b a
+w1–a
+b
+a

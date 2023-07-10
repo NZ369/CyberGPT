@@ -1,0 +1,433 @@
+Implementing Noise with Hash functions for Graphics Processing Units
+Matias Valdenegro-Toro
+Departamento de Informatica
+Universidad Tecnologica Metropolitana
+Santiago, Chile
+matias.valdenegro@gmail.comHector Pincheira Conejeros
+Departamento de Informatica
+Universidad Tecnologica Metropolitana
+Santiago, Chile
+hpinche51@gmail.com
+Abstract —We propose a modiﬁcation to Perlin noise which
+use computable hash functions instead of textures as lookup
+tables. We implemented the FNV1, Jenkins and Murmur
+hashes on Shader Model 4.0 Graphics Processing Units for
+noise generation. Modiﬁed versions of the FNV1 and Jenkins
+hashes provide very close performance compared to a texture
+based Perlin noise implementation. Our noise modiﬁcation
+enables noise function evaluation without any texture fetches,
+trading computational power for memory bandwidth.
+Keywords -Computer Graphics; Graphics Processors; Perlin
+Noise
+I. I NTRODUCTION
+Noise is a primitive function used in computer graphics to
+create real-looking procedural content and textures. It was
+introduced by Perlin [1] and it is the standard implementa-
+tion for noise. The noise function returns a pseudorandom
+deterministic scalar output based on its n-dimensional input.
+A noise function has some desirable features [2], such as:
+1) Continuous in its domain.
+2) A deﬁned output domain, usually [-1, 1].
+3) An average of zero.
+4) Statistically invariant to transformations on its domain.
+5) Band limited in frequency.
+The original Perlin Noise algorithm was suited to a CPU
+implementation, and uses two lookup tables. A permutation
+table is used as a hashing function and a gradient table.
+Accessing them in Graphics Processing Unit (GPU) or
+massive parallel architectures can be a bottleneck, as the
+noise function can be used several times per processed
+fragment.
+Removing the dependency on lookup tables is a difﬁcult
+matter, as they provide the necessary entropy to generate
+a pseudorandom output. A pure computable noise function
+would be valuable for a hardware and/or a GPU implemen-
+tation.
+This paper proposes modiﬁcations to Perlin Noise which
+makes it purely computable, replacing both lookup tables
+with functions computed at runtime. This enables a fast
+GPU implementation, using the OpenGL Shading Language
+(GLSL).II. P REVIOUS WORK
+On [3], Perlin introduced modiﬁcations to its classic Perlin
+Noise, using higher order interpolants remove discontinuities
+in the second derivate, which produced artifacts, and a
+new gradient distribution which hides some lattice-aligned
+artifacts.
+There are several GPU implementations of Perlin Noise,
+such as baking a 1D/2D/3D noise texture and sampling to get
+noise values [4], or implementing the complete algorithm,
+using textures to store the lookup tables [5].
+Olano [4] proposed a modiﬁcation to Perlin Noise us-
+ing a LCG-based hash function, and an alternate gradient
+distribution, which produced noise with a period of 61
+units. His proposal was aimed to a GPU Shader Assembly
+implementation.
+III. G ENERALIZED PERLIN NOISE
+Perlin noise uses a function Nn!Rnto assign every
+point in a integer lattice space a gradient vector of the
+same dimension. Perlin calculates this gradient using a
+precalculated gradient table ( N!Rn), indexed with the
+aid of a precalculated permutation table ( N!N):
+int permute(int x, int y, int z)
+{
+int px = permTable[x];
+int py = permTable[y + px];
+return permTable[py + z];
+}
+vec3 gradient(int x, int y, int z)
+{
+return gradTable[permute(x, y, z)];
+}
+There is no dependency between this gradient generation
+methodology and the Perlin noise algorithm [1]. Any other
+random generation method should be enough.
+IV. M ODERN GRAPHICS PROCESSING UNITS
+GPUs have evolved from a ﬁxed function programming
+model to a programmable model, in which the developerarXiv:1903.12270v1  [cs.GR]  28 Mar 2019can execute code in deﬁned stages of the graphics pipeline
+to achieve different effects.
+GPU features are deﬁned by shader model versions,
+deﬁned between Microsoft and Hardware Vendors. The most
+recent version as this writing is Shader Model 4.0, which
+supports several features [6] useful for this paper:
+1) Full support for signed and unsigned integers, and bit
+operations on them.
+2) Unﬁltered texture fetches.
+3) Texture fetches with pixel coordinates.
+4) Unlimited number of executed instructions.
+Integer and bit operation support is required to implement
+any common hashing function. This functionality is accessed
+through the OpenGL Shading Language.
+The GL EXT gpu shader4 [7] OpenGL extension ex-
+poses this funcionality for Shader Model 4.0 hardware.
+This extension has been integrated into the core OpenGL
+speciﬁcation in version 3.0 [8].
+V. P ROPOSED CHANGES TO PERLIN NOISE
+We propose changing Perlin’s gradient generation with a
+real hashing function, evaluated at runtime without lookup
+tables.
+Using a hash function N!N, it is evaluated on each
+component of the noise function input, but linked to the
+previous component evaluation in a similar way Perlin linked
+to its permutation evaluation. Then a n-dimensional integer
+vector is constructed, and used to evaluate a trigonometric
+function, converting the integer vector into a ﬂoatin point
+vector, ﬁnally yielding the n-dimensional gradient.
+vec2 gradient(ivec2 p)
+{
+int x = hash(p.x);
+int y = hash(x + p.y);
+return sin(vec2(x + y, y + y));
+}
+vec3 gradient(ivec3 p)
+{
+int x = hash(p.x);
+int y = hash(x + p.y);
+int z = hash(y + p.z);
+return sin(vec3(z + x, z + y, z + z));
+}
+Later the gradient is used normally with the Perlin Noise
+algorithm. For the hash function we chose 3 candidates,
+the Fowler-Noll-V o-1 (FNV1), Murmur and Jenkins hashes.
+Criteria for the hash function selection is:
+Small code footprint.Small execution time.
+Not a cryptographycally secure hash (due to execution
+time constraints).
+A. The FNV1 hash
+FNV is a hash function created by Fowler, Noll, and V o
+[9]. The hash is deﬁned for power of two output bitsizes,
+starting from 32 bits to 1024 bits. It uses two magic numbers,
+the FNV offset basis and the FNV prime, both dependant
+on the output size. The pseudocode for the hash follows:
+int hash(int input)
+{
+int ret = fnvOffsetBasis;
+for each byte i in input {
+ret = ret *fnvPrime;
+ret = ret ˆ i;
+}
+return ret;
+}
+B. The Murmur Hash
+Murmur is a hash function created by Appleby [10], which
+claims to have a excellent distribution, excellent avalanche
+and excellent collision resistance. It processes 32-bit blocks
+and has output size of 32 bits. The pseudocode for the hash
+follows:
+const int m = 1540483477;
+int hash(int[] k, int length)
+{
+int h = k ˆ length;
+for(int i = 0; i < length; i++) {
+k[i] *= m;
+k[i] ˆ= k[i] >> 24;
+k[i] *= m;
+h*= m;
+h ˆ= k[i];
+}
+return h;
+}
+C. The Jenkins Hash
+Jenkins hash is a family of hash function by Jenkins [11],
+but we refer speciﬁcally to the “one-at-a-time” version. It
+processes the input in 8-bit blocks, and doesn’t use any
+magic numbers. The pseudocode for the hash follows:
+int hash(int input)
+{int ret = 0;
+for each byte i in input {
+ret += i;
+ret += (ret << 10);
+ret ˆ= (ret >> 6);
+}
+ret += (ret << 3);
+ret ˆ= (ret >> 11);
+ret += (ret << 15);
+return ret;
+}
+VI. H ASH IMPLEMENTATIONS ON THE GPU
+Each hash can be implemented in a shader for direct
+evaluation. The only problem is generated by hashes which
+operate in blocks smaller than 32-bits, because the extension
+speciﬁcation only allows 32-bit integers.
+To overcome this limitation we split the input into 8-bit
+blocks stored in 32-bit integers, using bit operations, and
+process those blocks as they were 8-bit integers. This wastes
+some computational power in the process of splitting and
+processing bigger integers than it is necessary.
+Each hash implementation using GLSL can be seen in
+Figures 1, 2 and 3. All hashes are evaluated for a 32-bit
+input.
+VII. P ARTIAL HASHING
+Initial performance measures using the three chosen
+hashes showed that the implementation is signiﬁcantly
+slower than texture based Perlin Noise. To improve per-
+formance, we modiﬁed the FNV1 and Jenkins hashes to
+operate directly in 32-bit integers, instead on 8-bit integers.
+For the Jenkins hash, we found that sufﬁcient randomness
+is generated using only one iteration of the inner loop,
+but for the FNV1 hash, two iterations are required to
+get smooth noise. We call this modiﬁed hashes “Partial”
+versions. Implementations are shown in Figures 4 and 5.
+VIII. S TATISTICAL PROPERTIES
+Our proposed noise functions generate pseudorandom
+numbers in [ 1;1], with an average of 0:0. Perlin noise
+has a approximate uniform distribution [1], but changing the
+gradient generation might produce a different distribution.
+We found through simulation that all proposed functions
+have gaussian-like distributions. Partial hashes produce the
+same gaussian distribution in the noise output.
+Classic Perlin noise has a period of 256 units, which is
+limited by the size of the lookup tables. Our proposed noise
+functions don’t have a period set by the algorithm, but we
+choose to limit the period to 220to avoid artifacts because
+of integer to ﬂoating point convertion.const int prime = 16777619;
+const int offset = -2128831035;
+int fnv1Hash(int key)
+{
+int ret = offset;
+int b0 = (key & 255);
+int b1 = (key & 65280) >> 8;
+int b2 = (key & 16711680) >> 16;
+int b3 = (key & -2130706432) >> 24;
+ret *= prime;
+ret ˆ= b0;
+ret *= prime;
+ret ˆ= b1;
+ret *= prime;
+ret ˆ= b2;
+ret *= prime;
+ret ˆ= b3;
+return ret;
+}
+Figure 1: GLSL implementation of the FNV1 hash
+IX. I MPLEMENTATION
+The proposed modiﬁcations were implemented in
+OpenGL 3.0, using the OpenGL Shading Language v1.30.
+To measure performance, we rendered a texture mapped
+quad, using a texture coordinate as input to the noise func-
+tion; the scalar result was propagated to the rgb components
+to achieve a grayscale output.
+X. P ERFORMANCE
+Performance measures were made using a Dell XPS
+m1330 laptop, with a GeForce 8400M GS GPU with
+180.37.05 drivers on ArchLinux i686. To get instruction
+counts, we used NVIDIA’s Cg Compiler, which can compile
+GLSL code to NVfp4 Assembly.
+To get comparable results, an already implemented Perlin
+Noise function was used. This function is implemented using
+textures to store the permutation and gradient tables. Two
+versions of this function were used, one implemented using
+ﬂoating point mathematic (Perlin/Float), and other using
+integer arithmetic (Perlin/Integer).
+Performance was measured using the render time in
+milliseconds as metric, at different resolutions for 2D and
+3D Noise.int jenkinsHash(int key)
+{
+int hash = 0;
+int b0 = (key & 255);
+int b1 = (key & 65280) >> 8;
+int b2 = (key & 16711680) >> 16;
+int b3 = (key & -16777216) >> 24;
+hash += b0;
+hash += (hash << 10);
+hash ˆ= (hash >> 6);
+hash += b1;
+hash += (hash << 10);
+hash ˆ= (hash >> 6);
+hash += b2;
+hash += (hash << 10);
+hash ˆ= (hash >> 6);
+hash += b3;
+hash += (hash << 10);
+hash ˆ= (hash >> 6);
+hash += (hash << 3);
+hash ˆ= (hash >> 11);
+hash += (hash << 15);
+return hash;
+}
+Figure 2: GLSL implementation of the Jenkins hash
+XI. R ESULTS
+Example renders are shown in Figure 6. The ﬁrst column
+is a render of the noise function, the second column is
+a render of the turbulence funciton using the same noise
+function, and the third column is a render of a proocedural
+cloud texture using the same noise function. Performance
+measures are shown in Figure 7.
+Our performance data showed that the proposed im-
+plementations are slower than regular texture-based Perlin
+Noise, only Perlin/PartialFNV1 and Perlin/PartialJenkins are
+close enough to Perlin/Float to be considered an alternative
+implementation.
+The tradeoff between speed and period is alleviated in
+Perlin/PartialFNV1 and Perlin/PartialJenkins. Both can be
+considered alternatives because of their “cheap” cost and
+considerable large period.
+Noise generated by our proposed functions is of compara-
+ble quality when compared to Perlin/Float and Perlin/Integer.
+On great advantage of our implementation is that Modernconst int m = 1540483477;
+int murmurHash(int k)
+{
+int h = 10;
+k*= m;
+k ˆ= k >> 24;
+k*= m;
+h*= m;
+h ˆ= k;
+return h;
+}
+Figure 3: GLSL implementation of the Murmur hash
+int hash(int key)
+{
+int ret = offset;
+ret *= prime;
+ret ˆ= key;
+ret *= prime;
+ret ˆ= key;
+return ret;
+}
+Figure 4: GLSL implementation of the Partial FNV1 hash
+and newer GPUs can execute more ALU instructions per
+texture fetches than older processors [12], and therefore a
+developer needs to use more computational power to hide
+the latency of texture fetching. Our noise functions moves
+workload from texture bandwith to ALU units, and can help
+balance the workload between different GPU components.
+XII. F UTURE WORK
+In the future, we would like to implement other noise
+functions on GPUs, such as Worley’s cellular noise. But
+more important, is to demonstrate the advantage of hashing
+functions over precomputed tables in memory bandwith
+limited applications.
+XIII. C ONCLUSION
+We researched alternate implementations of noise for
+modern graphics processing units, using hash functions to
+replace lookup tables with runtime computable data.
+We expect that with faster noise implementations its
+usage in realtime applications such as commercial games,int hash(int key)
+{
+int hash = 0;
+hash += key;
+hash += (hash << 10);
+hash ˆ= (hash >> 6);
+hash += (hash << 3);
+hash ˆ= (hash >> 11);
+hash += (hash << 15);
+return hash;
+}
+Figure 5: GLSL implementation of the Partial Jenkins hash
+will grow. We recommend using Perlin/PartialFNV1 and/or
+Perlin/PartialJenkins as they have a large period ( 220units)
+and its performance is acceptable.
+There is still room for improvement. A function can never
+be fast enough for real time applications. Perlin’s Simplex
+noise could be modiﬁed in the same way, but it would only
+require O(n)contributions from neighbours, as opposed by
+2ncontributions needed for Perlin noise.
+A mix of Simplex noise and hash functions could lead to
+a silicon hardware implementation. The OpenGL Shading
+Language speciﬁcation requires a noise function, but there’s
+no major hardware implementation. The availability of fast
+noise would push its adoption in the industry.
+ACKNOWLEDGMENTS
+The authors would like to thank Sebastian Machuca and
+Gonzalo Gaete.
+REFERENCES
+[1] K. Perlin, “An image synthesizer,” SIGGRAPH Comput.
+Graph. , vol. 19, no. 3, pp. 287–296, 1985.
+[2] K. Group, OpenGL Shading Language Speciﬁcation, version
+1.40 revision 5 , 2009.
+[3] K. Perlin, “Improving noise,” in SIGGRAPH ’02: Proceedings
+of the 29th annual conference on Computer graphics and
+interactive techniques . ACM, 2002, pp. 681–682.
+[4] M. Olano, “Modiﬁed noise for evaluation on graphics
+hardware,” in HWWS ’05: Proceedings of the ACM SIG-
+GRAPH/EUROGRAPHICS conference on Graphics hard-
+ware . New York, NY , USA: ACM, 2005, pp. 105–110.
+[5] S. Green, “Implementing improved perlin noise,” GPU Gems
+2, 2005.
+[6] D. Blythe, “The Direct3D 10 system,” ACM Trans. Graph. ,
+vol. 25, no. 3, pp. 724–734, 2006.[7] NVIDIA and Others, “GL EXT gpu shader4 OpenGL ex-
+tension,” 2006.
+[8] K. Group, The OpenGL Graphics System: A Speciﬁcation,
+Version 3.0 , 2008.
+[9] G. Fowler, L. C. Noll, and P. V o, “FNV hash,” http://isthe.
+com/chongo/tech/comp/fnv/.
+[10] A. Appleby, “Murmurhash,” http://murmurhash.googlepages.
+com/.
+[11] B. Jenkins, “A hash function for hash table lookup,” http:
+//www.burtleburtle.net/bob/hash/doobs.html.
+[12] AMD, “ATI OpenGL Programming and Optimization Guide,”
+2007.(a) Perlin/FNV1
+ (b) Turbulence/FNV1
+ (c) Clouds/FNV1
+(d) Perlin/PartialFNV1
+ (e) Turbulence/PartialFNV1
+ (f) Clouds/PartialFNV1
+(g) Perlin/Jenkins
+ (h) Turbulence/Jenkins
+ (i) Clouds/Jenkins
+(j) Perlin/PartialJenkins
+ (k) Turbulence/PartialJenkins
+ (l) Clouds/PartialJenkins
+(m) Perlin/Murmur
+ (n) Turbulence/Murmur
+ (o) Clouds/Murmur
+(p) Perlin/Float
+ (q) Turbulence/Float
+ (r) Clouds/Float
+Figure 6: Example renders2D Noise Algorithm Instructions Rendertime at 800x600 Rendertime at 1024x768
+Perlin/FNV1 165 11.5 ms 17.5 ms
+Perlin/PartialFNV1 77 6.2 ms 8.7 ms
+Perlin/Jenkins 309 14.0 ms 20.0 ms
+Perlin/PartialJenkins 133 7.0 ms 10.4 ms
+Perlin/Murmur 93 7.5 ms 10.5 ms
+Perlin/Float 37 4.6 ms 8.0 ms
+Perlin/Integer 66 21.4 ms 33.1 ms
+3D Noise Algorithm Instructions Rendertime at 800x600 Rendertime at 1024x768
+Perlin/FNV1 473 23.6 ms 33.0 ms
+Perlin/PartialFNV1 209 13.3 ms 19.0 ms
+Perlin/Jenkins 905 29.0 ms 40.0 ms
+Perlin/PartialJenkins 377 15.4 ms 22.1 ms
+Perlin/Murmur 257 17.0 ms 23.0 ms
+Perlin/Float 77 12.5 ms 17.5 ms
+Perlin/Integer 134 40.1 ms 60.0 ms
+Figure 7: Proposed noise performance measures for 2 and 3 dimensions
