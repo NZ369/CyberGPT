@@ -1,0 +1,586 @@
+802.11ac Dual Radio  
+Access Point
+Model: UAP-AC-LITE
+Introduction
+Thank you for purchasing the Ubiquiti Networks® UniFi® AP . 
+This Quick Start Guide is designed to guide you through 
+installation and includes warranty terms.
+IMPORTANT:  The UAP-AC-LITE requires the UniFi Controller  
+v5.4 or newer, available at: downloads.ubnt.com/unifi
+Package Contents
+UniFi AP AC Lite Mounting Bracket Ceiling Backing Plate
+Flat Head Screws 
+(Qty. 4)Keps Nuts  
+(Qty. 4)Screws  
+(Qty. 4)Screw Anchors 
+(Qty. 4)
+802.11ac Dual Radio  
+Access Point
+Model: UAP-AC-LITE
+Gigabit PoE (24V, 0.5A)  
+with Mounting BracketPower Cord* Quick Start Guide
+Installation Requirements
+• Phillips screwdriver
+• Drill and drill bit (6 mm for wall-mounting or 3 mm for 
+ceiling-mounting)
+• Optional: Drywall or keyhole saw (to cut 18 mm hole for 
+Ethernet cable feed)
+• Cat5/6 UTP cable for indoor installations
+TERMS OF USE: Ubiquiti radio devices must be professionally installed. Shielded Ethernet 
+cable and earth grounding must be used as conditions of product warranty. TOUGHCable™ is 
+designed for outdoor installations. It is the professional installer’s responsibility to follow local 
+country regulations, including operation within legal frequency channels, output power, and 
+Dynamic Frequency Selection (DFS) requirements.System Requirements
+• Linux, Mac OS X, or Microsoft Windows 7/8/10
+• Java Runtime Environment 1.8 (or above)
+• Web Browser: Google Chrome (Other browsers may have 
+limited functionality).
+• UniFi Controller software v5.4 or newer (available at:  
+www.ubnt.com/download/unifi )
+Network Topology Requirements
+• A DHCP-enabled network (for the AP to obtain an IP address 
+as well as for the wireless clients after deployment)
+• A UniFi Cloud Key or management station running the UniFi 
+Controller software, located either on-site and connected to 
+the same Layer-2 network, or off-site in the cloud or a NOC
+US-16-150W
+USG-PRO-4
+(DHCP Server)
+InternetUAP-AC-Lite
+UAP-AC-M-PROUAP-AC-HD
+LAN
+WANUniFi Cloud Key
+(UniFi Controller)
+Remote Access too
+UniFi Controllerr
+Sample Network Diagram
+All UniFi devices support off-site management controllers. For 
+setup details, see the User Guide on the website:  
+www.ubnt.com/download/unifiHardware Overview
+LED
+LED Color Status
+White Factory default, waiting to be integrated.
+Flashing White Initializing. 
+Alternating 
+White/BlueDevice is busy; do not touch or unplug it. 
+This usually indicates that a process such 
+as a firmware upgrade is taking place.
+BlueIndicates the device has been successfully 
+integrated into a network and is working 
+properly. 
+Quickly 
+Flashing BlueThis is used to locate an AP . 
+When you click Locate  in the UniFi 
+Controller software, the LED on the AP will 
+flash. It will also display the location of the 
+AP on the map.
+Steady Blue 
+with occasional 
+flashingIndicates the device is in an isolated state 
+(all WLANs are brought down until an 
+uplink is found).Ports
+Ethernet 
+Port Reset 
+ButtonLocking Notch
+Cable 
+Feed Plug
+Locking Notch The Locking Notch  will be used with the 
+Mounting Bracket  to help secure the UniFi AP . (This is described 
+further in the Mounting Bracket  section.)
+Ethernet This Gigabit Ethernet port is used to connect the 
+power and should be connected to the LAN and DHCP server. 
+Power can be provided by a Ubiquiti Networks UniFi Switch with 
+PoE or Gigabit PoE  adapter (included with single-pack only).
+Reset The Reset  button serves two functions for the UniFi AP:
+• Restart Press and release the Reset  button quickly.
+• Restore to Factory Default Settings Press and hold the 
+Reset  button for more than five seconds.
+Alternatively, the UniFi AP may be reset remotely via a Reset  
+button located on the bottom of the Gigabit PoE adapter.
+Cable Feed Plug If your Ethernet cable feeds along the 
+mounting surface, remove the Cable Feed Plug .Mounting Bracket
+Mounting BracketLocking Tab
+Locking Tab During installation, the Locking Tab  on the 
+Mounting Bracket  moves from the Initial Position  to the Final 
+Position , where the Locking Tab  fits securely into the Locking 
+Notch on the UniFi AP to help prevent theft.
+Initial Position Final Position
+Slot
+Note:  If you need to remove the UniFi AP from the 
+Mounting Bracket , insert a paper clip in the Slot to release 
+the Locking Tab  and turn the UniFi AP counterclockwise.Hardware Installation
+The UniFi AP can be mounted on the wall or ceiling. Perform 
+the steps for the appropriate installation:
+Wall Mount
+1. Position the Mounting Bracket  at the desired location on 
+the wall with the arrow pointing up.
+2. Use a pencil to mark the four mounting holes. Use a 6 mm 
+drill bit to drill the mounting holes.
+Arrow
+3. If your Ethernet cable feeds through the wall, then cut or 
+drill a circle approximately 18 mm in diameter. Then feed 
+the CAT5/6 cable through the hole.
+25 mm
+Note:  25 mm is the distance from the center of the 
+bottom mounting hole to the center of the cable hole.4. Insert the Screw Anchors  into the 6 mm holes. Secure the 
+Mounting Bracket  to the wall by inserting the Screws  into 
+the anchors.
+5. If the Ethernet cable runs along the mounting surface, 
+remove the Cable Feed Plug .
+6. Connect the Ethernet cable to the Ethernet  port. 
+7. Align the arrow on the UniFi AP with the arrow on the 
+Locking Tab  of the Mounting Bracket .
+ArrowLocking Tab8. Ensure that the UniFi AP is firmly seated on the Mounting 
+Bracket . Turn the UniFi AP clockwise until it locks into place 
+and the Locking Tab  fits securely into the Locking Notch .
+Ceiling Mount
+1. Remove the ceiling tile.
+2. Place the Ceiling Backing Plate  in the center of the ceiling 
+tile. Mark the four mounting screw holes.
+3. Mark a hole approximately 18 mm in diameter for the 
+Ethernet cable feed.
+25 mm
+Note:  25 mm is the distance from the center of the 
+bottom mounting hole to the center of the cable hole.
+4. Use a 3 mm drill bit to drill the screw holes, and cut or drill 
+the hole for the Ethernet cable feed.5. Insert the Flat Head Screws  through the Mounting Bracket , 
+ceiling tile, and Ceiling Backing Plate . Fasten the screws 
+using the Keps Nuts . Then feed the Ethernet cable through 
+the 18 mm hole.
+6. Connect the Ethernet cable to the Ethernet  port.
+7. Align the arrow on the UniFi AP with the arrow on the 
+Locking Tab  of the Mounting Bracket .
+Locking Tab
+Arrow8. Ensure that the UniFi AP is firmly seated on the Mounting 
+Bracket . Turn the UniFi AP clockwise until it locks into place 
+and the Locking Tab  fits securely into the Locking Notch .
+9. Set the ceiling tile back into place.
+Powering the UniFi AP
+Use a UniFi Switch with PoE or a Gigabit PoE  adapter for power. 
+Connecting to a UniFi Switch with PoE
+Connect the Ethernet cable from the UniFi AP directly to a PoE 
+port on the UniFi Switch with PoE.
+1                     3                    5                    7                   9                  11                   13                  15                 17                 19                  21                 22
+2                    4                    6                    8                  10                  12                   14                 16                  18                 20                  22                 24SPF1
+SPF2
+*640-00180-08*
+640-00180-08Connecting Power over Ethernet
+The single-pack of the UAP-AC-LITE includes one Gigabit 
+PoE adapter. For multi-pack units, we recommend using a 
+UniFi Switch with PoE.
+1. Connect the Ethernet cable from the device to the 
+adapter’s POE  port.
+2. Connect an Ethernet cable from your LAN to the adapter’s 
+LAN  port. 
+3. Connect the Power Cord  to the adapter’s power port. 
+Connect the other end of the Power Cord  to a power outlet.
+Mounting the PoE Adapter (Optional)
+1. Remove the PoE Mounting Bracket  from the adapter, place 
+the bracket at the desired location, and mark the two holes. 
+2. Pre-drill the holes if necessary, and secure the bracket 
+using two fasteners (not included).
+3. Align the adapter’s slots with the tabs of the PoE Mounting 
+Bracket , and then slide the adapter down.
+Software Installation
+Download and install the latest version of the UniFi Controller 
+software. Launch it and follow the on-screen instructions. The 
+software and step-by-step instructions in the User Guide are 
+available at: www.ubnt.com/download/unifi
+After you have installed the software and run the UniFi 
+Installation Wizard, a login screen will appear for the UniFi 
+Controller management interface. Enter the Admin Name and 
+Password that you created and click Log In .. 
+You can manage your wireless network and view network 
+statistics using the UniFi Controller management interface. 
+For information on configuring and using the UniFi Controller 
+software, refer to the User Guide.
+Mobile App Installation
+Ubiquiti Networks also offers the UniFi mobile app, which 
+is available from the App Store (iOS) or Google Play™ Store 
+(Android). You can use it to provision a UniFi AP for basic 
+functionality without configuring a UniFi Controller. It also 
+allows seamless provisioning of APs for remote controllers 
+(controllers not on the same Layer 2 network) and easy access 
+to local controllers and those monitored on unifi.ubnt.comSpecifications
+UniFi AP AC Lite
+Dimensions 160 x 160 x 31.45 mm
+(6.3 x 6.3 x 1.24")
+Weight
+With Mounting Kits170 g (6.0 oz)
+185 g (6.5 oz)
+Networking Interface (1) 10/100/1000 Ethernet Port
+Buttons (1) Reset to Defaults
+Power Method Passive PoE (Pairs 4, 5+; 7, 8 Return)
+Power Supply 24V, 0.5A Gigabit PoE Adapter*
+Max. Power Consumption 6.5W
+Max. TX Power
+2.4 GHz
+5 GHz20 dBm
+20 dBm
+Antennas (2) Dual-Band Antennas, 3 dBi Each
+Wi-Fi Standards 802.11 a/b/g/n/ac
+Wireless Security WEP , WPA-PSK,  
+WPA-Enterprise (WPA/WPA2, TKIP/AES)
+BSSID Up to Four per Radio
+Mounting Wall/Ceiling (Kits Included)
+Operating Temperature -10 to 70° C (14 to 158° F)
+Operating Humidity 5 to 95% Noncondensing 
+Certifications CE, FCC, IC
+* Only the single-pack of the UAP-AC-LITE includes a PoE adapter.Safety Notices
+1. Read, follow, and keep these instructions.
+2. Heed all warnings.
+3. Only use attachments/accessories specified by the manufacturer.
+WARNING:  Do not use this product in location that can 
+be submerged by water. 
+WARNING:  Avoid using this product during an electrical 
+storm. There may be a remote risk of electric shock from 
+lightning. 
+Electrical Safety Information
+1. Compliance is required with respect to voltage, frequency, and current 
+requirements indicated on the manufacturer’s label. Connection to a 
+different power source than those specified may result in improper 
+operation, damage to the equipment or pose a fire hazard if the 
+limitations are not followed.
+2. There are no operator serviceable parts inside this equipment. Service 
+should be provided only by a qualified service technician.
+3. This equipment is provided with a detachable power cord which has 
+an integral safety ground wire intended for connection to a grounded 
+safety outlet.
+a. Do not substitute the power cord with one that is not the provided 
+approved type. Never use an adapter plug to connect to a 2-wire 
+outlet as this will defeat the continuity of the grounding wire. 
+b. The equipment requires the use of the ground wire as a part of the 
+safety certification, modification or misuse can provide a shock 
+hazard that can result in serious injury or death.
+c. Contact a qualified electrician or the manufacturer if there 
+are questions about the installation prior to connecting the 
+equipment.
+d. Protective earthing is provided by Listed AC adapter. Building 
+installation shall provide appropriate short-circuit backup 
+protection.
+e. Protective bonding must be installed in accordance with local 
+national wiring rules and regulations.Limited Warranty
+UBIQUITI NETWORKS, Inc (“UBIQUITI NETWORKS”) warrants that the 
+product(s) furnished hereunder (the “Product(s)”) shall be free from defects 
+in material and workmanship for a period of one (1) year from the date 
+of shipment by UBIQUITI NETWORKS under normal use and operation. 
+UBIQUITI NETWORKS’ sole and exclusive obligation and liability under 
+the foregoing warranty shall be for UBIQUITI NETWORKS, at its discretion, 
+to repair or replace any Product that fails to conform to the above 
+warranty during the above warranty period. The expense of removal and 
+reinstallation of any Product is not included in this warranty. The warranty 
+period of any repaired or replaced Product shall not extend beyond its 
+original term. 
+Warranty Conditions
+The above warranty does not apply if the Product:
+(I) has been modified and/or altered, or an addition made thereto, 
+except by Ubiquiti Networks, or Ubiquiti Networks’ authorized 
+representatives, or as approved by Ubiquiti Networks in writing;
+(II) has been painted, rebranded or physically modified in any way;
+(III) has been damaged due to errors or defects in cabling;
+(IV) has been subjected to misuse, abuse, negligence, abnormal 
+physical, electromagnetic or electrical stress, including lightning 
+strikes, or accident;
+(V) has been damaged or impaired as a result of using third party 
+firmware;
+(VI) has no original Ubiquiti MAC label, or is missing any other original 
+Ubiquiti label(s); or
+(VII) has not been received by Ubiquiti within 30 days of issuance of 
+the RMA.
+In addition, the above warranty shall apply only if: the product has been 
+properly installed and used at all times in accordance, and in all material 
+respects, with the applicable Product documentation; all Ethernet cabling 
+runs use CAT5 (or above), and for outdoor installations, shielded Ethernet 
+cabling is used, and for indoor installations, indoor cabling requirements 
+are followed.
+Returns
+No Products will be accepted for replacement or repair without obtaining 
+a Return Materials Authorization (RMA) number from UBIQUITI NETWORKS 
+during the warranty period, and the Products being received at UBIQUITI 
+NETWORKS’ facility freight prepaid in accordance with the RMA process of 
+UBIQUITI NETWORKS. Products returned without an RMA number will not 
+be processed and will be returned freight collect or subject to disposal. 
+Information on the RMA process and obtaining an RMA number can be 
+found at: www.ubnt.com/support/warrantyDisclaimer
+EXCEPT FOR ANY EXPRESS WARRANTIES PROVIDED HEREIN, UBIQUITI 
+NETWORKS, ITS AFFILIATES, AND ITS AND THEIR THIRD PARTY DATA, 
+SERVICE, SOFTWARE AND HARDWARE PROVIDERS HEREBY DISCLAIM 
+AND MAKE NO OTHER REPRESENTATION OR WARRANTY OF ANY KIND, 
+EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, 
+REPRESENTATIONS, GUARANTEES, OR WARRANTIES OF MERCHANTABILITY, 
+ACCURACY, QUALITY OF SERVICE OR RESULTS, AVAILABILITY, 
+SATISFACTORY QUALITY, LACK OF VIRUSES, QUIET ENJOYMENT, FITNESS 
+FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT AND ANY 
+WARRANTIES ARISING FROM ANY COURSE OF DEALING, USAGE OR 
+TRADE PRACTICE IN CONNECTION WITH SUCH PRODUCTS AND SERVICES. 
+BUYER ACKNOWLEDGES THAT NEITHER UBIQUITI NETWORKS NOR 
+ITS THIRD PARTY PROVIDERS CONTROL BUYER’S EQUIPMENT OR THE 
+TRANSFER OF DATA OVER COMMUNICATIONS FACILITIES, INCLUDING 
+THE INTERNET, AND THAT THE PRODUCTS AND SERVICES MAY BE 
+SUBJECT TO LIMITATIONS, INTERRUPTIONS, DELAYS, CANCELLATIONS 
+AND OTHER PROBLEMS INHERENT IN THE USE OF COMMUNICATIONS 
+FACILITIES. UBIQUITI NETWORKS, ITS AFFILIATES AND ITS AND THEIR THIRD 
+PARTY PROVIDERS ARE NOT RESPONSIBLE FOR ANY INTERRUPTIONS, 
+DELAYS, CANCELLATIONS, DELIVERY FAILURES, DATA LOSS, CONTENT 
+CORRUPTION, PACKET LOSS, OR OTHER DAMAGE RESULTING FROM ANY 
+OF THE FOREGOING. In addition, UBIQUITI NETWORKS does not warrant 
+that the operation of the Products will be error-free or that operation will 
+be uninterrupted. In no event shall UBIQUITI NETWORKS be responsible 
+for damages or claims of any nature or description relating to system 
+performance, including coverage, buyer’s selection of products (including 
+the Products) for buyer’s application and/or failure of products (including 
+the Products) to meet government or regulatory requirements.
+Limitation of Liability
+EXCEPT TO THE EXTENT PROHIBITED BY LOCAL LAW, IN NO EVENT WILL 
+UBIQUITI OR ITS SUBSIDIARIES, AFFILIATES OR SUPPLIERS BE LIABLE FOR 
+DIRECT, SPECIAL, INCIDENTAL, CONSEQUENTIAL OR OTHER DAMAGES 
+(INCLUDING LOST PROFIT, LOST DATA, OR DOWNTIME COSTS), ARISING 
+OUT OF THE USE, INABILITY TO USE, OR THE RESULTS OF USE OF THE 
+PRODUCT, WHETHER BASED IN WARRANTY, CONTRACT, TORT OR OTHER 
+LEGAL THEORY, AND WHETHER OR NOT ADVISED OF THE POSSIBILITY OF 
+SUCH DAMAGES. Note
+Some countries, states and provinces do not allow exclusions of implied 
+warranties or conditions, so the above exclusion may not apply to you. 
+You may have other rights that vary from country to country, state to 
+state, or province to province. Some countries, states and provinces do not 
+allow the exclusion or limitation of liability for incidental or consequential 
+damages, so the above limitation may not apply to you. EXCEPT TO 
+THE EXTENT ALLOWED BY LOCAL LAW, THESE WARRANTY TERMS DO 
+NOT EXCLUDE, RESTRICT OR MODIFY, AND ARE IN ADDITION TO, THE 
+MANDATORY STATUTORY RIGHTS APPLICABLE TO THE LICENSE OF ANY 
+SOFTWARE (EMBEDDED IN THE PRODUCT) TO YOU. The United Nations 
+Convention on Contracts for the International Sale of Goods shall not apply 
+to any transactions regarding the sale of the Products.
+Compliance
+FCC
+Changes or modifications not expressly approved by the party responsible 
+for compliance could void the user’s authority to operate the equipment.
+This device complies with Part 15 of the FCC Rules. Operation is subject to 
+the following two conditions.
+1. This device may not cause harmful interference, and
+2. This device must accept any interference received, including 
+interference that may cause undesired operation.
+This equipment has been tested and found to comply with the limits for a 
+Class A digital device, pursuant to part 15 of the FCC Rules. These limits are 
+designed to provide reasonable protection against harmful interference 
+when the equipment is operated in a commercial environment. This 
+equipment generates, uses, and can radiate radio frequency energy and, 
+if not installed and used in accordance with the instruction manual, may 
+cause harmful interference to radio communications. Operations of this 
+equipment in a residential area is likely to cause harmful interference in 
+which case the user will be required to correct the interference at his own 
+expense.
+This radio transmitter (FCC: SWX-UAPACL) has been approved by FCC. ISED Canada
+CAN ICES-3(A)/NMB-3(A)
+This device complies with ISED Canada licence-exempt RSS standard(s). 
+Operation is subject to the following two conditions: 
+1. This device may not cause interference, and 
+2. This device must accept any interference, including interference that 
+may cause undesired operation of the device.
+This radio transmitter (IC: 6545A-UAPACL) has been approved by ISED 
+Canada.
+CAN ICES-3(A)/NMB-3(A)
+Le présent appareil est conforme aux CNR d’ISDE Canada applicables aux 
+appareils radio exempts de licence. L’exploitation est autorisée aux deux 
+conditions suivantes :
+1. l’appareil ne doit pas produire de brouillage;
+2. l’appareil doit accepter tout brouillage radioélectrique subi, même si le 
+brouillage est susceptible d’en compromettre le fonctionnement.
+Le présent émetteur radio (IC: 6545A-UAPACL) a été approuvé par ISDE 
+Canada.
+RF Exposure Warning
+The antennas used for this transmitter must be installed to provide a 
+separation distance of at least 20 cm from all persons and must not be 
+located or operating in conjunction with any other antenna or transmitter.
+Les antennes utilisées pour ce transmetteur doivent être installé en 
+considérant une distance de séparation de toute personnes d’au moins 
+20 cm et ne doivent pas être localisé ou utilisé en conflit avec tout autre 
+antenne ou transmetteur.Australia and New Zealand
+Warning: This is a Class A product. In a domestic environment this 
+product may cause radio interference in which case the user may 
+be required to take adequate measures.
+Brazil
+Nota:  Este equipamento não tem direito à proteção contra 
+interferência prejudicial e não pode causar interferência em 
+sistemas devidamente autorizados. 
+CE Marking
+CE marking on this product represents the product is in compliance with all 
+directives that are applicable to it.
+Country List
+AT BE BG CY CZ DE DK EE EL ES FI FR HR HU
+IE IT LV LT LU MT NL PL PT RO SE SI SK UK
+BFWA (Broadband Fixed Wireless Access) members noted in blue
+Note:  This device meets Max. TX power limit per ETSI regulations.
+The following apply to products that operate in the 5 GHz frequency range:
+Note:  This device is restricted to indoor use only when operating 
+in the 5150 - 5350 MHz frequency range within all member states. 
+Note:  All countries listed may operate at 30 dBm. BFWA member 
+states may operate at 36 dBm.
+Note:  Operation in the 5.8 GHz frequency band is prohibited in 
+BFWA member states. Other countries listed may use the 5.8 GHz 
+frequency band. RoHS/WEEE Compliance Statement
+English
+European Directive 2012/19/EU requires that the equipment bearing 
+this symbol on the product and/or its packaging must not be disposed 
+of with unsorted municipal waste. The symbol indicates that this 
+product should be disposed of separately from regular household waste 
+streams. It is your responsibility to dispose of this and other electric and 
+electronic equipment via designated collection facilities appointed by the 
+government or local authorities. Correct disposal and recycling will help 
+prevent potential negative consequences to the environment and human 
+health. For more detailed information about the disposal of your old 
+equipment, please contact your local authorities, waste disposal service, or 
+the shop where you purchased the product.
+Deutsch
+Die Europäische Richtlinie 2012/19/EU verlangt, dass technische 
+Ausrüstung, die direkt am Gerät und/oder an der Verpackung mit diesem 
+Symbol versehen ist, nicht zusammen mit unsortiertem Gemeindeabfall 
+entsorgt werden darf. Das Symbol weist darauf hin, dass das Produkt 
+von regulärem Haushaltmüll getrennt entsorgt werden sollte. Es 
+liegt in Ihrer Verantwortung, dieses Gerät und andere elektrische 
+und elektronische Geräte über die dafür zuständigen und von der 
+Regierung oder örtlichen Behörden dazu bestimmten Sammelstellen zu 
+entsorgen. Ordnungsgemäßes Entsorgen und Recyceln trägt dazu bei, 
+potentielle negative Folgen für Umwelt und die menschliche Gesundheit 
+zu vermeiden. Wenn Sie weitere Informationen zur Entsorgung Ihrer 
+Altgeräte benötigen, wenden Sie sich bitte an die örtlichen Behörden oder 
+städtischen Entsorgungsdienste oder an den Händler, bei dem Sie das 
+Produkt erworben haben.Español
+La Directiva 2012/19/UE exige que los equipos que lleven este símbolo en 
+el propio aparato y/o en su embalaje no deben eliminarse junto con otros 
+residuos urbanos no seleccionados. El símbolo indica que el producto 
+en cuestión debe separarse de los residuos domésticos convencionales 
+con vistas a su eliminación. Es responsabilidad suya desechar este y 
+cualesquiera otros aparatos eléctricos y electrónicos a través de los puntos 
+de recogida que ponen a su disposición el gobierno y las autoridades 
+locales. Al desechar y reciclar correctamente estos aparatos estará 
+contribuyendo a evitar posibles consecuencias negativas para el medio 
+ambiente y la salud de las personas. Si desea obtener información más 
+detallada sobre la eliminación segura de su aparato usado, consulte a las 
+autoridades locales, al servicio de recogida y eliminación de residuos de su 
+zona o pregunte en la tienda donde adquirió el producto.
+Français
+La directive européenne 2012/19/UE exige que l’équipement sur lequel 
+est apposé ce symbole sur le produit et/ou son emballage ne soit pas jeté 
+avec les autres ordures ménagères. Ce symbole indique que le produit 
+doit être éliminé dans un circuit distinct de celui pour les déchets des 
+ménages. Il est de votre responsabilité de jeter ce matériel ainsi que tout 
+autre matériel électrique ou électronique par les moyens de collecte 
+indiqués par le gouvernement et les pouvoirs publics des collectivités 
+territoriales. L’élimination et le recyclage en bonne et due forme ont pour 
+but de lutter contre l’impact néfaste potentiel de ce type de produits 
+sur l’environnement et la santé publique. Pour plus d’informations sur le 
+mode d’élimination de votre ancien équipement, veuillez prendre contact 
+avec les pouvoirs publics locaux, le service de traitement des déchets, ou 
+l’endroit où vous avez acheté le produit.
+Italiano
+La direttiva europea 2012/19/UE richiede che le apparecchiature 
+contrassegnate con questo simbolo sul prodotto e/o sull’imballaggio non 
+siano smaltite insieme ai rifiuti urbani non differenziati. Il simbolo indica 
+che questo prodotto non deve essere smaltito insieme ai normali rifiuti 
+domestici. È responsabilità del proprietario smaltire sia questi prodotti sia 
+le altre apparecchiature elettriche ed elettroniche mediante le specifiche 
+strutture di raccolta indicate dal governo o dagli enti pubblici locali. Il 
+corretto smaltimento ed il riciclaggio aiuteranno a prevenire conseguenze 
+potenzialmente negative per l’ambiente e per la salute dell’essere umano. 
+Per ricevere informazioni più dettagliate circa lo smaltimento delle vecchie 
+apparecchiature in Vostro possesso, Vi invitiamo a contattare gli enti 
+pubblici di competenza, il servizio di smaltimento rifiuti o il negozio nel 
+quale avete acquistato il prodotto.Declaration of Conformity
+български [Bulgarian] С настоящото UBIQUITI NETWORKS декларира, че този тип 
+радиосъоръжение UAP-AC-LITE е в съответствие с Директива 2014/53/ЕС. Цялостният 
+текст на ЕС декларацията за съответствие може да се намери на следния интернет адрес: 
+www.ubnt.com/compliance
+Hrvatski [Croatian] UBIQUITI NETWORKS ovime izjavljuje da je radijska oprema tipa UAP-AC-
+LITE u skladu s Direktivom 2014/53/EU. Cjeloviti tekst EU izjave o sukladnosti dostupan je na 
+sljedećoj internetskoj adresi: www.ubnt.com/compliance
+Čeština [Czech] Tímto UBIQUITI NETWORKS prohlašuje, že typ rádiového zařízení UAP-AC-LITE 
+je v souladu se směrnicí 2014/53/EU. Úplné znění EU prohlášení o shodě je k dispozici na této 
+internetové adrese: www.ubnt.com/compliance
+Dansk [Danish] Hermed erklærer UBIQUITI NETWORKS, at radioudstyrstypen UAP-AC-LITE er i 
+overensstemmelse med direktiv 2014/53/EU. EU- overensstemmelseserklæringens fulde tekst kan 
+findes på følgende internetadresse: www.ubnt.com/compliance
+Nederlands [Dutch] Hierbij verklaar ik, UBIQUITI NETWORKS, dat het type radioapparatuur UAP-
+AC-LITE conform is met Richtlijn 2014/53/EU. De volledige tekst van de EU-conformiteitsverklaring 
+kan worden geraadpleegd op het volgende internetadres: www.ubnt.com/compliance
+English Hereby, UBIQUITI NETWORKS declares that the radio equipment type UAP-AC-LITE  is 
+in compliance with Directive 2014/53/EU. The full text of the EU declaration of conformity is 
+available at the following internet address: www.ubnt.com/compliance
+Eesti keel [Estonian] Käesolevaga deklareerib UBIQUITI NETWORKS, et käesolev raadioseadme 
+tüüp UAP-AC-LITE vastab direktiivi 2014/53/EL nõuetele. ELi vastavusdeklaratsiooni täielik tekst on 
+kättesaadav järgmisel internetiaadressil: www.ubnt.com/compliance
+Suomi [Finnish] UBIQUITI NETWORKS vakuuttaa, että radiolaitetyyppi UAP-AC-LITE on direktiivin 
+2014/53/EU mukainen. EU- vaatimustenmukaisuusvakuutuksen täysimittainen teksti on saatavilla 
+seuraavassa internetosoitteessa: www.ubnt.com/compliance
+Français [French] Le soussigné, UBIQUITI NETWORKS, déclare que l’équipement radioélectrique 
+du type UAP-AC-LITE est conforme à la directive 2014/53/UE. Le texte complet de la déclaration UE 
+de conformité est disponible à l’adresse internet suivante: www.ubnt.com/compliance
+Deutsch [German] Hiermit erklärt UBIQUITI NETWORKS, dass der Funkanlagentyp UAP-AC-LITE 
+der Richtlinie 2014/53/EU entspricht. Der vollständige Text der EU-Konformitätserklärung ist unter 
+der folgenden Internetadresse verfügbar: www.ubnt.com/compliance
+Ελληνικά [Greek] Με την παρούσα ο/η UBIQUITI NETWORKS, δηλώνει ότι ο ραδιοεξοπλισμός 
+UAP-AC-LITE πληροί την οδηγία 2014/53/ΕΕ. Το πλήρες κείμενο της δήλωσης συμμόρφωσης ΕΕ 
+διατίθεται στην ακόλουθη ιστοσελίδα στο διαδίκτυο: www.ubnt.com/compliance
+Magyar [Hungarian] UBIQUITI NETWORKS igazolja, hogy a UAP-AC-LITE típusú rádióberendezés 
+megfelel a 2014/53/EU irányelvnek. Az EU-megfelelőségi nyilatkozat teljes szövege elérhető a 
+következő internetes címen: www.ubnt.com/compliance
+Íslenska [Icelandic] Hér með lýsir UBIQUITI NETWORKS yfir því að UAP-AC-LITE er í samræmi 
+við grunnkröfur og aðrar kröfur, sem gerðar eru í tilskipun 2014/53/EU. Fullur texti ESB 
+samræmisyfirlýsing er að finna á eftirfarandi netfangi: www.ubnt.com/compliance
+Italiano [Italian] Il fabbricante, UBIQUITI NETWORKS, dichiara che il tipo di apparecchiatura 
+radio UAP-AC-LITE è conforme alla direttiva 2014/53/UE. Il testo completo della dichiarazione di 
+conformità UE è disponibile al seguente indirizzo Internet: www.ubnt.com/compliance
+Latviešu valoda [Latvian] Ar šo UBIQUITI NETWORKS deklarē, ka radioiekārta UAP-AC-LITE atbilst 
+Direktīvai 2014/53/ES. Pilns ES atbilstības deklarācijas teksts ir pieejams šādā interneta vietnē: 
+www.ubnt.com/complianceLietuvių kalba [Lithuanian] Aš, UBIQUITI NETWORKS, patvirtinu, kad radijo įrenginių tipas 
+UAP-AC-LITE atitinka Direktyvą 2014/53/ES. Visas ES atitikties deklaracijos tekstas prieinamas šiuo 
+interneto adresu: www.ubnt.com/compliance
+Malti [Maltese] B’dan, UBIQUITI NETWORKS, niddikjara li dan it-tip ta’ tagħmir tar-radju UAP-AC-
+LITE  huwa konformi mad-Direttiva 2014/53/UE. Id-dikjarazzjoni tal-konformità tista’ tiġi kkonsultata 
+minn www.ubnt.com/compliance
+Norsk [Norwegian] UBIQUITI NETWORKS erklærer herved at utstyret UAP-AC-LITE  er i 
+samsvar med de grunnleggende krav og øvrige relevante krav i direktiv 2014/53/EU. Den 
+fulle teksten til EU-samsvarserklæringen er tilgjengelig på følgende internettadresse: 
+www.ubnt.com/compliance
+Polski [Polish] UBIQUITI NETWORKS niniejszym oświadcza, że typ urządzenia radiowego UAP-
+AC-LITE jest zgodny z dyrektywą 2014/53/UE. Pełny tekst deklaracji zgodności UE jest dostępny 
+pod następującym adresem internetowym: www.ubnt.com/compliance
+Português [Portuguese] O(a) abaixo assinado(a) UBIQUITI NETWORKS declara que o presente 
+tipo de equipamento de rádio UAP-AC-LITE está em conformidade com a Diretiva 2014/53/UE. O 
+texto integral da declaração de conformidade está disponível no seguinte endereço de Internet: 
+www.ubnt.com/compliance
+Română [Romanian] Prin prezenta, UBIQUITI NETWORKS declară că tipul de echipamente radio 
+UAP-AC-LITE este în conformitate cu Directiva 2014/53/UE.  Textul integral al declarației UE de 
+conformitate este disponibil la următoarea adresă internet: www.ubnt.com/compliance
+Slovenčina [Slovak] UBIQUITI NETWORKS  týmto vyhlasuje, že rádiové zariadenie typu UAP-AC-
+LITE je v súlade so smernicou 2014/53/EÚ. Úplné EÚ vyhlásenie o zhode je k dispozícii na tejto 
+internetovej adrese: www.ubnt.com/compliance
+Slovenščina [Slovenian] UBIQUITI NETWORKS potrjuje, da je tip radijske opreme UAP-AC-LITE  
+skladen z Direktivo 2014/53/EU. Celotno besedilo izjave EU o skladnosti je na voljo na naslednjem 
+spletnem naslovu: www.ubnt.com/compliance
+Español [Spanish] Por la presente, UBIQUITI NETWORKS declara que el tipo de equipo 
+radioeléctrico UAP-AC-LITE es conforme con la Directiva 2014/53/UE. El texto completo 
+de la declaración UE de conformidad está disponible en la dirección Internet siguiente: 
+www.ubnt.com/compliance
+Svenska [Swedish] Härmed försäkrar UBIQUITI NETWORKS att denna typ av 
+radioutrustning UAP-AC-LITE överensstämmer med direktiv 2014/53/EU. Den 
+fullständiga texten till EU-försäkran om överensstämmelse finns på följande webbadress: 
+www.ubnt.com/compliance©2016-2018 Ubiquiti Networks, Inc. All rights reserved. Ubiquiti, Ubiquiti 
+Networks, the Ubiquiti U logo, the Ubiquiti beam logo, TOUGHCable, and 
+UniFi are trademarks or registered trademarks of Ubiquiti Networks, Inc. 
+in the United States and in other countries. Apple and the Apple logo are 
+trademarks of Apple Inc., registered in the U.S. and other countries. App 
+Store is a service mark of Apple Inc. Android, Google, Google Play, the 
+Google Play logo and other marks are trademarks of Google Inc. All other 
+trademarks are the property of their respective owners. AJAI103018
+  
+Online Resources
+Support help.ubnt.com
+Community community .ubnt.com
+Downloads downloads .ubnt.com
+Ubiquiti Networks, Inc.
+685 Third Avenue, 27th Floor
+New York, NY 10017
+USA
+  
+www.ubnt.com

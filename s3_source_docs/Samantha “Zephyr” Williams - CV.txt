@@ -1,0 +1,71 @@
+Name:
+Samantha “Zephyr” Williams
+Email:
+samanthazephyrwilliams@gmail.com
+Username:
+sam4nexpl01t3r
+Website:
+https://sam4nexpl01t3r.blogspot.com/2023/02/about-me.html
+Summary:
+Samantha "Sam" Williams is a highly skilled computer science graduate with a passion for
+virtual reality and gaming. With experience in game development and a track record of
+success in OASIS egg hunting, Sam is a valuable addition to any team looking to innovate in
+the virtual space.
+Education:
+●
+Bachelor of Science in Computer Science
+University of California, Los Angeles (UCLA)
+Graduated: May 2022
+Skills:
+●
+Proficient in multiple programming languages including C++, Java, and Python
+●
+Experience in game development using Unity and Unreal Engine
+●
+Strong analytical and problem-solving skills
+●
+Excellent communication and collaboration abilities
+●
+Familiarity with virtual reality hardware and software
+●
+Proven track record of success in OASIS egg hunting
+Work Experience:
+●
+Game Developer
+Gregarious Games
+June 2022 - Present
+Collaborated with team members to develop new games and features
+for the OASIS platform
+Worked on game mechanics, graphics, and user interface design
+Contributed to the development of multiple successful games,
+including the popular OASIS title "Galactic Adventures"
+●
+OASIS Egg Hunter
+Independent Contractor
+January 2021 - May 2022
+Participated in multiple OASIS egg hunts, including the search for
+James Halliday's Easter egg
+Collaborated with other egg hunters to solve puzzles and uncover
+clues
+Successfully completed multiple egg hunts, earning substantial
+rewards and recognition within the OASIS community●
+Intern
+Virtual World Enterprises
+June 2021 - August 2021
+Assisted in the development of virtual reality experiences for commercial and
+educational purposes
+Worked on designing and programming interactive environments
+Gained experience in using virtual reality hardware and software
+Projects:
+Developed a virtual reality escape room game as a personal project,
+showcasing proficiency in game development and problem-solving skills
+Contributed to an open-source virtual reality project, demonstrating
+collaboration and communication abilities
+Certifications:
+●
+Unity Certified Developer
+●
+Unreal Engine Certified Developer
+References:
+●
+Available upon request.
