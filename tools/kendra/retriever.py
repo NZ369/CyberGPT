@@ -37,7 +37,11 @@ class KendraRetriever(BaseRetriever):
         # map to document
         documents = list(
             map(
+                # Parsing api request into documents
                 lambda doc: Document(page_content = doc[1], metadata={'source': doc[0]}),
+
+                # filtering out all data that is not not from HOG
+                # Code exists only for demo
                 filter(lambda doc: bucket['hog'] in doc[0] or bucket["data"] in doc[0], # 🐷
                        response
                 )
