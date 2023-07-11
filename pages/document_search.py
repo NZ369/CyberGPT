@@ -1,17 +1,8 @@
 import streamlit as st
 from streamlit_extras.add_vertical_space import add_vertical_space
-
-from llms.azure_llms import create_llm
-
-#from tools.kendra.tool import get_relevant_documents, kendra_retrieval_tool;
-
-from langchain.chains import RetrievalQA
-from langchain.document_loaders import TextLoader
-from langchain.embeddings.openai import OpenAIEmbeddings
-from langchain.llms import OpenAI
-from langchain.text_splitter import CharacterTextSplitter
-from langchain.vectorstores import Chroma
 from agents.qa_agent import qa_chain
+from streamlit_extras.app_logo import add_logo
+from PIL import Image
 
 # Define function to get user input
 def get_text():
@@ -47,12 +38,13 @@ def new_chat():
     
 # Set Streamlit page configuration
 st.set_page_config(
-    page_title="CyberGPT: 📃Document Search📃",
-    page_icon="🤖🔎📃",
+    page_title="CyberGPT",
+    page_icon="📃",
     layout='wide'
 )
-st.title("CyberGPT: 📃Document Search📃")
-st.subheader("AI for Cybersecurity")
+image = Image.open('assets/logo.png')
+st.image(image, width=500)
+st.subheader("Cybersecurity Copilot: 📃 Document Search")
 
 # Initialize session states
 if "generated" not in st.session_state:
@@ -66,7 +58,8 @@ if "stored_session" not in st.session_state:
 
 # Set up sidebar with various options
 with st.sidebar:
-    st.title('CyberGPT: 📃Document Search📃')
+    add_logo('assets/logo2.png', height=50)
+    st.title('CyberGPT')
     st.markdown('''
     ## About
     CyberGPT to query and find documents, technical documents and papers stored in our index database.
