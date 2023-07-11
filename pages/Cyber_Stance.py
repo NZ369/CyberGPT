@@ -3,7 +3,9 @@ from streamlit_extras.add_vertical_space import add_vertical_space
 
 from agents.qa_agent import qa_chain
 from streamlit_extras.app_logo import add_logo
+
 from PIL import Image
+
 
 # Define function to get user input
 def get_text():
