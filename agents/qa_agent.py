@@ -10,7 +10,7 @@ from tools.kendra.retriever import KendraRetriever
 
 llm = create_llm()
 
-llm.request_timeout = 10
+llm.request_timeout = 15
 
 memory = ConversationBufferWindowMemory(memory_key="chat_history", k=3, return_messages=True)
 qa_chain = ConversationalRetrievalChain.from_llm(llm, retriever=KendraRetriever(), memory=memory, verbose=True)
