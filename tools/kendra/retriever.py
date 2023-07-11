@@ -30,7 +30,7 @@ class KendraRetriever(BaseRetriever):
         )
         
         #parse json
-        print(response.text[:200])
+        print(response.text[:1000])
 
         response = json.loads(response.text)
 
@@ -42,9 +42,9 @@ class KendraRetriever(BaseRetriever):
                        response
                 )
             )
-        )[:5]
-
-        print(documents[:200]);
+        )[:20]
+        print(len(documents))
+        print(str(documents)[:1000]);
 
         return documents
     async def _aget_relevant_documents(
