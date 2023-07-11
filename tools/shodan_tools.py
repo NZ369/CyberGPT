@@ -49,7 +49,7 @@ def shodan_ip_search(ip):
 
 class shodan_ip_lookup_tool(BaseTool):
     name = "Shodan IP Lookup"
-    description = "use Shodan for getting info about an IP address, provides a snapshot of the exposed services and potential vulnerabilities associated with a particular IP address. Input is an ip address."
+    description = "use Shodan to get info on any exposed services and potential vulnerabilities associated with a IP. Input is an ip address."
     def _run(
         self, query: str, run_manager: Optional[CallbackManagerForToolRun] = None
     ) -> str:
@@ -71,6 +71,6 @@ class shodan_ip_lookup_tool(BaseTool):
 ip_lookup = shodan_ip_lookup_tool()
 shodan_ip_lookup_tool = Tool(
     name = "Shodan IP Lookup",
-    description = "use Shodan for getting info about an IP address, provides a snapshot of the exposed services and potential vulnerabilities associated with a particular IP address. Input is an ip address.",
+    description = "use Shodan to get info on any exposed services and potential vulnerabilities associated with a IP. Input is an ip address.",
     func= ip_lookup.run
     )
