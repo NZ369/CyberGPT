@@ -131,6 +131,7 @@ with st.expander("Conversation", expanded=True):
     for i in range(len(st.session_state['generated'])-1, -1, -1):
         st.info(st.session_state["past"][i],icon="🙂")
         #st.success(st.session_state["generated"][i], icon="🤖")
+        #st.write(f"""```\n{st.session_state["generated"][i]}\n```""")
         st.write(st.session_state["generated"][i])
 
         ai_content=st.session_state["generated"][i]
@@ -138,9 +139,9 @@ with st.expander("Conversation", expanded=True):
 
         # PJ - remove first and last lines (which are triple quotes)
         ai_content=ai_content[ai_content.find('```\n')+3:ai_content.rfind('\n')]
-        print("-"*80)
-        print(ai_content)
-        print("-"*80)
+        # print("-"*80)
+        # print(ai_content)
+        # print("-"*80)
 
         if is_valid_python(ai_content):
             ai_content = "\n".join([f"    {line}" for line in ai_content.split("\n")])
@@ -167,7 +168,7 @@ with st.expander("Conversation", expanded=True):
             print("Should have plotted.")
 
         else:
-            print("Empty or invalid python - didn't plot anything.")
+            print("\nDEBUG: Empty or invalid python - didn't plot anything.")
 
         download_str.append("User: "+st.session_state["past"][i])
         download_str.append("AI: "+st.session_state["generated"][i])

@@ -9,6 +9,8 @@ from chains.pandas_multi_prompt import PandasMultiPromptChain
 
 llm = create_llm(temp=0)
 
+llm.request_timeout = 30
+
 
 
 print("Creating CSV Agent.")

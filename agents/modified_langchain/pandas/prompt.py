@@ -59,8 +59,9 @@ Question: {input}
 
 
 CODE_TABLE_SUFFIX_WITH_DF = """
-Output only the python code, not a description.  Also, display
-the results from printing your final pandas dataframe object.
+Store the final result into a table 'df_output', print it without the index, and return what was
+printed statement exactly with "```" at the start and at the end of the text.  Don't display
+two copies of "```" at the start of the block.
 This is the result of printing rows from the inital dataframe:
 {df_content}
 
@@ -95,8 +96,7 @@ Question: {input}
 
 
 CODE_TABLE_SUFFIX_NO_DF = """
-Output only the python code, not a description.  Also, display
-the results from printing your final pandas dataframe object.
+At the end, print the final table you created.
 Question: {input}
 {agent_scratchpad}
 """
