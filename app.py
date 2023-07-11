@@ -3,6 +3,7 @@ from streamlit_extras.add_vertical_space import add_vertical_space
 from tools.qa_tools import create_qa_retriever
 from agents.base_agent import base_agent
 from tools.borealis_tools import borealis_processing
+from tools.opencti_tools import openCTI_search_processing
 from streamlit_extras.app_logo import add_logo
 from PIL import Image
 
@@ -72,6 +73,39 @@ with st.sidebar:
     add_vertical_space(2)
     st.write('Made with ❤️ by GeekWeek Team 5.2')
 
+def process_user_input(user_input):
+    if (("ip scan" and "borealis") in user_input):
+        borealis_response = borealis_processing(user_input)
+        if borealis_response == None:
+            # Calls the base agent
+            output = base_agent.run(input=user_input)
+            st.session_state.generated.append(output)
+        else:
+            try:
+                openCTI_response = openCTI_search_processing(user_input)
+                response = borealis_response + "\n OpenCTI Scan Report \n" + openCTI_response
+            except:
+                print("OpenCTI not accessible outside CSE networks.")
+                response = borealis_response
+            st.session_state.generated.append(response)
+    elif ("associated ips" in user_input or "ips associated" in user_input):
+        try:
+            openCTI_response = openCTI_search_processing(user_input)
+            if openCTI_response == None:
+                # Calls the base agent
+                output = base_agent.run(input=user_input)
+                st.session_state.generated.append(output)
+            else:
+                response = openCTI_response
+                st.session_state.generated.append(response)
+        except:
+            output = base_agent.run(input=user_input)
+            st.session_state.generated.append(output)
+            print("OpenCTI not accessible outside CSE networks.")
+    else:
+        output = base_agent.run(input=user_input)
+        st.session_state.generated.append(output)
+
 # Get the user input
 user_input = get_text()
 
@@ -80,13 +114,7 @@ if user_input:
     st.session_state.past.append(user_input)
     # Try block handles any error with not parsing LLM output
     try:
-        response = borealis_processing(user_input)
-        if response == None:
-            # Calls the base agent
-            output = base_agent.run(input=user_input)
-            st.session_state.generated.append(output)
-        else:
-            st.session_state.generated.append(response)
+        process_user_input(user_input)
     except Exception as e:
         st.session_state.generated.append(str(e))
 
