@@ -2,6 +2,9 @@ import streamlit as st
 from streamlit_extras.add_vertical_space import add_vertical_space
 from tools.qa_tools import create_qa_retriever
 from agents.base_agent import base_agent
+from tools.borealis_tools import borealis_processing
+from streamlit_extras.app_logo import add_logo
+from PIL import Image
 
 # Define function to get user input
 def get_text():
@@ -35,8 +38,9 @@ st.set_page_config(
     page_icon="🤖",
     layout='wide'
 )
-st.title("🤖 CyberGPT")
-st.subheader("AI for Cybersecurity")
+image = Image.open('assets/logo.png')
+st.image(image, width=500)
+st.subheader("Cybersecurity Copilot")
 
 # Initialize session states
 if "generated" not in st.session_state:
@@ -50,6 +54,7 @@ if "stored_session" not in st.session_state:
 
 # Set up sidebar with various options
 with st.sidebar:
+    add_logo("assets/logo2.png", height=50)
     st.title('CyberGPT')
     st.markdown('''
     ## About
@@ -75,26 +80,29 @@ if user_input:
     st.session_state.past.append(user_input)
     # Try block handles any error with not parsing LLM output
     try:
-        # Calls the base agent
-        output = base_agent.run(input=user_input)
-        st.session_state.generated.append(output)
+        response = borealis_processing(user_input)
+        if response == None:
+            # Calls the base agent
+            output = base_agent.run(input=user_input)
+            st.session_state.generated.append(output)
+        else:
+            st.session_state.generated.append(response)
     except Exception as e:
         st.session_state.generated.append(str(e))
 
 # Allow to download as well
 download_str = []
 # Display the conversation history using an expander, and allow the user to download it
-with st.expander("Conversation", expanded=True):
-    for i in range(len(st.session_state['generated'])-1, -1, -1):
-        st.info(st.session_state["past"][i],icon="🙂")
-        st.success(st.session_state["generated"][i], icon="🤖")
-        download_str.append("User: "+st.session_state["past"][i])
-        download_str.append("AI: "+st.session_state["generated"][i])
+for i in range(len(st.session_state['generated'])-1, -1, -1):
+    st.info(st.session_state["past"][i],icon="🙂")
+    st.success(st.session_state["generated"][i], icon="🤖")
+    download_str.append("User: "+st.session_state["past"][i])
+    download_str.append("AI: "+st.session_state["generated"][i])
     
-    # Can throw error - requires fix
-    download_str = '\n\n'.join(download_str)
-    if download_str:
-        st.download_button('Download',download_str)
+# Can throw error - requires fix
+download_str = '\n\n'.join(download_str)
+if download_str:
+    st.download_button('Download',download_str)
         
 hide_menu_style = """
         <style>

@@ -9,6 +9,10 @@ wikipedia
 duckduckgo-search
 cohere
 tiktoken
+shodan
+
+#kedra stuff
+requests
 
 #kedra stuff
 requests
