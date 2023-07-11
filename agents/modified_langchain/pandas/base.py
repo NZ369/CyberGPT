@@ -4,14 +4,12 @@ from typing import Any, Dict, List, Optional, Tuple
 from langchain.agents.agent import AgentExecutor, BaseSingleActionAgent
 
 from langchain.agents.mrkl.base import ZeroShotAgent
-from langchain.agents.openai_functions_agent.base import OpenAIFunctionsAgent
 from langchain.agents.types import AgentType
 from langchain.tools.base import BaseTool
 from langchain.base_language import BaseLanguageModel
 from langchain.callbacks.base import BaseCallbackManager
 from langchain.chains.llm import LLMChain
 from langchain.schema import BasePromptTemplate
-from langchain.schema.messages import SystemMessage
 from langchain.tools.python.tool import PythonAstREPLTool
 from agents.modified_langchain.pandas.prompt import *
 from chains.pandas_multi_prompt import PandasMultiPromptChain
