@@ -1,5 +1,6 @@
 from langchain.tools import DuckDuckGoSearchRun
 from langchain.tools import HumanInputRun
+#from langchain.tools import ShellTool
 from langchain.utilities import WikipediaAPIWrapper
 from langchain.utilities import PythonREPL
 from langchain.agents.tools import Tool
@@ -31,3 +32,10 @@ human_tool = Tool(
     func= human.run,
     description="Useful when you're not sure what to do next and you need to clarify something with a human expert."
 )
+
+#shell = ShellTool()
+#shell_tool = Tool(
+#    name='Shell Commands',
+#    func= shell.run,
+#    description="Useful when you want to interact with the local filesystem to run shell commands."
+#)
