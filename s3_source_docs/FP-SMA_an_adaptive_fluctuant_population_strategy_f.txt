@@ -1,0 +1,931 @@
+ORIGINAL ARTICLE
+FP-SMA: an adaptive, fluctuant population strategy for slime mould
+algorithm
+Jassim Alfadhli1•Ali Jaragh1•Mohammad Gh. Alfailakawi1•Imtiaz Ahmad1
+Received: 16 August 2021 / Accepted: 30 January 2022
+/C211The Author(s), under exclusive licence to Springer-Verlag London Ltd., part of Springer Nature 2022
+Abstract
+In this paper, an adaptive Fluctuant Population size Slime Mould Algorithm (FP-SMA) is proposed. Unlike the originalSMA where population size is ﬁxed in every epoch, FP-SMA will adaptively change population size in order to effectively
+balance exploitation and exploration characteristics of SMA’s different phases. Experimental results on 13 standard and 30
+IEEE CEC2014 benchmark functions have shown that FP-SMA can achieve signiﬁcant reduction in run time whilemaintaining good solution quality when compared to the original SMA. Typical saving in terms of function evaluations for
+all benchmarks was between 20 and 30% on average with a maximum being as high as 60% in some cases. Therefore, with
+its higher computation efﬁciency, FP-SMA is much more favorable choice as compared to SMA in time stringentapplications.
+Keywords Fluctuant population (FP) /C1Slime mould algorithm (SMA) /C1Metaheuristic algorithm (MA) /C1Population
+diversity /C1Population adaptation
+1 Introduction
+Population-based meta-heuristics have been the dominant
+methods to ﬁnd optimal or good solutions to many complex
+optimization problems in reasonable time [ 22]. The popu-
+larity of meta-heuristics has increased considerably due to
+their key role in learning and knowledge discovery within
+the emerging ﬁelds of big data and machine learning.These meta-heuristics derive their inspiration from mim-
+icking intelligent processes arising in nature, and are
+commonly classiﬁed into two categories: evolutionary(EA) and swarm intelligence algorithms [ 13]. The most
+popular EA algorithms are genetic (GA) [ 17] and differ-
+ential evolution (DE) [ 47]. As for the swarm intelligence
+category, this includes particle swarm (PSO) [ 47], cuckoo
+search (CS) [ 58], whale optimization [ 32], monarch but-
+terﬂy optimization (MBO) [ 53], moth search (MSA) [ 52],
+and Harris hawks optimization (HHO) [ 19] among others.Although the development of meta-heuristics has wit-
+nessed tremendous progress in recent years, there is still
+much room for improvement as no single algorithm cansolve all problems efﬁciently as per the ‘‘No Free Lunch’’
+theorem [ 55]. Recently, a new population-based meta-
+heuristic called slime mould algorithm (SMA) has been
+proposed by Li et al. [ 27]. SMA is inspired by a unique
+slime mould, i.e., physarum polycephalum, which is anorganism that can live freely as a single cell but can also
+form communicating aggregates when foraging food
+sources. In order to ﬁnd food, slime mould starts the searchprocess with a randomly distributed population. Once
+having identiﬁed food concentration during the random
+search, the slime mould will approach and wrap the foodand secrete enzyme to digest it, while retaining certain
+exploration capability to search for better food sources. In
+order to imitate slime mould’s exploration and exploitationbehaviors, authors in [ 27] proposed a bio-oscillating policy
+that separates the population into two groups according to
+their ﬁtness. The ﬁrst group, called positive group, is thegroup of individuals from the population with the best
+ﬁtness whereas the other one, labeled as negative group, is
+the one consisting of those with the lowest ﬁtness. Thebetter ﬁtness group will be exploited to ﬁnd the best
+&Mohammad Gh. Alfailakawi
+alfailakawi.m@ku.edu.kw
+1Computer Engineering Department, College of Engineeringand Petroleum, Kuwait University, Safat 13060, Kuwait
+123Neural Computing and Applications
+https://doi.org/10.1007/s00521-022-07034-6 (0123456789().,-volV) (0123456789(). ,- volV)
+Content courtesy of Springer Nature, terms of use apply. Rights reserved.possible solution whereas the lower ﬁtness one will be used
+to explore outward regions. In addition, a vibration
+parameter based on the sigmoid function is introduced to
+simulate food-grabbing behavior of slime mould.
+Despite SMA being a recent algorithm, it has demon-
+strated excellent performance compared to state-of-the-art
+meta-heuristics in many ﬁelds. However, one of the keydisadvantages of SMA lies in its relatively long run time
+and high computational cost. Being applied successfully in
+multiple ﬁelds, in this work we investigate the enhance-
+ment of the algorithm by augmenting it with a population
+size adaptation method that can reduce its prohibitivelylong run time. Population size plays a very important role
+in both run-time efﬁciency and optimization effectiveness
+of meta-heuristics and thus by balancing exploration andexploitation characteristics of the SMA algorithm, its per-
+formance and computational cost can be improved [ 27]. In
+order to balance exploration and exploitation phases of analgorithm, population size adaptation schemes can auto-
+matically adjust population size according to population
+diversity during the search process thus enhancing perfor-mance and reducing run time. Population size adaptation
+has been widely studied in genetic algorithms [ 5,25],
+differential evolution [ 40,50], artiﬁcial bee colony opti-
+mization [ 9], swarm intelligence [ 7,12,41] and recently to
+sine cosine algorithm [ 3]. However, to the best of the
+author’s knowledge, no such work has been reported forSMA.
+To ﬁll this research gap, we propose herein an adaptive
+ﬂuctuant population size SMA algorithm called FP-SMA.Unlike the original SMA where population size is ﬁxed in
+every epoch, FP-SMA will adaptively change population
+size to enhance run time characteristics of both exploitationand exploration phases of the algorithm. Population adap-
+tation concept used in the proposed algorithm is a cluster-
+based approach borrowed from K-mean clustering algo-rithm. The threshold used to start the adaptation process is
+a scaled sigmoid function that decreases smoothly initially,
+then dramatically midway, and again smoothly near theend of algorithm execution. Once population diversity is
+out of the threshold, population size increases or decreases
+using a sine wave pattern (for randomization). Therefore,key contributions of this study can be summarized as the
+following:
+– Propose an adaptive ﬂuctuant population size slime
+mould algorithm (FP-SMA) that automatically adjust
+population size during the search process according topopulation diversity to effectively balance exploitation
+and exploration characteristics of conventional SMA
+algorithm.– FP-SMA performance is analyzed over several bench-
+mark functions, including 13 standard and 30 IEEECEC2014 benchmark functions.
+– Simulation results revealed that FP-SMA can achieve
+signiﬁcant reductions in the number of function eval-uations as compared to conventional SMA without
+impacting solution quality.
+The remainder of the paper is organized as follows. Sec-
+tion 2highlights SMA algorithm, literature review, and
+population diversity adaptation techniques. Section 3pro-
+vides details of the proposed algorithm. Experimental
+results are reported and analyzed in Sect. 4. Finally, con-
+clusions and some future directions are presented in
+Sect. 5.
+2 Background
+In this section, we introduce SMA algorithm’s mathemat-
+ical models followed by the short literature review of SMA,
+and ﬁnally brief discussion of population diversity-basedadaptation techniques [ 56] that motivated this work.
+2.1 SMA introduction
+In [27], a new stochastic optimizer called slime mould
+algorithm (SMA) was proposed. The algorithm models themorphological changes of slime mould, namely Physarum
+polycephalum, when foraging. Slime mould is eukaryote
+where its organic matter utilizes a process called Plas-modium as its main process to seek food. Once a food
+source is identiﬁed, the slime mould surrounds it and
+secrete enzymes to digest it. The foraging process of theSlime mould is divided into three phases, where the ﬁrst
+process is ﬁnding food source, followed by wrapping, and
+then food grabble. The mathematical model for the variousprocesses of the slime mould is described as follows [ 27]:
+X!ðtþ1Þ¼rand/C1ðUB/C0LBÞþLB rand \z
+Xb/C131!ðtÞþvb!/C1W!/C1XA/C131!ðtÞ/C0XB/C131!ðtÞ/C16/C17
+r\p
+vc!/C1X!ðtÞ r/C21p8
+>><
+>>:
+ð1Þ
+with rand andrare random values 2[0,1], UB/LBrepre-
+senting the upper/lower bound of the search space, and
+value zis used to balance exploration and exploitation
+characteristics. As for X!and Xb/C131!, they represent the
+locations of current and best ﬁtness individuals at iteration
+t, respectively, where best ﬁtness here represents the indi-
+vidual with the highest odor concentration. XA/C131!and XB/C131!areNeural Computing and Applications
+123
+Content courtesy of Springer Nature, terms of use apply. Rights reserved.two randomly selected individuals from the slime mould
+population. Parameter vc!is a linearity decreasing value
+from 1 to 0 whereas vb!is a variable 2[a,-a] where ais
+calculated using [ 27]:
+a¼arctanh ð/C0ðt
+TÞþ1Þ ð2Þ
+where T represents maximum number of iterations.
+Parameter W!is a vector representing the slime mould
+weight and is described mathematically as [ 27]:
+W!ðSmellIndex ðiÞÞ1þr/C1logFb/C0SðiÞ
+Fb/C0Fwþ1/C18/C19
+;condition
+1/C0r/C1logFb/C0SðiÞ
+Fb/C0Fwþ1/C18/C19
+;otherwise8
+>>><
+>>>:
+ð3Þ
+SmellIndex ¼sortðSÞð 4Þ
+where F
+b/Fwrepresents best/worst ﬁtness value at the
+current iteration and rbeing a random number 2[0,1].
+Moreover, S(i) represents the individual’s ﬁtness, condition
+indicates the rank of S(i) in the ﬁrst half of the population
+(i.e., the positive group). In Eq. ( 4), the term SmellIndex
+denotes the result of sorting Sin an ascending order.
+Parameter pin Eq. ( 1) is calculated using [ 27]:
+p¼tanhðjSðiÞ/C0DFÞjÞ ð 5Þ
+where DF is the overall global best ﬁtness and S(i) repre-
+sents the individual’s ﬁtness.
+A ﬂowchart for SMA algorithm is depicted in Fig. 1
+where it starts with initializing parameters
+D,P,T,LB,UB,z, and a random population Xi!ðt¼0Þ.I n
+each iteration, SMA will calculate individuals’ ﬁtness and
+ﬁnd the best one in the current iteration. The next popu-
+lation is then updated according to Eq. ( 1) and conditional
+weighting parameter W. This iterative process is repeated
+until maximum number of iteration is reached where the
+best ﬁtness and the solution are stored as the ﬁnal result.
+In Eq. ( 1), the exploration capability is guaranteed with
+a probability of at least zwhile exploitation is performed
+with a probability of at least 1 /C0p. When rand is less than
+z, SMA will take a random walk within the boundaries
+deﬁned by LB and UB. However, when another random
+number ris larger than p, SMA will perform exploitation
+and search in the neighbourhood of the current location.
+When ris less than p, SMA will wrap around the current
+best position, Xb/C131!ðtÞ, with wrapping direction and radius
+depending on the current position’s ﬁtness. Such behaviors
+can be much more evident when plugging the deﬁnition ofWin Eq. ( 3) back to Eq. ( 1) when r\presulting in [ 27]:X!ðtþ1Þ¼X
+b/C131!ðtÞþvb!
+/C1XA/C131!ðtÞ/C0XB/C131!ðtÞ/C6r/C1logFb/C0SðiÞ
+Fb/C0Fwþ1/C18/C19 /C18/C19
+ð6Þ
+The SMA algorithm will wrap the food in two directions
+depending on the ﬁtness of the current position’s with the
+radius depending on the amplitude of vb!and population
+variance. In Eq. ( 1),vb!andvc!are two tuning parameters
+oscillating towards 0 with iterations imitating food-grab-
+bing behaviour and hence exploitation around the best foodsource.
+2.2 Literature review
+SMA and its variants were successfully applied to manyproblems such as image segmentation [ 34,61], breast
+cancer detection [ 29,36], COVID-19 early detection
+[4,46], parameters estimation of photovoltaic cells
+[14,31,33], medical data classiﬁcation [ 54], feature
+selection [ 23], proportional-integral-derivative (PID) motor
+speed controllers [ 11,43], power systems [ 38,45], bearings
+defect identiﬁcation [ 51], travelling salesman problem
+[30], and machine learning models parameter tuning for
+support vector machine [ 8] and artiﬁcial neural network
+[63] to name a few.
+Start End
+Initialize D, P, T ,
+LB, U B, z
+Randomly ini-
+tialize−−−−−− →Xi(t=0 )
+Calculate F(−→Xi)while
+t≤T
+Update best ﬁt-
+ness DF and
+its position−→Xb
+Calculate W
+by Eq. (2)t← t+1
+For each−→Xi:
+Update p,−→Vb,−Vc;
+Update−−−−−− →Xi(t+1 )b y
+Eq. (1)Yes
+No
+Fig. 1 SMA ﬂowchartNeural Computing and Applications
+123
+Content courtesy of Springer Nature, terms of use apply. Rights reserved.However, SMA may suffer from some shortcomings
+such as slow convergence rate because of being trapped in
+local minima and having an unbalanced exploitation and
+exploration phases. Therefore, to further improve SMAperformance, researchers have reported a variety of speciﬁc
+stochastic operators such as Levy distribution [ 4,10],
+cosine function for controlling parameters [ 16,18], quan-
+tum rotation gate [ 59], opposition-based learning
+[35,45,54], and chaotic operator [ 31]. In addition, SMA
+has been hybridized with other metaheuristics such as
+Harris hawk optimization [ 60], whale optimization [ 1],
+particle swarm [ 15], differential evolution [ 20,29], and
+arithmetic optimization algorithm [ 62] to efﬁciently solve
+speciﬁc optimization problems. Furthermore, variants of
+SMA to solve discrete binary [ 2,26] and multi-objective
+optimization problems [ 21,24,44] have been proposed.
+However, none of these works have considered population
+size adaptation to enhance the performance of SMA.
+2.3 Population adaptation
+Population size adaption has become prevalent in many
+population-based metaheuristic algorithms (MAs). The
+choice of a proper population size can substantiallyenhance the efﬁciency of many meta-heuristic algorithms
+including SMA. In a typical linear population size reduc-
+tion algorithm, there is a large number of individuals in thepopulation initially to enhance exploration capability.
+During population evolution, population size is decreased
+linearly until reaching smallest population size at the endof algorithm execution in order to allow for proper
+exploitation. However, for more complex objective func-
+tions, it is also possible to increase population size towardsthe end of the search process to avoid premature conver-
+gence or stagnation. A common criteria to control popu-
+lation size direction is to use population diversity as ametric (i.e., population distribution). For example, in
+[6,39,42,56,57], the authors proposed to use population
+diversity to start and stop population adaption process indifferential evolution. The following is a review of popu-
+lation diversity adaptation technique based on the work
+presented in [ 56]. Parameters and variables associated with
+this technique are listed in Table 1.<Table ID="
+Population diversity is measured by mean of the
+Euclidean distances in each feature described as follows:
+DI
+t¼ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+1
+PtXPt
+i¼1XD
+j¼1ðxi;j/C0/C22xjÞ2vuut ð7Þ
+where value /C22x
+jis calculated as:/C22xj¼1
+PtXPt
+i¼1xi;j ð8Þ
+During the evolution process, a relative measure of popu-
+lation diversity is calculated using:
+RD t¼DIt
+DIt¼0ð9Þ
+where the lower and upper bound for RD t2½0:9/C2
+cRFES ;t;1:1/C2cRFES ;t/C138where cis a scaling factor and RFES ;t
+is the relative number of depleted function evaluations
+given by:
+RFES ;t¼current number of function evaluations
+number of function evaluation allowedð10Þ
+When RD tdrops below the lower bound (i.e.,
+0:9/C2cRFES ;t),Ptwill increase by 1 whereas when it
+exceeds the upper bound (i.e., 1 :1/C2cRFES ;t) it will
+decreased by 1. Such a technique results in a linearly
+ﬂuctuant population that utilizes population diversity based
+on Euclidean distance.
+In [48], the authors proposed using a pseudo random-
+ization technique to change population size where
+00 .2 0.40 .60 .8100.20.40.60.81
+area to start de-
+creasing population
+size by Δ tarea to start increas-
+ing population size
+by Δ t
+area to reset population
+t
+TREPυlowυhigh/epsilon1
+Fig. 2 REP;tlow;thighand /C15againstt
+TTable 1 Population diversity parameters and variables [ 56]
+xi;j Value of j-th feature in i-th individual at t-th iteration
+/C22xj Center of j-th feature at t-th iteration
+Pt Population size at t-th iteration
+DIt Population diversity at t-th iteration
+RDt Relative population diversity at t-th iteration
+RFES ;t Relative ratio of the depleted function evaluations
+c Scaling factorNeural Computing and Applications
+123
+Content courtesy of Springer Nature, terms of use apply. Rights reserved.population size Ptin the t-th function evaluation is calcu-
+lated using:
+Pt¼PminþMt/C2D/C0Pmin
+2/C2cost/C2p
+Mt/C2D2/C18/C19
+þ1/C18/C19 /C20/C21
+ð11Þ
+where ‘‘ ½/C138’’ is a rounding operator, Pminis minimum pop-
+ulation size, D is the dimension of the function to be
+optimized, and Mtis a linear reduction parameter deﬁned
+as:
+Mt¼ðM/C01Þ/C2ð T/C0tÞ
+Tþ1 ð12Þ
+with Tbeing maximum function evaluations and tbeing the
+index of current function evaluation. Parameter Mis a
+function of initial population size and problem dimension
+which is calculated using:
+M¼Pinit
+Dð13Þ
+In this paper, we propose to use population diversity to start
+and stop population adaptation similar to Pola ´kova´et al.
+[39] but cluster the population by applying K-mean algo-
+rithm. As pointed out in [ 39], in the SMA process when
+best food sources are gradually grabbed, it is expected thatpopulations are gradually contracted around food sources
+with the best ﬁtness, and hence DI
+twill gradually decreases
+toward 0. By tracking the value of DIt, SMA convergence
+rate can be envisioned and population size can be adapted
+accordingly. If DItis high, then the population is too
+diverse and population size can be reduced. If DItis low,
+the population is contracted and if that happens during the
+initial phase of SMA, more population should be added toenhance exploration capability. However, if SMA is
+approaching the last few iterations, population size should
+be reduced to save computation time. If DI
+tis decreasing
+dramatically to a small value during the evolution process,
+resetting the population can also be considered to avoid
+being stuck at local optimal. The proposed algorithmherein is based on this concept and its details are described
+in the next section.
+3 FP-SMA and analysis
+In this section, the proposed algorithm, called FP-SMA, isdescribed in details. Suppose at the t-th epoch, there are
+x
+i;i¼1; :::;Ptindividuals in the population. By applying the
+K-mean algorithm, each individual xiis associated to a group
+center xciresulting in population diversity at iteration t-th as:DIt¼1
+PtXPt
+i¼1ðxi/C0xciÞ2ð14Þ
+The initial population diversity, DIinit¼DIt¼0, is stored as
+a reference to deﬁne relative diversity ( RD t) during the
+evolution process as deﬁned in Eq. ( 9) with relative
+expected population diversity REPcalculated as:
+REP¼1/C0c1þarctanh ðbðx/C00:5ÞÞ
+2where x¼t
+T2½0;1/C138
+ð15Þ
+where tis current iteration index, Tis the total number of
+iterations, and bis a scaling factor with a default value of 10.
+c2½0;1/C138is the fraction of relative population diversity
+expected to be consumed during the SMA process and hence
+REPcan be treated as the expected relative population
+diversity at the current iteration. Initially, it is expected that
+REP/C251 but then towards the end of the evolution process
+becomes REP/C251/C0c. It is also expected that REPdecreases
+smoothly when REP/C251, then abruptly halfway through the
+process, and then smoothly again until REP/C251/C0c.
+Value REPis used as a reference to trigger population
+adaptation. During the optimization, if current relative
+population diversity RD tis less than tlow¼0:9/C2REPor
+larger than thigh¼1:1/C2REP, then population adaptation
+will start. Optionally, if REP\/C15andPt\Pminthen the pop-
+ulation is reset to its initial size. The term Pminis the required
+minimum population size to guarantee minimum amount of
+exploration. Typically values for Pmin¼Pinit
+2and /C15¼0:1.
+Once population adaptation is started, Dtpoints are
+added/removed to/from the current population with Dt
+deﬁned as
+Dt¼maxMt/C2D
+2/C2sin2t/C2p
+K/C16/C17
+þ1/C16/C17/C20/C21
+;1/C18/C19
+ð16Þ
+The deﬁnition of Dtis similar to that of Ptin Eq. ( 11)
+except for parameter K, which is a problem-speciﬁc
+parameter to control ﬂuctuation period. In the original
+deﬁnition of Pt, the period of ﬂuctuation is 2 /C2Mt/C2D2
+which may ﬂuctuate too slowly for practical engineering
+design problems. Note that if K¼1 , then Dtis ﬁxed to be
+one and thus is rolling back to the approach proposed in
+[48]. Therefore, population size change can be summarized
+as:
+Ptþ1¼Pinit if RD t\/C15andPt\Pmin
+Pt/C0Dtif RD t\/C15andPt[Pmin
+PtþDtif /C15\RD t\tlowandPt\Pinit
+Pt/C0Dtif RD t[thighandPt[Pmin
+Pt otherwise8
+>>>>>><
+>>>>>>:
+ð17ÞNeural Computing and Applications
+123
+Content courtesy of Springer Nature, terms of use apply. Rights reserved.As depicted in Fig. 2, the solid green line shows the
+expected REPas a function of t. When the actual RD tis
+moving outside the region covered by dashed blue lines,
+population adaptation will change by Dt. Furthermore, if
+RD tis always dropping below /C15when population size is
+already at its minimum level (i.e., Pt¼Pmin), population
+size can be reset.
+The FP-SMA algorithm is illustrated in Algorithm 1.
+The input to the algorithm is the ﬁtness function to evaluateF. In lines 2–6, parameters and the population are initial-
+ized and population diversity are calculated using Eq. ( 14)
+before starting the iterations. In lines 8–13, the ﬁtness ofeach individual in the population will be evaluated and
+then sorted accordingly before being divided into two
+groups, positive and negative group. Each individual thenwill have its position updated according to Eq. ( 1). Line 14
+through 15 are the newly proposed steps where DI
+t,RD t
+andREPare updated accordingly. Finally in line 16, pop-
+ulation size for next epoch is updated as deﬁned by the
+ﬂuctuation strategy described in Eq. ( 17).
+The time complexity of FP-SMA depends on number of
+iterations (T), population size (P), function dimension (D)and is bounded by the computation performed within the
+while loop (lines 7–17). Therefore, based on simple anal-
+ysis of the main compute intensive processes executedduring the while loop, one can compute FP-SMA’s time
+complexity. For each iteration, computational complexity
+depends on ﬁtness evaluation and sorting (line-8) whichcan be performed in OðPlogPÞ, weight update (line-9),
+and position update (lines 11-13) where both can be per-
+formed in OðP/C3DÞ. K-means clustering (lines 14–16) for
+population size adaptation can be performed in OðP/C3KÞ
+for a ﬁxed number of iterations and attributes, where K isthe number of clusters. Therefore, the ﬁnal time complexity
+of FP-SMA is: OðT/C3ð ðPlogPÞþð P/C3DÞþð P/C3KÞÞ
+which is comparable with the original SMA. However, in
+our case, the average value for P is less due to the adaptivenature at each epoch as compared to SMA which has ﬁxed
+value for all iterations.
+4 Experiment results
+In this section, we apply FP-SMA on Ackley benchmark
+function to validate the relationship between relative pop-
+ulation diversity and population size in addition to con-
+vergence characteristics. Moreover, the performance of FP-
+SMA as compared to original SMA using a set of 13benchmarks and CEC2014 functions [ 27,28,37] will be
+discussed. The performance metrics used to compare
+solution quality will be ﬁtness values, whereas for run time,the number of functional evaluations will be used. All
+results have been obtained using Python 3.7 running on
+Intel
+/C210CoreTM2 Quad CPU Q8400 @ 2.66 GHz with a
+8 GB RAM and a 64-bit OS.
+4.1 Convergence analysis
+In convergence analysis experiment, FP-SMA was applied
+toAckley benchmark function which is widely used as a
+multivariate test function for optimization problems [ 49]. It
+is described mathematically by Eq. ( 18) and plotted in
+Fig. 3.Neural Computing and Applications
+123
+Content courtesy of Springer Nature, terms of use apply. Rights reserved.FðXÞ¼/C0 aexp/C0bﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+1
+DXD
+i¼1X2
+ivuut0
+@1
+A
+/C0exp1
+DXD
+i¼1cosðXiÞ !
+þaþexpð1Þð18Þ
+TheAckley function is characterized by its nearly ﬂat outer
+region and a global optimal at the center ( X/C3¼0) with
+many local optimal close by. Recommended variable val-ues for Ackley benchmark are a¼20;b¼0:2;c¼2p.A s
+for the parameters used in FP-SMA implementation they
+are:D=100, P
+init=200, T=1000, z=0.03, K=100, /C15=0.1, c=1.
+These parameters are used throughout the remainder of this
+discussion.
+Figure 4a shows population size Ptand relative popu-
+lation diversity RD tduring FP-SMA execution whereas
+Fig. 4b shows best ﬁtness evolution. In the ﬁrst tens of
+epochs, RD tis decreasing dramatically from 1 to below 0.5
+with best ﬁtness improved to around 100indicating con-
+vergence toward a local optimal. However, to continue the
+exploration process, population size is still ﬁxed at itsinitial value of P
+init¼200. During the ﬁrst 500 epochs,population size is slightly changing due to RD tﬂuctuation
+to maintain the balance between exploration and
+exploitation. After 500 iterations, REPdrops considerably
+as are seen in Fig. 4a leading to a sharp decrease in pop-
+ulation size down to Pmin¼100. Keeping this minimum
+population size is sufﬁcient to reach the global minimum at
+around the 540th iteration.
+Figure 5shows population distribution only in the ﬁrst
+two dimensions during the optimization process. At the
+beginning when t¼0, the population is randomly dis-
+tributed between the lower and upper bound; however, as
+execution continues, the population is gradually concen-trated around multiple centers. As a result, population size
+can be decreased gradually to save computation without
+effecting exploitation characteristics. At t¼750, the
+algorithm converges toward two centers indicating that
+minimum population size is sufﬁcient for exploitation.
+4.2 Benchmarks comparisons
+FP-SMA was also evaluated using 13 standard benchmark
+function (see Table 5in appendix) commonly used to
+evaluate optimization algorithms and additional 30
+benchmarks from CEC2014 [ 28]. The results are the
+average values for 30 independent runs of the algorithms
+on each benchmark. Tables 2and3show the best ﬁtness
+on both standard and CEC2014 benchmarks, respectively.In the tables, column f
+min xspeciﬁes the ﬁtness value fol-
+lowed by standard deviation ( r). Column !indicates the
+ﬁtness of SMA whether it is better, equal or worst than FP-SMA using symbols ‘‘ -’’, ‘‘¼’’ or ‘‘ þ,’’ respectively.
+Moreover, a comparison between SMA and FP-SMA per-
+formance in terms of function evaluations are representedin column dð%Þwhich represents the percentile decrease in
+the number of function evaluations calculated using:−505−50510F(X)
+Fig. 3 Ackley function with a¼20;b¼0:2;c¼2p;D¼2
+0 100 200 300 400 500 600 700 800 9001 ,000100120140160180200
+iteration tPtPt
+RD t
+00.511.5RD t
+Population size vs. diversity0 100 200 300 400 500 600 700 800 9001 ,00010−1610−1410−1210−1010−810−610−410−2100101
+iteration tF(Xb)F(Xb)
+Best ﬁtness evolution (a) (b)
+Fig. 4 FP-SMA Performance on Ackley benchmarkNeural Computing and Applications
+123
+Content courtesy of Springer Nature, terms of use apply. Rights reserved.(a) (b)
+(c) (d)
+Fig. 5 Population distribution
+Table 2 Results for standard
+benchmarkFn. fmin SMA FP-SMA ! d(%)
+fmin r fmin r
+f0 0.0 0.000000 (0.000000) 0.000000 (0.000000) = #28.09
+f1 0.0 0.000000 (0.000000) 0.000000 (0.000000) = #28.96
+f2 0.0 0.000000 (0.000000) 0.000000 (0.000000) = #25.99
+f3 0.0 0.000000 (0.000000) 0.000000 (0.000000) = #29.90
+f4 0.0 0.000000 (0.000000) 0.000000 (0.000000) = #30.77
+f5 0.0 0.001636 (0.000320) 0.009851 (0.006180) - #29.05
+f6 0.0 0.000071 (0.000054) 0.000123 (0.000091) - #28.67
+f7 /C0419/C3n /C026553 :12 (1029.06) /C023658 :74 (1394.06) - #22.35
+f8 0.0 0.000000 (0.000000) 0.000000 (0.000000) = #29.19
+f9 0.0 0.000000 (0.000000) 0.000000 (0.000000) = #28.54
+f10 0.0 0.000000 (0.000000) 0.000000 (0.000000) = #30.29
+f11 0.0 /C00:270612 (0.0081) /C00:261275 (0.0082) - #33.33
+f12 0.0 0.365256 (0.346215) 0.727546 (0.361334) - #26.21
+Average ( d) 28.56%Neural Computing and Applications
+123
+Content courtesy of Springer Nature, terms of use apply. Rights reserved.Tables 2and3compares that attained best ﬁtness for SMA
+and FP-SMA algorithms on standard and CEC2014
+benchmarks, respectively. The tables show that FP-SMA
+was able to reduce the number of function evaluation forstandard benchmark on average by approximately 28% and
+CEC2014 ones by 24%. In 8 out of 13 standard bench-
+marks and more than half of CEC2014 benchmarks, FP-SMA was able to achieve equivalent or better ﬁtness than
+the original SMA. FP-SMA was able to achieve the same
+ﬁtness in 5 CEC2014 benchmarks while having worst ﬁt-
+ness in 10 benchmarks with an average ﬁtness loss of about9% which is much less than the 26% ﬁtness improvement
+found in the other benchmarks. As a matter of fact, if f
+8and
+f19are excluded from ﬁtness results, then overall loss in
+Table 3 Results for CEC2014
+benchmarksFn. SMA FP-SMA ! d(%)
+fmin r fmin r
+1 101779108.2 (23005654.76) 72392092.94 (15456620.21) þ# 15.02
+2 54068.22766 (32827.35102) 33888.22483 (10398.97004) þ# 23.73
+3 15771.81289 (1937.027374) 12969.05761 (3055.875967) þ# 26.22
+4 765.8050354 (38.33549) 743.462391 (28.69199231) þ# 24.93
+5 521.3523084 (0.025410748) 521.3536462 (0.02636567) - #28.74
+6 689.7700054 (4.495182553) 702.4456421 (8.778099803) - #11.34
+7 701.2252342 (0.019830644) 701.3457094 (0.085363385) - #6.02
+8 1591.485312 (81.15187989) 1850.510688 (119.2295506) - #23.46
+9 900.1435128 (0.042795493) 900.1265529 (0.038929931) ? #20.75
+10 15683.92405 (1005.930421) 16346.75008 (943.8132163) - #26.48
+11 17194.68012 (1069.398267) 16451.43246 (840.0234629) ? #24.11
+12 1201.439864 (0.198065608) 1201.509781 (0.318894703) - #14.43
+13 1300.862725 (0.040562908) 1300.87667 (0.06223831) - #21.81
+14 1400.783038 (0.284020258) 1400.761513 (0.272489399) ? #25
+15 1577.920191 (10.31230952) 1580.754892 (10.6801292) - #17.37
+16 1644.25172 (0.278229155) 1643.969788 (0.532866376) ? #28.38
+17 9512024.724 (2280058.593) 7026197.112 (2059096.534) ? #25.34
+18 430718.1946 (91400.58899) 304522.4289 (40505.38438) ? #22.8
+19 2188.738236 (258.0159205) 3676.819488 (2689.284593) - #25.58
+20 1.89872E ?14 (1.9095E þ11) 1.9012E ?14 (5.48002E ?11) - #32.78
+21 7740706.982 (1910878.222) 4949377.984 (1919460.462) ? #23.36
+22 9340.247418 (1287.694449) 7587.324668 (691.5903953) ? #26.18
+23 2567.439243 (3.558234589) 2563.896174 (4.562597725) ? #12.27
+24 2600.5 (0) 2600.5 (0) = #31.33
+25 2700 (0) 2700 (0) = #12.89
+26 2800 (0) 2800 (0) = #64.3
+27 2900.003182 (3.45898E -12) 2900.003182 (3.45898E -12) = #29.81
+28 3000.003182 (3.45898E -12) 3000.003182 (3.45898E -12) = #27.49
+29 109322190.1 (89077824.93) 1632038.666 (1338227.485) ? #23.93
+30 38576257.21 (22524047.63) 4019890.212 (1611603.934) ? #25.52
+Average ( d) 24.05%d¼#function evaluations(SMA) /C0#function evaluations(FP - SMA)
+#function evulations (SMA)Neural Computing and Applications
+123
+Content courtesy of Springer Nature, terms of use apply. Rights reserved.ﬁtness will become negligible (i.e., 0.8%) for the bench-
+marks with worst ﬁtness.
+To get a sense of run time enhancement as compared to
+simply the reduction in number of function evaluations,
+Table 4shows run-time characteristics for both SMA and
+FP-SMA algorithms on standard benchmarks where the
+values are given in seconds. Column dgives percentile
+reduction in run-time when using FP-SMA as compared to
+SMA. It is apparent that on average, FP-SMA provide a
+reduction of 25% in run-time. The same characteristics areobserved for CEC2014 benchmarks (i.e., 22% reduction in
+run-time) but not shown to keep the discussion concise.
+Surprisingly, FP-SMA was able to save 64.3% of
+computational cost associated with f26as compared to
+original SMA. By plotting population size ( Pt) and relative
+diversity ( RD t) in Fig. 6a and best ﬁtness in Fig. 6b, it can
+be observed that the relative diversity has dramaticallydecreased after about 100 epochs, indicating algorithm
+stagnation. Population size ﬂuctuation can no longer help
+the algorithm escape its stagnation and after 250 epochs,
+the relative diversity RD
+tdrops to zero and population size
+is set to its minimum value. This results in a considerablereduction in the number of function evaluations as depicted
+in Table 3. Since the algorithm was able to identify this
+condition, it is possible to utilize such an approach totrigger early algorithm termination resulting in further
+reduction in function evaluation. Note that in these tables,
+we only presented the saving in the number of functionevaluation without changing the terminating condition (i.e.,
+maximum number of iteration). A possible further
+enhancement to the proposed algorithm is to consider thiscase and terminate the algorithm to boost reduction in
+overall execution time.
+In summary, the following observations can be made
+from the experimental results:
+– Population size adaptation based on population diver-
+sity played an important role in both run-time efﬁciency
+and optimization effectiveness of FP-SMA as compared
+with SMA.Table 4 Standard benchmarks run-time comparison
+Benchmark TSMAðsÞ TFP/C0SMAðsÞ dð%Þ
+0 1.61 1.16 27.9
+1 2.54 2.09 17.72 108.73 74.69 31.33 2.65 2.17 18.14 49.83 36.68 26.45 1.83 1.3 28.96 21.05 14.46 31.37 73.52 57.92 21.28 60.19 48.73 19.09 5.73 3.83 33.110 59.86 45.08 24.7
+11 122.84 100.51 18.2
+12 108.49 80.69 25.6Average #24.9
+(a) (b)
+Fig. 6 FP-SMA Performance on f26benchmarkNeural Computing and Applications
+123
+Content courtesy of Springer Nature, terms of use apply. Rights reserved.– Experimental results on 13 standard and 30 CEC2014
+benchmark functions in Tables 2and3have revealed
+that FP-SMA can achieve 20–30% savings in function
+evaluations on average while maintaining good solution
+quality when compared to SMA.
+– As depicted in Table 4, the FP-SMA showed a 25%
+reduction in run-time on standard benchmarks on
+average when compared to SMA and thus demonstrat-ing its balanced exploration and exploitation
+capabilities.
+5 Conclusion
+This paper proposed an acceleration strategy for SMAalgorithm named FP-SMA that adaptively change popula-
+tion size during algorithm execution. A cluster-basedpopulation diversity from K-mean is used as an indicator to
+change population size to balance exploration and
+exploitation phases of the algorithm. Thresholds for pop-ulation diversity that trigger population size change are
+dynamically ﬁne-tuned to appropriate levels duringdifferent stages of the algorithm. Once population diversity
+exceeds the threshold, population size is modiﬁed using
+sine wave function pattern. Simulation results on 13 stan-
+dard and 30 IEEE CEC2014 benchmark functions haverevealed that FP-SMA algorithm can achieve approxi-
+mately 20% reduction in computation cost while main-
+taining good solution quality. The performance gain can beattributed to the ﬂexibility offered by FP-SMA to switch
+between exploration and exploitation phases and the
+adaptable population size. The proposed algorithm can be
+found on Github using the link https://github.com/
+e6la3banoh/FP-SMA. As future work, we would like tostudy the parallelization of FP-SMA and its extension for
+multiple-objective SMA [ 21,24,44].
+Appendix A: Standard benchmarks
+See Appendix Table 5.
+Table 5 Deﬁnitions of standard benchmarks
+Function Range
+f1ðxÞ¼Pn
+i¼1x2
+i½/C0100 ;100/C138
+f2ðxÞ¼Pn
+i¼1jxijþQn
+i¼1jxij ½/C010;10/C138
+f3ðxÞ¼Pn
+i¼1ðPi
+j¼1xjÞ2 ½/C0100 ;100/C138
+f4ðxÞ¼max i:1/C20i/C20njxij ½/C0100 ;100/C138
+f5ðxÞ¼Pn/C01
+i¼1½100ðxiþ1/C0x2
+iÞ2þðxi/C01Þ2/C138 ½/C030;30/C138
+f6ðxÞ¼Pn
+i¼1½xiþ0:5/C1382 ½/C0100 ;100/C138
+f7ðxÞ¼Pn
+i¼1ix4
+iþUrandom½0;1/C138 ½/C0128 ;128/C138
+f8ðxÞ¼Pn
+i¼1/C0xisinﬃﬃﬃﬃﬃﬃ
+jxijp½/C0500 ;500/C138
+f9ðxÞ¼Pn
+i¼1½x2
+i/C010 cos ð2pxiÞþ10/C138 ½/C05:12;5:12/C138
+f10ðxÞ¼/C0 20expð/C00:2ð1
+nPn
+i¼1x2
+iÞ0:5Þ/C0expð1
+nPn
+i¼1cosð2pxiÞÞ þ 20þe ½/C032;32/C138
+f11ðxÞ¼1
+4000Pn
+i¼1x2
+i/C0Qn
+i¼1cosðxiﬃ
+ipÞþ1 ½/C0600 ;600/C138
+f12ðxÞ¼p
+n½10 sinðpy1ÞþPn/C01
+i¼1ðyi/C01Þ2½1þ10 sin2ðpyiþ1Þ/C138 þ ð yn/C01Þ2/C138þPn
+i¼1uðxi;10;100 ;4Þ ½/C050;50/C138
+where
+yi¼1þxiþ1
+4
+and
+uðxi;a;k;mÞ¼kðxi/C0aÞmxi[a
+0 /C0a\xi\a
+kð/C0xi/C0aÞmxi\a8
+<
+:
+f13ðxÞ¼0:1½sin2ð3pxiÞþPn/C01
+i¼1ðxi/C01Þ2½1þsin2ð3pxiþ1Þ/C138 þ ð xn/C01Þ2½1þsin2ð2pxnÞ/C138/C138Pn
+i¼1uðxi;5;100 ;4Þ ½/C050;50/C138Neural Computing and Applications
+123
+Content courtesy of Springer Nature, terms of use apply. Rights reserved.Declarations
+Conflict of interest The authors declare that they have no conflict of
+interest.
+References
+1. Abdel-Basset M, Chang V, Mohamed R (2020) Hsma\_woa: a
+hybrid novel slime mould algorithm with whale optimizationalgorithm for tackling the image segmentation problem of chest
+x-ray images. Appl Soft Comput 95:106642. https://doi.org/10.
+1016/j.asoc.2020.106642
+2. Abdel-Basset M, Mohamed R, Chakrabortty RK, Ryan MJ,
+Mirjalili S (2021) An efﬁcient binary slime mould algorithm
+integrated with a novel attacking-feeding strategy for feature
+selection. Comput Ind Eng 153:107078
+3. Al-Faisal HR, Ahmad I, Salman AA, Alfailakawi MG (2021)
+Adaptation of population size in sine cosine algorithm. IEEE
+Access 9:25258–25277. https://doi.org/10.1109/ACCESS.2021.
+3056520
+4. Anter AM, Oliva D, Thakare A, Zhang Z (2021) Afcm-lsma: new
+intelligent model based on le ´vy slime mould algorithm and
+adaptive fuzzy c-means for identiﬁcation of covid-19 infectionfrom chest x-ray images. Adv Eng Inform 49:101317
+5. Arabas J, Michalewicz Z, Mulawka J (1994) Gavaps-a genetic
+algorithm with varying population size. In: Proceedings of the 1st
+IEEE conference on evolutionary computation. IEEE worldcongress on computational intelligence. IEEE, pp 73–78
+6. Brest J, Greiner S, Bos ˇkovicˇB, Mernik M, Z ˇumer V (2006) Self-
+adapting control parameters in differential evolution: a compar-
+ative study on numerical benchmark problems. IEEE Trans EvolComput 10:646–657
+7. Chen D, Zhao C (2009) Particle swarm optimization with adap-
+tive population size and its application. Appl Soft Comput
+9(1):39–48
+8. Chen Z, Liu W (2020) An efﬁcient parameter adaptive support
+vector regression using k-means clustering and chaotic slime
+mould algorithm. IEEE Access 8:156851–156862
+9. Cui L, Li G, Zhu Z, Lin Q, Wen Z, Lu N, Wong KC, Chen J
+(2017) A novel artiﬁcial bee colony algorithm with an adaptive
+population size for numerical function optimization. Inf Sci
+414:53–67
+10. Cui Z, Hou X, Zhou H, Lian W, Wu J (2020) Modiﬁed slime
+mould algorithm via levy ﬂight. In: 2020 13th international
+congress on image and signal processing, biomedical engineering
+and informatics (CISP-BMEI). IEEE, pp 1109–1113 (2020)
+11. I˙zci D ES (2021) Comparative performance analysis of slime
+mould algorithm for efﬁcient design of proportional–integral–
+derivative controller. Electrica 21:151–159
+12. Dhal KG, Das A, Sahoo S, Das R, Das S (2019) Measuring the
+curse of population size over swarm intelligence based algo-
+rithms. Evol Syst 12:1–48
+13. Dokeroglu T, Sevinc E, Kucukyilmaz T, Cosar A (2019) A sur-
+vey on new generation metaheuristic algorithms. Comput Ind Eng137:106040
+14. El-Fergany AA (2021) Parameters identiﬁcation of pv model
+using improved slime mould optimizer and lambert w-function.Energy Rep 7:875–887
+15. Gao Z, Zhao J, Li S (2020) The hybridized slime mould and
+particle swarm optimization algorithms. In: 2020 IEEE 3rdinternational conference on automation, electronics and electricalengineering (AUTEEE). IEEE, pp 304–308 (2020)16. Gao ZM, Zhao J, Li SR (2020) The improved slime mould
+algorithm with cosine controlling parameters. J Phys: Confer Ser
+1631:012083. https://doi.org/10.1088/1742-6596/1631/1/012083
+17. Goldberg DE, Holland JH (1988) Genetic algorithms and
+machine learning. Mach Learn 3:95–99
+18. Hassan MH, Kamel S, Abualigah L, Eid A (2021) Development
+and application of slime mould algorithm for optimal economicemission dispatch. Expert Syst Appl 182:115205
+19. Heidari AA, Mirjalili S, Faris H, Aljarah I, Mafarja M, Chen H
+(2019) Harris hawks optimization: algorithm and applications.Fut Gener Comput Syst 97:849–872. https://doi.org/10.1016/j.
+future.2019.02.028
+20. Houssein EH, Mahdy MA, Blondin MJ, Shebl D, Mohamed WM
+(2021) Hybrid slime mould algorithm with adaptive guided dif-ferential evolution algorithm for combinatorial and global opti-mization problems. Expert Syst Appl 174:114689
+21. Houssein EH, Mahdy MA, Shebl D, Manzoor A, Sarkar R,
+Mohamed WM (2022) An efﬁcient slime mould algorithm forsolving multi-objective optimization problems. Expert Syst Appl
+187:115870
+22. Hussain K, Salleh MNM, Cheng S, Shi Y (2019) Metaheuristic
+research: a comprehensive survey. Artif Intell Rev52(4):2191–2233
+23. Ibrahim RA, Yousri D, Abd Elaziz M, Alshathri S, Attiya I
+(2021) Fractional calculus-based slime mould algorithm for fea-ture selection using rough set. IEEE Access 9:131625–131636
+24. Khunkitti S, Siritaratiwat A, Premrudeepreechacharn S (2021)
+Multi-objective optimal power ﬂow problems based on slime
+mould algorithm. Sustainability 13(13):7448
+25. Koumousis VK, Katsaras CP (2006) A saw-tooth genetic algo-
+rithm combining the effects of variable population size and
+reinitialization to enhance performance. IEEE Trans Evol Com-put 10(1):19–28
+26. Li L, Pan TS, Sun XX, Chu SC, Pan JS (2021) A novel binary
+slime mould algorithm with au strategy for cognitive radio
+spectrum allocation. Int J Comput Intell Syst 14(1):1–18
+27. Li S, Chen H, Wang M, Mirjalili AAHS (2020) Slime mould
+algorithm: a new method forstochastic optimization. Futur Gener
+Comput Syst. https://doi.org/10.1016/j.future.2020.03.055
+28. Liang JJ, Qu BY, Suganthan PN (2013) Problem deﬁnitions and
+evaluation criteria for the CEC 2014 special session and com-petition on single objective real-parameter numerical optimiza-
+tion, vol 635. Technical report Zhengzhou, China
+29. Liu L, Zhao D, Yu F, Heidari AA, Ru J, Chen H, Mafarja M,
+Turabieh H, Pan Z (2021) Performance optimization of differ-
+ential evolution with slime mould algorithm for multilevel breast
+cancer image segmentation. Comput Biol Med 138:104910
+30. Liu M, Li Y, Huo Q, Li A, Zhu M, Qu N, Chen L, Xia M (2020)
+A two-way parallel slime mold algorithm by ﬂow and distance
+for the travelling salesman problem. Appl Sci 10(18):6180
+31. Liu Y, Heidari AA, Ye X, Liang G, Chen H, He C (2021)
+Boosting slime mould algorithm for parameter identiﬁcation ofphotovoltaic models. Energy 234:121164
+32. Mirjalili S, Lewis A (2016) The whale optimization algorithm.
+Adv Eng Softw 95:51–67. https://www.sciencedirect.com/sci
+ence/article/pii/S0965997816300163
+33. Mostafa M, Rezk H, Aly M, Ahmed EM (2020) A new strategy
+based on slime mould algorithm to extract the optimal modelparameters of solar pv panel. Sustain Energy Technol Assess42:100849
+34. Naik MK, Panda R, Abraham A (2020) Normalized square dif-
+ference based multilevel thresholding technique for multispectralimages using leader slime mould algorithm. J King Saud Univer-Comput Inf Sci. https://doi.org/10.1016/j.jksuci.2020.10.030
+35. Naik MK, Panda R, Abraham A (2021) Adaptive opposition
+slime mould algorithm. Soft Comput 25(22):14297–14313Neural Computing and Applications
+123
+Content courtesy of Springer Nature, terms of use apply. Rights reserved.36. Naik MK, Panda R, Abraham A (2021) An entropy minimization
+based multilevel colour thresholding technique for analysis of
+breast thermograms using equilibrium slime mould algorithm.Appl Soft Comput 113:107955
+37. Nguyen T (2020) A framework of optimization functions using
+numpy (opfunu) for optimization problems (2020). https://doi.
+org/10.5281/zenodo.3620960
+38. Nguyen TT, Wang HJ, Dao TK, Pan JS, Liu JH, Weng S (2020)
+An improved slime mold algorithm and its application for opti-
+mal operation of cascade hydropower stations. IEEE Access8:226754–226772
+39. Pola ´kova´R, Tvrdı ´k J, Bujok P (2019) Differential evolution with
+adaptive mechanism of population size according to current
+population diversity. Swarm Evolut Comput 50:100519
+40. Piotrowski A (2017) Review of differential evolution population
+size. Swarm Evol Comput 32:1–24
+41. Piotrowski AP, Napiorkowski JJ, Piotrowska AE (2020) Popu-
+lation size in particle swarm optimization. Swarm Evol Comput58:100718
+42. Polakova R, Tvrdik J, Bujok P (2014) Controlled restart in dif-
+ferential evolution applied to CEC2014 benchmark functions. In:IEEE congress on evolutionary computation, pp 2230–2236
+43. Precup RE, David RC, Roman RC, Petriu EM, Szedlak-Stinean
+AI (2021) Slime mould algorithm-based tuning of cost-effective
+fuzzy controllers for servo systems. Int J Comput Intell Syst14(1):1042–1052
+44. Premkumar M, Jangir P, Sowmya R, Alhelou HH, Heidari AA,
+Chen H (2021) Mosma: multi-objective slime mould algorithm
+based on elitist non-dominated sorting. IEEE Access9:3229–3248
+45. Rizk-Allah RM, Hassanien AE, Song D (2021) Chaos-opposi-
+tion-enhanced slime mould algorithm for minimizing the cost ofenergy for the wind turbines on high-altitude sites. ISA Trans121:191–205
+46. Shi B, Ye H, Zheng J, Zhu Y, Heidari AA, Zheng L, Chen H,
+Wang L, Wu P (2021) Early recognition and discrimination ofcovid-19 severity using slime mould support vector machine formedical decision-making. IEEE Access 9:121996–122015
+47. Storn R, Price K (1997) Differential evolution - a simple and
+efﬁcient heuristic for global optimization over continuous spaces.J Glob Optim 11:341–359
+48. Sun G, Xu G, Gao R, Liu J (2019) A ﬂuctuant population strategy
+for differential evolution. Evolut Intell. https://doi.org/10.1007/
+s12065-019-00287-6
+49. Back T (1996) Evolutionary algorithms in theory and practice:
+evolution strategies, evolutionary programming, genetic algo-
+rithms. Oxford University Press on Demand
+50. Teo J (2006) Exploring dynamic self-adaptive populations in
+differential evolution. Softw Comput. 10:673–68651. Vashishtha G, Chauhan S, Singh M, Kumar R (2021) Bearing
+defect identiﬁcation by swarm decomposition considering per-
+mutation entropy measure and opposition-based slime mouldalgorithm. Measurement 178:109389
+52. Wang GG (2018) Moth search algorithm: a bio-inspired meta-
+heuristic algorithm for global optimization problems. MemetComput. https://doi.org/10.1007/s12293-016-0212-3
+53. Wang GG, Deb S, Cui Z (2015) Monarch butterﬂy optimization.
+Neural Comput Appl. https://doi.org/10.1007/s00521-015-1923-y
+54. Wazery YM, Saber E, Houssein EH, Ali AA, Amer E (2021) An
+efﬁcient slime mould algorithm combined with k-nearest neigh-bor for medical classiﬁcation tasks. IEEE Access
+9:113666–113682
+55. Wolpert DH, Macready WG (1997) No free lunch theorems for
+optimization. IEEE Trans Evol Comput 1(1):67–82
+56. Yang M, Cai Z, Li C, Guan J (2013) An improved adaptive
+differential evolution algorithm with population adaptation. In:
+GECCO ’13 proceedings of the 15th annual conference ongenetic and evolutionary computation, pp 145–152
+57. Yang M, Li C, Cai Z, Guan J (2014) Differential evolution with
+auto-enhanced population diversity. IEEE Trans Cybern45:302–315
+58. Yang XS, Deb S (2014) Cuckoo search: recent advances and
+applications. Neural Comput Appl 24(1):169–174
+59. Yu C, Heidari AA, Xue X, Zhang L, Chen H, Chen W (2021)
+Boosting quantum rotation gate embedded slime mould algo-rithm. Expert Syst Appl 181:115082
+60. Zhao J, Gao ZM (2020) The hybridized Harris hawk optimization
+and slime mould algorithm. In: Journal of physics: conferenceseries, vol 1682. IOP Publishing, pp 012029
+61. Zhao S, Wang P, Heidari AA, Chen H, Turabieh H, Mafarja M,
+Li C (2021) Multilevel threshold image segmentation with dif-fusion association slime mould algorithm and Renyi’s entropy forchronic obstructive pulmonary disease. Comput Biol Med
+134:104427
+62. Zheng R, Jia H, Abualigah L, Liu Q, Wang S (2021) Deep
+ensemble of slime mold algorithm and arithmetic optimizationalgorithm for global optimization. Processes 9(10):1774
+63. Zubaidi SL, Abdulkareem IH, Hashim KS, Al-Bugharbee H,
+Ridha HM, Gharghan SK, Al-Qaim FF, Muradov M, Kot P, Al-Khaddar R (2020) Hybridised artiﬁcial neural network modelwith slime mould algorithm: a novel methodology for prediction
+of urban stochastic water demand. Water 12(10):2692
+Publisher’s Note Springer Nature remains neutral with regard to
+jurisdictional claims in published maps and institutional afﬁliations.Neural Computing and Applications
+123
+Content courtesy of Springer Nature, terms of use apply. Rights reserved.1.
+2.
+3.
+4.
+5.
+6.Terms and Conditions 
+Springer Nature journal content, brought to you courtesy of Springer Nature Customer Service Center GmbH (“Springer Nature”). 
+Springer Nature supports a reasonable amount of sharing of  research papers by authors, subscribers and authorised users (“Users”), for small-
+scale personal, non-commercial use provided that all copyright, trade and service marks and other proprietary notices are maintained. By
+accessing, sharing, receiving or otherwise using the Springer Nature journal content you agree to these terms of use (“Terms”). For these
+purposes, Springer Nature considers academic use (by researchers and students) to be non-commercial. 
+These Terms are supplementary and will apply in addition to any applicable website terms and conditions, a relevant site licence or a personal
+subscription. These Terms will prevail over any conflict or ambiguity with regards to the relevant terms, a site licence or a personal subscription
+(to the extent of the conflict or ambiguity only). For Creative Commons-licensed articles, the terms of the Creative Commons license used will
+apply. 
+We collect and use personal data to provide access to the Springer Nature journal content. We may also use these personal data internally within
+ResearchGate and Springer Nature and as agreed share it, in an anonymised way, for purposes of tracking, analysis and reporting. We will not
+otherwise disclose your personal data outside the ResearchGate or the Springer Nature group of companies unless we have your permission as
+detailed in the Privacy Policy. 
+While Users may use the Springer Nature journal content for small scale, personal non-commercial use, it is important to note that Users may
+not:  
+use such content for the purpose of providing other users with access on a regular or large scale basis or as a means to circumvent access
+control;
+use such content where to do so would be considered a criminal or statutory offence in any jurisdiction, or gives rise to civil liability, or is
+otherwise unlawful;
+falsely or misleadingly imply or suggest endorsement, approval , sponsorship, or association unless explicitly agreed to by Springer Nature in
+writing;
+use bots or other automated methods to access the content or redirect messages
+override any security feature or exclusionary protocol; or
+share the content in order to create substitute for Springer Nature products or services or a systematic database of Springer Nature journal
+content. 
+In line with the restriction against commercial use, Springer Nature does not permit the creation of a product or service that creates revenue,
+royalties, rent or income from our content or its inclusion as part of a paid for service or for other commercial gain. Springer Nature journal
+content cannot be used for inter-library loans and librarians may not upload Springer Nature journal content on a large scale into their, or any
+other, institutional repository. 
+These terms of use are reviewed regularly and may be amended at any time. Springer Nature is not obligated to publish any information or
+content on this website and may remove it or features or functionality at our sole discretion, at any time with or without notice. Springer Nature
+may revoke this licence to you at any time and remove access to any copies of the Springer Nature journal content which have been saved. 
+To the fullest extent permitted by law, Springer Nature makes no warranties, representations or guarantees to Users, either express or implied
+with respect to the Springer nature journal content and all parties disclaim and waive any implied warranties or warranties imposed by law,
+including merchantability or fitness for any particular purpose. 
+Please note that these rights do not automatically extend to content, data or other material published by Springer Nature that may be licensed
+from third parties. 
+If you would like to use or distribute our Springer Nature journal content to a wider audience or on a regular basis or in any other manner not
+expressly permitted by these Terms, please contact Springer Nature at  
+onlineservice@springernature.com 

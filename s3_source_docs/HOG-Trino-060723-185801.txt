@@ -1,0 +1,40 @@
+Trino
+Trino CLI
+ 
+Trino CLI
+To run the trino CLI to connect to Trino server:
+Download the trino jar from : https://trino.io/docs/current/installation/cli.html 
+Rename (or symlink) it to trino for usability and make it executable
+Select the authentication method you wish to use
+Interactive: The CLI will present a clickable URL, which opens a browser window to complete the login
+Access Token: An access token must be obtained prior to calling the CLI and passed as a parameter
+Run the following:
+For pb:
+For u:
+For udev:
+Note: The <trino-username> should be replaced with the principal name from the user's access token. Trino uses the email field from 
+the token, which usually follows the format Edward.Drake@cyber.gc.ca
+1
+2
+3
+4
+5# Interactive
+trino --server <https://trino.hogwarts.pb.azure.chimera.cyber.gc.ca:44 3> --catalog hogwartspb --external-authenti
+# Access Token
+trino --server <https://trino.hogwarts.pb.azure.chimera.cyber.gc.ca:44 3> --catalog hogwartspb --access-token $(az
+1
+2
+3
+4
+5# Interactive
+trino --server <https://trino.hogwarts.u.azure.chimera.cyber.gc.ca:44 3> --catalog hogwartsu --external-authentica
+# Access Token
+trino --server <https://trino.hogwarts.u.azure.chimera.cyber.gc.ca:44 3> --catalog hogwartsu --access-token $(az a
+1
+2
+3
+4
+5# Interactive
+trino --server <https://trino.hogwarts.udev.azure.chimera.cyber.gc.ca:44 3> --catalog hogwartsudev --external-auth
+# Access Token
+trino --server <https://trino.hogwarts.udev.azure.chimera.cyber.gc.ca:44 3> --catalog hogwartsudev --access-token 

@@ -4,11 +4,27 @@ from tools.prebuilt_tools import python_tool, wikipedia_tool, duckduckgo_tool
 from tools.qa_tools import qa_retrieval_tool
 from tools.csv_tools import mitre_retrieve_tool
 
-tool_llm = create_llm()
-tools=[]
+from tools.borealis_tools import borealis_tool
+from tools.opencti_tools import openCTI_tool
+from tools.shodan_tools import shodan_ip_lookup_tool
+from tools.ipapi_tools import ipapi_tool
+from tools.kendra.tool import kendra_retrieval_tool;
 
-tools.append(python_tool)
-tools.append(wikipedia_tool)
-tools.append(duckduckgo_tool)
-tools.append(qa_retrieval_tool)
-tools.append(mitre_retrieve_tool)
+tool_llm = create_llm()
+
+base_tools=[
+    python_tool,
+    wikipedia_tool,
+    duckduckgo_tool,
+    qa_retrieval_tool,
+    borealis_tool,
+    openCTI_tool,
+    shodan_ip_lookup_tool,
+    ipapi_tool,
+    kendra_retrieval_tool,
+    mitre_retrieve_tool
+]
+
+qa_tools=[
+    kendra_retrieval_tool
+]

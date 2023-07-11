@@ -1,0 +1,92 @@
+Hogwarts Table Features
+The Hogwarts Table visualization is the default visualization in Superset. Users are encouraged to use the Hogwarts Table visualization in 
+place of Superset’s Table visualization, as numerous features have been added to the Hogwarts Table to fulfill user requirements. 
+This page describes the features that have been added to the Hogwarts Table (AgGrid), including those added to replicate features present 
+in Superset’s Table visualization, and those which are not (at the time of writing) available in Superset’s Table visualization. 
+Search Users can perform a text search on local results when viewing data 
+in an Explore or in a Dashboard. Note that this will search only 
+returned results; no queries will be reissued. 
+ Yes Yes
+Pagination Users can configure their chart to show results in pages. Yes Yes
+Column Reordering Users can reorder columns in the Hogwarts Table in a Dashboard or 
+an Explore. If columns are reordered in the Explore view and the 
+chart is save, that column ordering will persist when the chart is 
+added to a Dashboard. If columns are reordered when viewing the 
+chart in a Dashboard, that ordering will reset every time the 
+Dashboard is reloaded. 
+Having column order persist after it is set in the Explore view 
+provides a method to reorder a large number of columns without 
+having to deselect and re-select fields in the leftward control panel. 
+*As of 2.0, the Superset Table allows columns to be reordered when 
+viewing the chart in a Dashboard. Columns cannot be reordered in 
+the Explore except by deselecting and re-selecting fields in the 
+leftward field picker. Yes Partially*Feature Notes Available in 
+Hogwarts 
+TableAvailable in 
+Superset 
+Table
+ 
+Column Resizing Users can dynamically resize columns in the Hogwarts Table when 
+viewing it in a dashboard. 
+Auto-sizing options are also available in the column menu (shown 
+below). 
+ Yes  
+Grouping Search results can be grouped locally.
+ Yes  
+Sorting Users can sort by multiple fields by shift+clicking on an additional 
+column header. Yes Partially*
+ 
+*While this feature is also present in the Superset Table, the 
+Hogwarts Table displays numbers indicating the order in which fields 
+were sorted. 
+Copying User can copy cell values by right-clicking and selecting the “Copy” 
+option. Alternately, they may select “Copy with Headers” to include 
+the column header with the selected field in the copied value.
+For example, if the selection illustrated above were copied with 
+headers, the copied value would be: 
+Note that the underlying value in the database (not the value 
+rendered based on advanced types) is currently copied.  
+Yes 
+Selecting/Emitting Multiple FiltersUsers can select multiple cells in the Hogwarts Table with ctrl+click. 
+These selected values can then be emitted by right-clicking and 
+selecting “Emit Filters” from the context menu.
+ Yes  
+1
+2start_ip_intend_ip_int
+29335599362933559939
+Rendering based on Advanced 
+TypeIf a dataset field is tagged with a recognized Advanced Type (e.g., 
+IPv4), the values in that field will be rendered according to their 
+Advanced Type (e.g., IPv4 values will be rendered in human-
+readable dotted-decimal notation). 
+Currently supported Advanced Types are:
+IPv4
+IPv6
+JSON
+Additional Advanced Types will be added in the future. 
+ Yes  
+Row Numbers Row numbers can be added to the Hogwarts Table in the Explore 
+view. They will be pinned to the leftward side of the table, meaning 
+they will remain visible even when scrolling horizontally on wide 
+tables. Yes  
+Pinned Fields Columns in the Hogwarts Table can be pinned in an adhoc manner. 
+Note that these pinned columns will not persist between dashboard 
+refreshes and will not be saved if added via the Explore view. 
+In the image below, note that the “start_ip_int” field has been pinned 
+to the left. 
+ Yes  
+Adhoc Field Selection Fields may be hidden and un-hidden in an adhoc manner when 
+viewing the visualization in a Dashboard or an Explore. Note, 
+however, that hidden fields will not persist between dashboard 
+reloads and cannot be saved via the Explore view. 
+ Yes  
+JSON Viewer If a user clicks on a cell that contains valid JSON data, and if that 
+JSON data is in a field of type JSON, then a modal will open showing 
+an expandable JSON viewer (pictured below). Yes  
+Export to CSV/Excel Users can export data from the Hogwarts Table to CSV or to an 
+Excel file, as shown below. 
+*Note that there is another “Export to CSV” option built in to all 
+Superset charts (see the vertical … in the upper right), which we Yes Partially*
+ recommend not using. It retrieves more data than is displayed in the 
+local visualization and may return unexpected results. 
+ 

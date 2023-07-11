@@ -1,0 +1,284 @@
+Xcom
+What is it
+How do I use it
+Pushing
+Pulling
+Operators
+Python family
+Pushing
+Python callable return value
+Task instance object’ s xcom_push  method
+Pulling
+Jinja templating through kwargs
+Task instance object’ s xcom_pull method
+Bash family
+Pushing
+Bash return value
+Pulling
+Notebook family
+Pushing
+Last Notebook cell’ s output
+Pulling
+What is it
+Xcom (short for “cross-communication”) is a way for us to pass small bits of information between our Airflow tasks. It is a great way to 
+inform your downstream tasks about what has happened or what needs to happen.
+For more information about Xcom, please read the official documentation.
+How do I use it
+Xcoms have two distinct mechanisms: pushing and pulling. 
+The information that can be passed through these mechanisms should be small and serializable python data types and data structures 
+(string, integer, list, dict).
+Pushing
+By default, the xcom “push” of a task will be the return value of your operator (e.g. python_callable return value, last bash output, etc.) and 
+will be identified by the return_value key. 
+Ex: The code below will push an xcom with key return_value and value Hello, World!.Trying to pass large amounts of data will lead to errors and is highly discouraged. It is recommended to stick to small strings or 
+JSON data.
+1
+2
+3def my_code():
+  return 'Hello, World!' 
+A task can also output multiple xcoms if it has access to the task_instance object. 
+Ex: The code below will output an xcom with the key direct_push and value Bye!, as well as the default xcom where key 
+return_value and value Hello, World!
+ 
+Pulling
+Xcom pulling is a bit more involved as we need to use Airflow’s Jinja templating to fetch the xcom value and pass it to our operator.
+In the code below, we pull the return_value xcom from the xcom_push task and pass it as a parameter to our python code :
+The xcom_push task above will print Xcom: Hello, World!
+If we want to pull both xcom values, we can do the following:
+4
+5
+6
+7
+8xcom_push = PythonOperator (
+  task_id ='xcom_push' ,
+  python_callable =my_code,
+  ...
+)
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10# The task instance object is passed in directly 
+def my_code(ti):
+  ti.xcom_push (key='direct_push' , value='Bye!')
+  return 'Hello, World!'
+xcom_push = PythonOperator (
+  task_id ='xcom_push' ,
+  python_callable =my_code,
+  ...
+)
+The code above only works for Python based Operators. You will not have access to the task instance object from Bash & Notebook 
+operators.
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11def my_pull_code (xcom):
+  print(f'Xcom: {xcom}')
+xcom_push = PythonOperator (
+  task_id ='xcom_pull' ,
+  python_callable =my_pull_code ,
+  op_kwargs ={
+    "xcom": "{{ ti.xcom_pull(task_ids='xcom_push', key='return_value') }}"
+  },
+  ...
+)
+1
+2
+3
+4
+5
+6
+7
+8def my_pull_code(xcom_return, xcom_direct):
+  print(f'Xcom_return: {xcom_return}')
+  print(f'Xcom_direct: {xcom_direct}')
+xcom_push = PythonOperator(
+  task_id='xcom_pull',
+  python_callable=my_pull_code,
+  op_kwargs={Operators
+Unfortunately, not all operators support xcom pushing by default. Below, you will find a list of the most common operators used in Hogwarts 
+and their Xcom support:
+ 
+ 
+Python family
+The most straight forward operator to use with xcom.
+Pushing
+Python callable return value
+key: return_value
+value <value_of_your_return>
+Task instance object’s xcom_push method
+key: <user_specified>
+9
+10
+11
+12
+13    "xcom_return": "{{ ti.xcom_pull(task_ids='xcom_push', key='return_value') }}",
+    "xcom_direct": "{{ ti.xcom_pull(task_ids='xcom_push', key='direct_push') }}"
+  },
+  ...
+)
+Python PythonOperator
+HogwartsPythonOperator
+GitPythonOperator
+ 
+Bash BashOperator
+HogwartsBashOperator
+GitBashOperator
+ 
+Notebook GitNotebookOperator
+NbgalleryOperator
+ 
+(supported as of STRATUS 1.16.2)
+Container ContainerOperator
+  Family Operators Supported
+If you wish to use xcom with an operator that doesn’t support it or isn’t in the list above, let us know in the Hogwarts support chat.
+1
+2
+3
+4
+5
+6
+7
+8def code():
+  return '<value_of_your_return>'
+xcom_push = PythonOperator (
+  task_id ='xcom_push' ,
+  python_callable =code,
+  ...
+)value: <value_passed_in_method>
+Pulling
+Jinja templating through kwargs
+Task instance object’s xcom_pullmethod
+ 
+Bash family
+Pushing
+Bash return value
+key: return_value
+value <value_of_your_return>
+Pulling
+1
+2
+3
+4
+5
+6
+7
+8def code(ti):
+  ti.xcom_push (key='<user_specified>' , value='<value_passed_in_method>' )
+xcom_push = PythonOperator (
+  task_id ='xcom_push' ,
+  python_callable =code,
+  ...
+)
+1
+2
+3
+4
+5
+6
+7
+8
+9def code(xcom):
+  print(xcom)
+xcom_pull = PythonOperator (
+  task_id ='xcom_pull' ,
+  python_callable =code,
+  op_kwargs ={'xcom': '{{ ti.xcom_pull(task_ids="xcom_push", key="return_value") }}' },
+  ...
+)
+1
+2
+3
+4
+5
+6
+7
+8def code(ti):
+  print(ti.xcom_pull (task_ids ="xcom_push" , key="return_value" ))
+xcom_pull = PythonOperator (
+  task_id ='xcom_pull' ,
+  python_callable =code,
+  ...
+)
+1
+2
+3
+4
+5xcom_push = BashOperator (
+  task_id ='xcom_push' ,
+  bash_command ='echo "<value_of_your_return>"' ,
+  ...
+)Notebook family
+The following examples apply to all operators in the Notebook family (i.e. GitNotebookOperator, NbgalleryOperator)
+Pushing
+Last Notebook cell’s output
+Supported since daggers==2.9.3.7553
+key: return_value
+value <value_of_your_return>
+**Make sure to add do_xcom_push=True as it is disable by default for this operator family!
+In your notebook’s last cell, there can be two different output which are supported in Hogwarts :
+stream (stdout/print)
+execute_result (value returned from the cell)
+ 
+To determine how your Notebook’s output will look like, follow these simple steps:
+Execute your notebook on Jupyterhub and save it.
+In another notebook or python code, run the following code
+The code above will read the notebook, parse it, and retrieve the last cell’s last output. For more information on the output format of 
+notebooks, take a look at the nbformat documentation.
+Pulling
+Use the same approach as the Python family operators and pass the templated xcom value to your nb_params.
+1
+2
+3
+4
+5xcom_pull = BashOperator (
+  task_id ='xcom_pull' ,
+  bash_command ='echo "{{ ti.xcom_pull(task_ids=\"xcom_push\", key=\"return_value\") }}"' ,
+  ...
+)
+1
+2
+3
+4
+5
+6
+7xcom_push = GitNotebookOperator (
+  task_id ='xcom_push' ,
+  repo_url ='...',
+  nb_in='notebooks/my_notebook.ipynb' ,
+  do_xcom_push =True,
+  ...
+)
+1
+2
+3
+4from daggers .utils.notebook import extract_notebook_output
+return_value = extract_notebook_output ('<your_notebook_path_here.ipynb' )
+print(return_value )
+1
+2
+3
+4xcom_pull = GitNotebookOperator (
+  task_id ='xcom_pull ' ,
+  repo_url ='...',
+  nb_in='notebooks/my_notebook.ipynb' , 
+ 
+5
+6
+7  nb_params ={'xcom': '{{ ti.xcom_pull(task_ids="xcom_push", key="return_value") }}' },
+  ...
+)
+Make sure to add a cell with a parameters tag in the metadata of your notebook, otherwise these parameters won’t be injected at 
+runtime.

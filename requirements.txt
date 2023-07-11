@@ -11,7 +11,10 @@ cohere
 tiktoken
 tabulate
 boto3
+shodan
 
+#kedra stuff
+requests
 # uncomment to use huggingface llms
 # huggingface-hub
 
