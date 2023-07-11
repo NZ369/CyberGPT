@@ -1,0 +1,98 @@
+Last Upda ted on 31st Ma y 2022Dipan Nanda
+ 7880 039057  d19c yber @gmail.c om
+Education
+UNIVERSITY OF LEEDS
+MS in Data Sci ence/ Analysis
+Sep2022 Leeds,UK
+•InternationalMasters
+ExcellenceScholarship
+•ExpectingaFirstclassdegree
+•WorkingasPALMentor
+MITS, GW ALIOR
+B Tech in Comput er Science
+Sep2020 Gwalior,MP
+GraduatedwithDistinction
+Links
+GitHubthemagicalmammal
+Linkedin themagicalmammal
+Coursework
+GRADUA TE
+DataScience
+ProgrammingforDataScience
+KnowledgeRepresentationand
+Reasoning
+StatisticalTheoryandMethods
+LearningSkillsthroughCaseStudies
+ArtificialIntelligence
+MachineLearning
+StatisticalLearning
+Dissertation: Machinelearning
+methodsforsolubilitypredictionin
+chemicalexperiments
+Skills
+PROGRAMMING
+Python•R•PHP•C/C++•HTML/CSS•
+JavaScript•SQL
+MISCELLANEOUS
+Shell•L ATEX•Tableau•MicrosoftOffice
+•Firebase•Git
+Honors
+EXCELLENCE SCHOLARSHIP
+University of leeds
+Awardedtointernationalstudents
+whohaveachievedtheequivalentof
+aUKfirstclassbachelors’degree.
+INDUSTRIAL VISIT
+Infosys Pune
+Iwasasoneofthestudentsfor
+industrialtraining,where28students
+werechosenoutof2000.Experience
+SOFTW ARE ENGINEER
+Indian Institute of Technology
+Sep2020–Aug2021 Indore,MP
+•UsingYolotoboosttheaccuracyoflowlightsituationsin
+mobilenetv3
+•UsingBashscriptsandLinuxtoolstoautomateandoptimizethedata
+handlingfortrafficsigns.
+MACHINE LEARNING INTERN
+Raja Ramanna Centre for Advanced Technology
+Apr2020–Aug2020 Indore,MP
+•UsingGeneticalgorithmdesignedamodeltodetectthe
+crossover/mutationingenewhichisportableforscheduling
+scenariosscenarios.
+WEB DEVELOPMENT INTERN
+Raja Ramanna Centre for Advanced Technology
+Jan2020–Feb2020 Indore,MP
+•DesignedthedynamicwebsiteusingPHPfordatavisualization
+(Angular5andNodeJs)ofparticleacceleratorforinternalusage.
+•WorkedonAmChartstodisplaylivedatastreamsandusedstatistical
+toolsforcomputationandunderstandingofdata.
+WEB DEVELOPMENT INTERN
+Raja Ramanna Centre for Advanced Technology
+Jun2019–Jul2019 Indore,MP
+•UsingDjangotoconnectwithSQLbackendwithSQLServer2012.
+•ThewebpageismadeoutofAngularJSwithUIelementsfrom
+Materialize.
+Competitions
+COMPLEX LEVEL
+Smart India Hackathon
+Jan2019–Feb2019 Bhubaneshwar,Orissa
+•Wehadateamof6peopleunderthealias’Cicada3301’everyonehad
+differentskillsetswemadeawebsitewhichwasconnectedtoa
+blockchainnetworkonEthereumwhichwassetuponthenetworkof
+ourpersonalcomputers.
+•Afterpassingallthethreerounds,ourteamwasdeclaredthewinner
+ofourquestionset. Wewonalumpsumof1lakh₹(s).
+RecentProjects
+IPL ANAL YSIS
+University of Leeds
+Nov2021–Dec2021 Leeds,UK
+AprojectundertheUniversityofLeedstoanalysedatafrom2008to2015
+anddiscoverpatternsinthedatasuchastrends,co‑relations,probabilities,
+andusedtoolssuchasmatplotlib,Pandas,Seabornfordatavisualization.
+STUDY OF THE BEHA VIOUR OF SERIAL KILLERS’
+University of Leeds
+Nov2021–Dec2021 Leeds,UK
+Thestudyofthebehaviourofserialkillerswithdifferentmotivessuchas
+Convenience(didnotwantchildren/spouse),EnjoymentorPowerand
+Escapeoravoidingarrest.

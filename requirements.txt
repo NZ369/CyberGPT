@@ -11,6 +11,8 @@ cohere
 tiktoken
 shodan
 
+#kedra stuff
+requests
 # uncomment to use huggingface llms
 # huggingface-hub
 

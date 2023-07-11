@@ -1,0 +1,847 @@
+See discussions, st ats, and author pr ofiles f or this public ation at : https://www .researchgate.ne t/public ation/221024030
+A multi-threaded PIPELINED Web server architectu re for SMP/SoC machines
+Conf erence Paper  · Januar y 2005
+DOI: 10.1145/1060745.1060851  · Sour ce: DBLP
+CITATIONS
+16READS
+586
+4 author s, including:
+Some o f the author s of this public ation ar e also w orking on these r elat ed pr ojects:
+Evaluation of t opic Models - A Machine L earning P erspectiv e View pr oject
+Contr oversy De tection on the w eb and in social media  View pr oject
+Gyu Sang Choi
+Yeungnam Univ ersity
+126 PUBLICA TIONS    1,165  CITATIONS    
+SEE PROFILE
+All c ontent f ollo wing this p age was uplo aded b y Gyu Sang Choi  on 27 A ugust 2014.
+The user has r equest ed enhanc ement of the do wnlo aded file.A Multi-Threaded PIPELINEDWeb Server Architecture
+for SMP/SoCMachines∗
+Gyu Sang Choi, Jin-Ha Kim, Deniz Ersoz and Chita R. Das
+Department of Computer Science andEngineering
+Penn State University
+UniversityPark, PA 16802
+{gchoi, jikim,ersoz, das }@cse.psu.edu
+ABSTRACT
+Design of high performance Web servers has become a recent
+research thrust to meet the increasing demand of network-based services. In this paper, we propose a new Web serverarchitecture, called multi-threaded PIPELINED Web server,suitable for Symmetric Multi-Processor (SMP) or System-on-Chip (SoC) architectures. The proposed PIPELINED
+model consists of multiple thread pools, where each thread
+pool consists of ﬁve basic threads and two helper threads.The main advantages of the proposed model are global in-formation sharing by the threads, minimal synchronizationoverhead due to less number of threads, and non-blockingI/O operations, possible with the helper threads.
+We have conducted an in-depth performance analysis of
+the proposed server model along with four prior Web servermodels (Multi-Process (MP), Multi-Thread (MT), Single-Process Event-Driven (SPED) and Asynchronous Multi-Pro-cess Event-Driven (AMPED)) via simulation using six Webserver workloads. The experiments are conducted to inves-
+tigate the impact of various factors such as the memory size,
+disk speed and numbers of clients. The simulation resultsindicate that the proposed PIPELINED Web server archi-tecture shows the best performance across all system andworkload parameters compared to the MP, MT, SPED and
+AMPED models. Although the MT and AMPED models
+show competitive performance with less number of proces-sors, the advantage of the PIPELINED model becomes ob-vious as the number of processors or clients in an SMP/SoCmachine increases. The MP model shows the worst perfor-mance in most of the cases. The results indicate that the
+proposed server architecture can be used in future large-scale
+SMP/SoC machines to boost system performance.
+Categories andSubject Descriptors
+C.2.4 [ Distributed Systems ]: Client/server; C.4 [ Per-
+formance Of Systems ]: Design studies; D.2.8 [ Operating
+Systems ]: Organization and Design
+∗This research was supported in part by NSF grants CCR-
+9900701, CCR-0098149, EIA-0202007 and CCR-0208734.
+Copyright is held by the International World Wide Web Conference Com-
+mittee (IW3C2). Distribution of these papers is limited to classroom use,
+and personal use by others.
+WWW 2005 , May 10-14, 2005, Chiba, Japan.
+ACM 1-59593-046-9/05/0005.General Terms
+Algorithms, Design, Performance and Measurement
+Keywords
+Multi-Process, Multi-Thread, Single Event-Driven Process,
+Asynchronous Multi-Process Event-Driven, Symmetric Multi-Processor, System-on-Chip
+1. INTRODUCTION
+Improving the performance of Web servers has become
+a critical issue to cope with the increasing use of network-
+based services. The critical nature of many online trans-actions and distributed service, provided through SOAP,mandates design of high performance Web servers since suchservers are anticipated to be the bottleneck in hosting network-based services [20]. Three techniques have been proposed
+and adopted to improve the performance of a Web server[8];
+(i) software scale-up, (ii) hardware scale-up and (iii) cluster-based scale-up.
+Several software and hardware scale-up techniques have
+been proposed to enhance the performance of single nodeservers. Typically, a software based approach attempts to
+improve a Web server’s cache hit ratio, and thus, minimize
+the disk access latency in satisfying user requests. It hasbeen observed that by employing a larger data cache [12,6, 8] and suitable cache replacement techniques [7], serverthroughput can be signiﬁcantly improved. On the otherhand, a hardware scale-up provides additional computing
+facility by adding more processor and memory to a single
+system. Finally, the cluster-based solution is aimed at pro-viding a cost-eﬀective solution by utilizing a cluster of ho-mogeneous or heterogeneous nodes under a single domainname. Commercial servers like Google and e-Bay have used
+this technique quite eﬀectively [3].
+Although cluster-based Web servers seem a viable solution
+from performance, scalability and economic standpoints, thisis certainly not the only choice, and any application spe-ciﬁc design should exploit the novelty of the state-of-the-art architectural trend. The motivation of this paper relies
+on this context, and attempts to see how the server design
+can beneﬁt from the architectural innovations. Towards thisgoal, we focus on two types of high performance architec-tures that can be used in designing Web servers; SymmetricMulti-Processors (SMPs) and System-on-Chip (SoC) archi-tectures.
+Recently, a Dual-Core CPU [15] is released by Intel and
+730 AMD to target the high-performance server market. Four
+and Eight core SMPs are expected to be released soon. In
+addition, with the advent in deep sub-micron technology,SoC architectures have become a reality, and by the endof the decade, SoCs with billions of transistors are likelyto dominate the high performance computing landscape [5,10, 4]. With technology scaling down to 35nm, it would
+be possible to fabricate SoCs with up to 32/64 processors.
+Hence, we expect that many Web servers will be employedon a SoC system to provide high-performance throughputs.
+To our knowledge, there is little research on designing
+SMP/SoC-based Web servers. PalChaudhuri et al. [14]conducted a performance comparison of Web server archi-
+tectures for SMP systems. They proposed a coordinated
+AMPED (Co-AMPED) model with multiple AMPED pro-cesses. The experiments on a 4-way SMP machine revealedthat multiple AMPED servers suﬀered from scalable per-formance. This study, in our opinion, provides a limitedview since it does not conduct an in-depth analysis of ex-
+isting Web server models to understand the limitations, so
+that an eﬃcient server model can be used in the SMP envi-ronment. Furthermore, there is no study that examines theperformance and scalability implications in the SoC domain.
+To understand the performance implications of current
+server architectures, we ﬁrst analyze the memory usage of
+four server architectures; Multi-Process (MP) [18], Multi-
+Thread (MT) [18], Single-Process Event-Driven (SPED) [21]and Asynchronous Multi-Process Event-Driven (AMPED)[13]. This is done through measuring the memory require-ments of Flash (AMPED model) [13] and Apache [18] Web
+servers on a Sun solaris machine. This analysis is then ex-
+tended to three other architectures (MP, MT and SPED).The data cache and cache overhead analysis of the four mod-els in an SMP/SoC environment reveals that the MT servermodel is ideal in providing a large data cache per serverto enhance throughput. However, the synchronization over-
+head of this model can be signiﬁcant with a large number of
+threads. Thus, an MT model with small number of threadsshould provide high throughput in SMP/SoC-based servers.
+Based on this rationale, we propose a new Web server ar-
+chitecture, called a multi-threaded PIPELINED Web server,for SMP or SoC systems in this paper. A PIPELINED Web
+server consists of multiple pipelined thread pools, each of
+which is composed of 5 basic threads and 2 helper threads.The main advantage of the proposed model is that a threadcan share the global information (i.e. data cache, path trans-lation structure, etc.) with other threads. Thus, like theMT model, it needs relatively small memory to maintain
+the global information. However, unlike the MT model, it
+can alleviate the synchronization overhead by limiting thetotal number of threads to 7 ×N, where N is the num-
+ber of processors. In addition, by utilizing separate helperthreads, the main 5 threads do not block for I/O operations,
+and thus, it helps in boosting performance.
+We have developed a detailed simulator to analyze the
+performance of four prior server models and the proposedmodel. We have conducted exhaustive performance analysisby varying several parameters such as the number of proces-sors in the SMP/SoC system, memory size, and number of
+clients with six Web server traces; Penn State CSE [17], UC
+Berkeley [11], Penn State [16], Clarknet [2], WorldCup98 [1]and NASA [2] workloads.
+The main conclusions of this paper are the following: First,our proposed PIPELINED Web server architecture shows
+the best performance across various environments and work-
+loads compared to the MP, MT, SPED and AMPED models.The MP model is the worst performance due to availablesmall data cache size per process. Second, the AMPEDand SPED Web servers suﬀer from decreasing data cachesize with more number of processors in an SMP/SoC ma-
+chine due to little sharing of global information. Third,
+the MT model can provide competitive throughput as thePIPELINED model with smaller system conﬁgurations, andless number of clients. However, as the number of processorsas well as the number of clients increases, the PIPELINEDmodel becomes a clear winner. All these results indicate
+that the PIPELINED server model is a viable candidate for
+deploying server architectures in SMP/SoC machines.
+The rest of this paper is organized as follows: In Section
+2, we provide a summary of all prior Web server architec-tures. Section 3 analyzes the memory requirements of Webserver models. The multi-threaded PIPELINED Web server
+architecture is presented in Section 4. Section 5 narrates the
+simulator design and workload used for performance anal-ysis. The performance results are analyzed in Section 6,followed by the concluding remarks in the last Section.
+2. WEB SERVER ARCHITECTURES
+Generally, an HTTP server consists of six request pro-
+cessing steps. The ﬁrst step is the accept client connection ,
+which accepts an incoming connection from a client based
+on the socket operations. Second, the read request opera-
+tion reads and parses an HTTP request from the client’sconnection. Third, the ﬁnd ﬁle operation checks whether
+the requested ﬁle exists in the ﬁle system, and the client hasappropriate permissions. Fourth, the send response header
+step sends an HTTP response header to the client through
+a socket connection. Next, the read ﬁle operation reads the
+requested data from the ﬁle system or from the memorycache. Finally, the send data step transmits the requested
+content to the client. Especially, for larger ﬁles, the read ﬁle
+andsend data steps are repeated (shown by the self loop in
+Figure 1) until all of the requested contents are transmitted
+[13].
+Four HTTP server architectures have been proposed in
+the literature as shown in Figure 1. The Multi-Process (MP)model, as shown in Figure 1 (a), has a process pool and eachprocess is assigned to execute the basic steps associated with
+servicing a request. Since multiple processes are employed,
+many HTTP requests can be served concurrently. However,the disadvantage of this model is the diﬃculty to share anyglobal information (e.g.: shared cache information) amongthe processes, since each process has its own private address.
+An MP-based Web server needs more memory to maintain
+the same cache size per process compared to other servermodels. Thus, the overall performance of this model is ex-pected to be lower than that of other models [12, 6].
+The Multi-Thread (MT) model, in the other hand, con-
+sists of multiple kernel threads with a single shared address
+space. In Figure 1 (b), each thread takes care of a client’s
+request and performs the request processing steps indepen-dently. The advantage of this model is that the threads canshare any global information. Especially, the data cache isshared among all threads. However, not all Operating Sys-tems (OSs) support kernel threads, and sharing the data
+cache information among many threads may lead to high
+731 Accept
+Connec
+-tionRead
+RequestFind
+FileSend
+HeaderRead File
+& Send
+Data
+Accept
+Connec
+-tionRead
+RequestFind
+FileSend
+HeaderRead File
+Send
+DataProcess 1
+Process NAccept
+Connec
+-tionRead
+RequestFind
+FileSend
+HeaderRead File
+& Send
+Data
+Accept
+Connec
+-tionRead
+RequestFind
+FileSend
+HeaderRead File
+Send
+DataThread 1
+Thread NA Single Web Server Process
+Event DispatcherAccept
+Connec-
+tionRead
+RequestFind
+FileSend
+HeaderRead
+File &
+Send
+DataA Single Web Server Process
+Event DispatcherAccept
+Connec-
+tionRead
+Request
+Read Data
+Helper
+ProcessSend
+HeaderRead
+File &
+Send
+DataA Single Web Server Process
+Path
+Translation
+Helper
+ProcessFind
+File
+Inter-Process
+Communication
+(a) Multi-Process (MP) (b) Multi-Thread (MT) (c) Single-Process (d) Asynchronous
+Model Model Event-Driven Multi-Process Event-Driven
+(SPED) Model (AMPED) Model
+Figure 1: Web Server Architectures
+synchronization overhead. The widely used Apache Web
+server was originally designed as an MP model. Later, itis enhanced to support both MP and MT models, since the
+MT model tends to yield better performance than the MP
+model [18].
+Next, Figure 1 (c) shows a Single-Process Event-Driven
+(SPED) Web server architecture that uses non-blocking I/Ooperations. SPED can avoid context-switching and synchro-nization overheads among threads or processes, because it is
+a single Web server process. This model is implemented by
+the Zeus Technology [21]. However, the non-blocking I/Ooperations in this model are actually blocked [13] when itperforms disk-related operations due to the limitations ofcurrent OSs. This is the reason why SPED doesn’t show
+better results than the MT model for disk-bound workload
+[13].
+The last architecture is the Asynchronous Multi-Process
+Event-Driven (AMPED) model [13], which has been pro-posed to alleviate the weakness of the SPED model. Figure1 (d) depicts the AMPED server architecture, which consists
+of one main Web server process and multiple helper pro-
+cesses to mainly handle I/O operations. As this model hasmultiple helper processes to serve disk-oriented requests, themain Web server process only serves cache-hit requests. Ifthere is a cache miss, the main process forwards the requestto a helper process, and then, the helper process fetches
+the data from the disk and sends it back to the main pro-
+cess by Inter-Process Communication (IPC). Especially, us-ing the mmap operation in the AMPED model, additionaldata copying between a Web server and the helper processescan be removed.
+All these server models were originally proposed for single
+CPU systems. The scalability of these server architectures
+has not been examined for SMP/SoC systems.
+3. MEMORYANALYSIS
+In this section, we analyze the memory requirements for
+the four Web server models on an SMP or SoC machine.
+We deﬁne three terms to conduct the memory analysis.
+First, we use system memory as the maximum available
+main memory for a Web server, although normally system
+memory is referred as the main memory. For example, ifthe size of main memory is 100MBytes and an OS uses10MBytes, then the system
+memory is 90MBytes. Next,
+the available memory space for caching the Web contentsis called the data
+cache. Finally, we refer to all additional
+memory spaces as cache overhead which is equal to sys-temmemory -datacache. This includes memory overhead
+for the Web server to maintain the datacache (e.g. name,
+size, and path translation of cached contents).
+3.1 Memory UsageinFlashWebservers
+First, to show the scalability problem of the AMPED
+model, we measure the total memory usage of a Flash Web
+server by varying the number of servers in a single node.The total memory usage (i.e.system
+memory )i st h es u mo f
+thecache overhead anddatacache in a Web server. The
+cache overhead of a Flash Web server consists of several
+terms. First, the major component of the cache overhead is
+the space required for maintaining the information of cachedﬁles, and it is 850Bytes per ﬁle. If we assume that the av-
+erage Web ﬁle size is 15KBytes [13] and the data
+cache is
+100MBytes, the maximum number of the cached web ﬁles isapproximately 6800. Then, the cache
+overhead to maintain
+100MBytes of datacache is approximately 5MBytes. Sec-
+ond, since the maximum number of path translation entriesin a Flash Web server is 6000 and the average size of a path
+translation entry is about 125Bytes, path translation con-
+sumes around 0.7MBytes. Third, two helper processes ina Flash Web server, readandpath translation helpers ,c o n -
+sume additional 3MBytes [13]. Thus, besides the data
+cache,
+a Flash Web server needs an additional 8.7MBytes to main-tain the 100MBytes data
+cache in the main memory. While
+thiscache overhead seems small for a single AMPED server
+process, it increases linearly with the number of servers.
+02468100140180220
+Number of Flash Web ServersMemory Usage (MBytes) 02468200250300350400
+Number of Flash Web ServersMemory Usage (MBytes)
+(a) 100MBytes Cache Size (b) 200MBytes Cache Size
+Figure 2: Memory Usage of the Flash Web servers
+(AMPED Model)
+Figure 2 shows the memory usage as a function of the
+number of AMPED-based Flash Web servers in a singlenode. To examine the cache
+overhead ,w eﬁ xt h e datacache
+size to 100MBytes and 200MBytes and increase the num-
+ber of servers from 1 to 8 in a node. We measured the
+732 memory usage using the system monitoring tool in a sin-
+gle CPU Sun Solaris machine. In Figure 2 (a), for a sin-
+gle Web server, the cache overhead is only around 5MBytes
+for 100MBytes of datacache. However, when the num-
+ber of Web servers is eight, the cache overhead becomes
+120MBytes, which is even larger than the datacache size.
+Figure 2 (b) shows that when the number of the Web servers
+is eight, the cache overhead becomes almost 200MBytes with
+200MBytes of datacache. This high overhead is attributed
+to the fact that processes cannot share the global informa-tion. The reason why the cache
+overhead in Figure 2 (b) is
+larger than in Figure 2 (a) is that a Web server has morecached ﬁles in the data
+cache due to a larger datacache size.
+This experiment clearly shows that the cache overhead in
+Flash Web servers is a major bottleneck.
+3.2 Memory UsageinOtherWebServer
+Architectures
+Based on the previous memory usage results of the Flash
+Web server, we analyze the cache overhead in other Web
+server architectures.
+In an MP model, each node has typically 16 to 32 pro-
+c e s s e s ,a n de a c hp r o c e s ss h o u l dh a v ei t so w n datacache.
+Thus, the datacache size per process reduces accordingly. In
+addition, each server process needs space for the cache over-
+headto maintain the datacache.
+Since threads in an MT model can share the global cache
+information, the memory requirement should not change sig-
+niﬁcantly with an increase in the number of threads. To ver-
+ify this, we increased the number of threads in an ApacheWeb server [18] from 25 to 50, and measured the memoryusage. Each thread consumed about 25KBytes in the MTmodel conﬁguration. In addition, we ran a simple multi-threaded barrier program and varied the number of threads
+from 10 to 1000. We measured the memory usage as we
+increased the number of threads. We observed that the ad-ditional memory requirement is only 10KBytes per thread.
+However, the problem with the MT model is the syn-
+chronization overhead among threads. When the numberof threads increases, the synchronization overhead becomes
+non-negligible. This overhead can be a major bottleneck
+in a large-scale SMP or SoC node. Since usually the num-ber of threads per CPU is 32 or 64 and these types of ma-chines can have 16 to 64 Processing Elements (PEs), thetotal number of threads, T, can be in hundreds or thou-
+sands. These threads compete to access the cached contents
+and path translation information, which needs to be syn-chronized.
+Since the SPED Web server architecture is basically sim-
+ilar to the AMPED model, both the models have similarcache
+overhead . The main diﬀerence between the two mod-
+els is the helper processes in the AMPED model. Due to
+the memory requirements of the two helper processes, theAMPED model needs additional 3MBytes compared to theSPED model.
+3.3 cache overhead inWebServer
+Architectures
+Now, we calculate the cache overhead of prior four server
+models in an SMP or SoC system. Here, we assume that allWeb servers have the same cache structure.
+Assuming 16 or 32 server processes per CPU in an MP
+model, the total number of the processes, P, could be veryhigh in an SMP or SoC system. In the SPED and AMPED
+models, one Web server process usually runs in one node,
+while Zeus [21] recommends to launch two server processesfor better performance. In an SMP or SoC machine, we maylaunch one Web server process per CPU. In the MT-basedmodel, there is only one Web server process, no matter howmany threads are running.
+Based on this, we compute the cache
+overhead to main-
+tain the cache information in each server architecture in Ta-ble 1, when system
+memory size is known. Since we as-
+sume that the size of an average Web ﬁle is 15KBytes [9],the number of ﬁles that can be cached is file
+entries =
+datacache size/15KBytes . The memory requirement for
+keeping the information of these entries is fileentries ×
+850Bytes , since the average size to maintain each cache el-
+ement is about 850Bytes in a Flash Web server. The totalcache
+overhead of an MP-based Web server is fileentries ×
+850×N×P,w h e r e Nis the number of processing elements,
+andPis the number of Web server processes per CPU. We
+ignore the memory space for the path translation, because
+this value is relatively small.
+In an MT-based Web server, the total memory usage of
+the server model does not change signiﬁcantly. The cache ov-
+erhead can be calculated as fileentries ×850Bytes +T×
+25KBytes , since one thread in the Apache server consumes
+25KBytes. In the SPED-based Web server, the cache ov-
+erhead isfileentries ×850Bytes ×N, if we assume that we
+launch a single Web server per CPU. In an AMPED-basedWeb server, since read and name translation helpers con-sume about 3MBytes per server, the total cache
+overhead
+becomes fileentries ×850Bytes ×N+3MBytes ×N.
+3.4 data cache inWebServer Architectures
+In this subsection, we calculate the available datacache
+of four server architectures, where the available datacache
+for the Web contents is system memory −cache overhead .
+Since the available datacache size aﬀects the performance
+of a Web server, we can predict a server’s performance based
+on the calculated datacache values. In this experiment, we
+examine the relationship between datacache size, number
+of PEs (or CPUs) and system memory .
+Figure 3 shows the variation of available datacache as
+a function of PEs and the system memory .F i g u r e 3 ( a )
+depicts that the datacache size in an MP model reduces
+drastically when the number of PEs increases. Because ofthis reduced data
+cache space, the cache hit ratio of an MP-
+based server would be low, which in turn would aﬀect thelatency and throughput due to frequent disk accesses.
+In Figure 3 (b), the data
+cache for the MT-based Web
+server is almost constant because there is only one Webserver process, and a thread can share cache informationwith other threads. However, as we will see later, the perfor-mance of the MT model might suﬀer from high synchroniza-tion overhead as the number of threads increases. Figures
+3 (c) and (d) show that the data
+caches of the SPED and
+AMPED servers reduce when the number of PEs increases.It is attributed to the non-sharing nature of the global in-formation. An interesting observation is that the availabledata
+cache size in the AMPED model shrinks more com-
+pared to the SPED model, because the helper processes in
+the AMPED model consume more additional memory.
+733 Web Server Architecture cache overhead (Bytes)
+Multi-Process Model fileentries ×850×N×P
+Multi-Thread Model fileentries ×850 + T×25K
+Single-Process Event-Driven Model fileentries ×850×N
+Asynchronous Multi-Process Event-Driven Model fileentries ×850×N+3M×N
+Table 1: cache overhead in Web Server Architectures, where fileentries is the number of cached ﬁles, Nis the
+number of processing elements, Pis the number of Web server processes per processing element, and Tis
+the total number of threads
+24681012141605001000
+0100200300400500600
+System Memory 
+ (MBytes)Number of Processing ElementsData Cache Size per Web 
+Server Process (MBytes)
+24681012141605001000
+02004006008001000
+System Memory (MBytes)Number of Processing ElementsData Cache Size per Web 
+  Server Process (MBytes)
+24681012141605001000
+02004006008001000
+System Memory (MBytes)Number of Processing ElementsData Cache Size per Web 
+ Server Process (MBytes)
+(a) Multi-Process (b) Multi-Thread (c) Single-Process Event-Driven
+Model Model (SPED) model
+24681012141605001000
+02004006008001000
+System Memory (MBytes)Number of Processing ElementsData Cache Size per Web 
+ Server Process (MBytes) 24681012141605001000
+02004006008001000
+System Memory (MBytes)Number of Processing ElementsData Cache Size per Web 
+Server Process (MBytes)
+(d) Asynchronous Multi-Process (e) Multi-Threaded PIPELINED
+Event-Driven (AMPED) Model model
+Figure 3: datacacheSize in Web Server Architectures
+4. AMULTI-THREADEDPIPELINEDWEB
+SERVER ARCHITECTURE
+In this section, we propose a new Web server architecture,
+called multi-threaded PIPELINED Web server ,w h i c ht a k e s
+advantage of the MT model, but mitigates the synchroniza-tion overhead by limiting the number of threads. Figure 4depicts the architecture of the multi-threaded PIPELINEDHTTP server. In the proposed server, each basic operationof an HTTP request is mapped on to a thread. First, an
+accept connection thread takes care of a connection from a
+user, and forwards this request to a read request thread. The
+read request thread parses the request, and then, the ﬁnd
+ﬁle request thread checks whether the request is in a path
+translation cache. If it is located in the path translation
+cache, the ﬁnd ﬁle request thread gives it to a send header
+thread. Otherwise, it forwards the request to a path transla-
+tion helper thread. Next, the send header thread sends the
+response header to the client. Finally, the read ﬁle andsend
+datathreads send the requested data to the client. If the
+ﬁle size is large, these threads repeat (shown by the loop in
+Figure 4) the process, until the ﬁle is sent. Due to its sim-ilarity to the PIPELINED model in computer architecture,
+we call this model a PIPELINED Web server.
+We refer to these ﬁve basic processing threads and two
+helper threads as a pipelined thread pool . A PIPELINED
+Web server can have multiple pipelined thread pools. Twohelper threads are dedicated to handle the I/O operations.One is the path translation helper thread, which converts a
+request’s URL to a system path to the requested ﬁle. The
+other is a read helper thread, which reads the requested ﬁle
+from a disk, when a cache miss occurs. Whenever an I/Ooperation is required, the thread passes the request to oneof the helper threads, and it handles the next request im-mediately. Whenever a helper thread completes an I/O op-
+eration, it sends back the response to the proper thread.
+The most important characteristic of this model is that
+there is only one Web server process, even though there aremultiple pipelined thread pools. While there will be onepipelined thread pool in a single CPU, a pipelined threadpool can be launched on each CPU in an SMP or SoC system
+and the threads can share the global information. Since the
+data
+cache size in a single process model (i.e. the MT model)
+is larger than that in other models in a multi-CPU environ-
+734 ment, the proposed model needs relatively small memory to
+maintain the global information compared to the SPED and
+AMPED models.
+The main reason why the proposed model is suitable for
+an SMP/SoC environemnt is because of almost constantdata
+cache size (Figure 3 (e)). There might be multiple
+processes of the SPED or AMPED model in an SMP/SoC
+system. These multiple Web processes should have their
+own private cache, and thus, it signiﬁcantly reduces thedata
+cache size as shown in Figures 3 (c) and (d).
+Accept
+Connection
+ThreadRead
+Request
+ThreadFind File
+ThreadSend
+Header
+ThreadRead File &
+Send Data
+ThreadPipeline 1
+Pipeline NA Single Web Server Process
+Path
+Translation
+Helper ThreadRead Helper
+Thread
+Accept
+Connection
+ThreadRead
+Request
+ThreadFind File
+ThreadSend
+Header
+ThreadRead File &
+Send Data
+Thread
+Path
+Translation
+Helper ThreadRead Helper
+Thread
+Figure 4: Architecture of the Multi-Threaded
+PIPELINED Web Server
+Moreover, the PIPELINED model can alleviate the syn-
+chronization overhead, one of the drawbacks of the MTmodel. The total number of threads in the proposed model is7×N, while it will be 64 (or 32) ×Nin the MT model, where
+Nis the number of processors. In addition, the threads in
+the MT model are likely to compete with each other to ac-
+cess the shared information (i.e. data
+cache and path trans-
+lation cache). However in a pipelined thread pool, sinceeach thread plays a diﬀerent role, the contention can bemitigated.
+Unlike the MT model, we also adapt helper threads to
+prevent a thread being blocked due to an I/O operation.
+Without the helper threads, a pipelined thread pool can-
+not proceed before completing the blocking I/O operation.Thus, when a cache miss occurs, the read ﬁle thread forwards
+this request to a readhelper thread. The helper thread sends
+back the static contents to the thread after reading it froma disk.
+Next, we analyze the cache
+overhead anddatacache sizes
+of a multi-threaded PIPELINED server. The cache over-
+head=fileentries ×850Bytes +7×N×25KBytes .F i g u r e
+3( e )s h o w st h e datacache size variation of this architecture
+when the number of PEs (N) and system memory are varied.The memory requirement of this model is marginally smaller
+than that of the MT model, since the number of threads
+in the proposed model is around 10 times less than thatof the MT model and these two models have only a singleWeb server process. Thus, due to large data
+cache size, we
+expect better performance in the proposed model than other
+models.
+5. A SIMULATIONTESTBED
+In this section, we present a simulator for analyzing theﬁve Web server models and summarize the six traces used
+in performance evaluation.
+5.1 Simulator
+We have developed a simulator platform, which can model
+the MP, MT, SPED, AMPED and PIPELINED server ar-chitectures. The simulator receives the number of PEs and
+the system memory size as input parameters. The client
+module reads a request from a trace ﬁle, and sends the re-quest to the Web server. The main part of the simulatoris the Web server module. Whenever a request arrives, theWeb server module processes the HTTP basic operations.In our experiment, the client sends a next request as soon
+as the previous request is completed. Since disk latency is
+a critical factor in quantifying server performance, we mod-eled two hard drives from the Western Digital Technologies[19] and the hard drive speciﬁcations are depicted in Table2. Throughput (number of completed requests per second)is the objective function analyzed in this paper.
+Hard Drives
+Model Fast Slow
+Capacity (GBytes) 36.7 80
+Average Latency (ms) 2.99 5.35
+Rotational Speed (RPM) 10,000 5,400
+Data Transfer Rate (MBits/s) 1200 594
+Table 2: Performance Parameters of Two HardDrives
+We extracted performance-related parameters from a Flash
+Web server through measurements, and summarizes them in
+Table 3. Average Entry Size for the cache in Table 3 repre-
+sents the memory required for maintaining the informationof a cached ﬁle, and Average Access Latency for the cache
+is the required time to check whether the requested datais in the data
+cache.Average Entry Size for path trans-
+lation is memory required to map the requested ﬁle to an
+actual path on a disk, Number of Entries is the maximum
+number of entries in path translation cache, and Average
+Access Latency for the path translation cache is the time to
+look up the directory of the cached ﬁles and map from therequested ﬁle names to actual ﬁles on a disk. Average Mem-
+ory Usage is memory consumption per helper process in the
+AMPED model [13] and Average Memory Consumption is
+memory required per thread in MT and PIPELINED mod-els [18]. Average Connection Overhead is the overhead for a
+TCP connection between a client and a server, and Average
+Transmit Latency is the network latency to transmit data.
+Finally, Context Switching Overhead is the time to switch
+between two kernel threads in MT and PIPELINEd models.
+5.2 Workload
+We use six trace-based workloads with diﬀerent charac-
+teristics for performance analysis;, Penn State CSE [17], UC
+Berkeley[11], Penn State (PSU) [16], Clarknet [2], NASA [2]
+and WorldCup98 [1]. Table 4 shows the detail characteristicsof the six traces including the number of ﬁles, average ﬁlesize, number of requests and data set size. The main traceused in the experiments is Penn State CSE [17]. The aver-age ﬁle size of Penn State CSE trace is 124.3KBytes, which
+is much larger than the average ﬁle size of other workloads.
+735 Logs Number of Files Average File Size Number of requests Data Set Size
+Penn State CSE 48079 124.3KBytes 1395148 5.7GBytes
+UC Berkeley 511189 9.84KBytes 1383211 4.8GBytes
+Penn State 139894 15.7KBytes 8853333 2.1GBytes
+Clarknet 28864 14.2KBytes 2978121 320MBytes
+NASA 9129 27.6KBytes 3147684 208MBytes
+WorldCup98 13236 15.3KBytes 7000000 158MBytes
+Table 4: Main Characteristics of the WWW Server Traces
+Cache Average Entry Size 850Bytes
+Average Access Latency 13.5µs
+Path Average Entry Size 125Bytes
+Translation Number of Entries 6000
+Cache Average Access Latency 6.16µs
+Helper Average Memory Usage 1.5MBytes
+Network Average Connection Overhead 129µs
+Average Transmit Latency 24µs
+per 512Bytes
+Thread Average Memory Consumption 25KBytes
+Context Switching Overhead 5µs
+Table 3: Measured Parameters from a Flash Web
+server
+The reason is that it has many course material and multi-
+media ﬁles. The total data set size is about 5.7GBytes. Wechose this as the main trace because it has a large data setto ﬁt into an SMP or SoC system. The UC Berkeley trace[11] has the unique characteristics of very low spatial local-
+ity and the smallest average ﬁle size in all workloads. The
+characteristics of the other traces are listed in Table 4.
+5.3 Simulator Validation
+We have validated our simulator using a real trace, by
+comparing to the results of the Flash Web server, reported
+in [13]. While the authors in [13] used two workloads, they
+conducted most of results in their experiments by the traceof Rice University Computer Science. However, we decide touse the Clarknet [2] workload because we couldn’t get thisworkload. Since both these workloads have diﬀerent locality,the results are likely to be diﬀerent. The Rice University
+CS trace [13] has a very high locality. It means that an
+MP model can have comparable throughput to those as MT,SPED and AMPED server models. In contrast, the Clarknethas less locality, compared to the CS trace in [13]. It impliesthat an MP model will show less throughput compared to
+other models, when the data
+cache size is smaller than data
+set size.
+We choose two experiments in [13], to verify our simulator.
+In the ﬁrst validation experiment, the data set size is var-ied from 20MBytes to 150MBytes, and we set the number ofclients to 64. These conﬁgurations are the same as the Flash
+Web server study [13]. In [13], the system memory size was
+128MBytes, but the actual data
+cache size might be around
+100MBytes, since the bandwidth signiﬁcantly dropped afterthe 100MBytes data set size and the Solaris OS itself con-sumes around 30MBytes. Hence, we set the data
+cache size
+to 100Mbytes in this experiment. We use a slow disk model,
+since the results in [13] were measured in 1999. We mea-2040608010012014016020406080100120140160180200
+Data Set Size (MB)Bandwidth (Mb/s)MP
+MTSPEDAMPED
+0100 200 300 400 500020406080100120140160
+Number of Simultaneous ClientsBandwidth (Mb/s)MPMTSPEDAMPED
+(a) Data Set Size (MBytes) (b) Number of Clients
+Figure 5: Simulator Validation
+sured bandwidth (Mb/s) as the performance metric, which
+was used in [13]. As Figure 10 in [13] showed that the band-width dropped after the data set size is 100MBytes, ourresult in Figure 5 (a) also shows the similar trend. The in-
+teresting point is that the MP bandwidth in our result is
+diﬀerent from that in [13]. This is because the Clarknetworkload has less spatial locality than the Rice UniversityCS trace.
+In the second validation experiment, we varied the number
+of clients, while the data set size is ﬁxed at 90MBytes, and
+the other conﬁgurations are the same as the ﬁrst validation.In Figure 5 (b), the results exhibit the similar trend, asreported in [13], while the bandwidth of the MP model dropsslowly after 200 clients. As we expected, the MP model hasless bandwidth/throughput than the results in [13] due to
+low spatial locality of the Clarknet trace.
+6. PERFORMANCEANALYSIS
+In this section, we present the performance comparison of
+the ﬁve Web server architectures under a variety of workload
+and system parameters. The performance analysis is done indetail through a series of experiments. In all experiments, weuse a warm-up period of 5000 seconds to avoid the transientphase.
+6.1 Impact ofWorkload
+First, we show the performance results with various work-
+loads. We use six traces, listed in Table 4. Since the PennState CSE and UC Berkeley workloads have very large dataset size, we use 4GBytes as the system
+memory for the Penn
+State CSE [17] and 3.5GBytes for UC Berkeley workload.
+We set 1.5GBytes as system memory for the Penn State
+trace [16], 220MBytes for the Clarknet trace, 110MBytes forthe WorldCup98 trace, and 150MBytes for the NASA work-load [2]. We set the system
+memory to 70 ∼75% of the to-
+tal data set size to compare each workload’s characteristics,while the number of clients is ﬁxed at 1000. We used a simple
+program to measure the locality of the traces, by ﬁxing the
+736 0 5 10 15050010001500200025003000
+Number of PEsThroughputMP
+MTSPEDAMPEDPIPELINED
+0 5 10 150200400600800100012001400
+Number of PEsThroughputMP
+MT
+SPED
+AMPED
+PIPELINED
+0 5 10 15050001000015000
+Number of PEsThroughputMP
+MT
+SPED
+AMPED
+PIPELINED
+0 5 10 1500.511.522.533.54x 104
+Number of PEsThroughputMP
+MTSPEDAMPEDPIPELINED
+(a) Penn State CSE (b) UC Berkeley (c) Penn State (d) WorldCup98
+4GBytes system memory 3.5GBytes system memory 1.5GBytes system memory 110MBytes system memory
+Figure 6: Performance Comparison among Web Server Architectures with Several Workloads
+date set size and datacache size. From our measurements,
+Table 5 presents the locality when the datacache size is
+given. For example, 4GBytes datacache in Penn State CSE
+trace has 99.6% locality, while 3.5GBytes datacache in UC
+Berkeley trace shows only 88.3%.
+Wrokload datacache Size (Bytes) Locality (%)
+Penn State CSE 4G 99.6
+UCB 3.5G 88.3
+Penn State 1.5G 99.47
+Clarknet 220M 99.5
+WorldCup98 110M 99.9
+NASA 150M 99.82
+Table 5: Spatial Locality of the Workloads
+Figure 6 shows that the proposed PIPELINED Web server
+outperformed all prior Web servers except with the World-
+Cup98 trace, when we vary the number of CPUs/Processing
+Elements (PEs) on an SMP/SoC machine. With the World-Cup98 trace, the MT server shows competitive performanceas the PIPELINED server. On the other hand, the MPmodel shows the worst throughput across all traces. Sincethe MP model requires more space for the cache
+overhead
+and this overhead increases as the number of the PE in-
+creases, it suﬀers from high cache miss ratio, and the diskbecomes the performance bottleneck.
+In Figure 6 (a), the PIPELINED model shows up to 30%
+improvement in throughput compared to the MT, SPED andAMPED models. The performance diﬀerence between the
+PIPELINED model and the other models increases with the
+number of processors. This is because of the higher cachehit ratio of the PIPELINED Web server. The MT model hashigh synchronization overhead and this overhead increasesas the number of threads increases. The AMPED and SPED
+models have more cache
+overhead than the PIPELINED and
+MT models because they share the global information. TheAMPED model needs 8 times more cache
+overhead than the
+PIPELINED model for 16 processors. Thus, the availabledata
+cache in the AMPED and SPED models decreases as
+the number of PEs increases. In addition, since the SPED
+model cannot handle the disk access eﬃciently, it yields
+poorer performance than the AMPED model.
+Figure 6 (b) shows the results of the UC Berkeley work-
+load. As shown in Table 4, it has relatively low spatiallocality compared to other traces. While the average ﬁlesize is the smallest among the traces, its data set size is
+very large and the number of the requests is the highest.Thus, it needs a large data
+cache to prevent frequent disk
+accesses, and the performance also depends on how a Web
+server can handle small contents eﬃciently. In Figure 6 (b),
+the PIPELINED model noticeably outperformed all othermodels. The reason that the AMPED and SPED models donot show good performance is that the smaller data
+cache
+hurts performance more than the other trace ﬁles due to thelow spatial locality ratio of UCB trace. However, with up
+to 3 PEs, the AMPED model shows the best performance
+because it can eﬃciently handle the disk-bound request [13],and can avoid the context switch overhead compared to thePIPELINED and MT models.
+Although the MT model guarantees a large data
+cache,
+each thread handles many requests. Since the size of the
+contents in the trace is small, it results in high synchroniza-tion overhead. In addition, during disk accesses, the threadsin the MT model are blocked. Therefore, the MT modeldoes not have the beneﬁt of increasing concurrency like withother trace ﬁles. The PIPELINED Web server, unlike the
+other models, can handle these requests very eﬃciently due
+to helper threads, and thus, is a very good candidate whenthe workload shows very low spatial locality.
+With the Penn State trace, the PIPELINED model is
+the best performer in Figure 6 (c) when number of PEsis greater than 8, while the SPED and AMPED models
+have comparable performance with the PIPELINED model
+with up to 8 PEs. As the number of PEs increases, totalcache
+overhead size in SPED and AMPED models increases
+butdatacache size per process in these models decreases
+moderately, because processes can’t share global informa-tion. Thus, throughput in these models signiﬁcantly drops
+beyond 9 PEs. The MT model shows lower throughput than
+the PIPELINED model. This is because the synchroniza-tion overhead among threads increases due to high cachehit ratio. We skip the result of the Clarknet trace due toits similarity with the Penn State trace. The NASA andWorldCup98 traces have the smallest data set size and sys-
+tem
+memory . As the number of processors increases, the
+reduction of the datacache size can aﬀect the throughput
+more than other traces, due to the small system memory
+size. The characteristics of the WorldCup98 trace are thatit has not only the smallest data set among all workloads,
+but also has the highest spatial locality. Thus, the through-
+put in Figure 6 (d) is the highest among all workloads. Sincethe MT model does not suﬀer from high disk accesses due tothe smallest data set size, it shows comparable performanceto the PIPELINED model. We omit the result of NASAtrace, since it shows similar trend as the WorldCup98 trace.
+737 0 5 10 15100200300400500600700
+Number of PEsThroughputMP
+MTSPEDAMPEDPIPELINED
+0 5 10 150500100015002000
+Number of PEsThroughputMPMTSPEDAMPEDPIPELINED
+0 5 10 15050010001500200025003000
+Number of PEsThroughputMPMTSPEDAMPEDPIPELINED
+0 5 10 15050010001500200025003000
+Number of PEsThroughputMPMTSPEDAMPEDPIPELINED
+(a) 1GBytes system memory (b) 2GBytes system memory (c) 3GBytes system memory (d) 5GBytes system memory
+Figure 7: Performance Comparison of Web Server Architectures by Varying system memory with the Penn
+State CSE trace
+6.2 Impact ofDataCache Size
+In this experiment, we examine the impact of datacache
+by varying the system memory , when the number of clients
+is ﬁxed at 1000. The workload used for this experiment isthe Penn State CSE. Figure 7 (a) depicts the throughput
+results of the ﬁve Web server architectures when the sys-
+tem
+memory is 1GBytes, while the data set size of the trace
+is about 5.7GBytes. In this experiment, the Web serversincur large number of cache misses due to the small cachesize. Thus, the throughputs of all Web servers are boundedby the disk speed. In other words, the throughput is not
+scalable as the number of PEs increases. The PIPELINED
+model shows the best throughput among these ﬁve mod-els, while the performance of the MP model is the worst,as expected. The throughputs of the AMPED and SPEDmodels increase until the number of PEs is 5, and decreaseafter that. An increase in the number of PEs reduces the
+data
+cache, consequently causing more disk accesses. More
+PEs in the MT and PIPELINED models doesn’t reduce thedata
+cache signiﬁcantly, and thus, they yield stable through-
+puts.
+The throughput results with 2 GBytes and 3 GBytes as
+system memory size are plotted in Figures 7 (b) and 7 (c), re-
+spectively. The performance diﬀerence among the PIPELI-NED, AMPED and SPED models is more evident as thesystem
+memory increases. Since the cache miss rate is de-
+creased, the throughputs of all servers improved drastically.However, the disk is still the bottleneck in the SPED and
+AMPED model, when the number of PEs is greater than 12
+in Figure 7 (c). Results with 4GBytes system
+memory are
+depicted in Figure 6 (a). In Figure 7 (d), all servers exceptthe MP model beneﬁt from the large cache, because the diskoperation is not the bottleneck any more. The PIPELINEDmodel shows 32% throughput improvement compared to the
+MT model. The results of this section indicate that the
+cache size has a great impact on the throughput for all Webserver architectures. We observed similar results with otherworkloads, and the proposed Web server had better through-put across all cases of system
+memory .
+6.3 Number ofClients
+In this experiment, we vary the number of clients to exam-
+ine the scalability issue in terms of the number of concurrent
+connections. We chose the Penn State CSE workload, andthesystem
+memory size is ﬁxed to 2GBytes. Other work-
+load results are omitted due to space limitation. In Figure 8(a), when the number of clients is 500, the PIPELINED andMT models are the best performers, while the PIPELINED
+model shows slightly better throughput than the MT model(up to 12%). Figure 8 (b) depicts the throughputs with
+1500 clients, where the performance diﬀerence between thePIPELINED and MT models becomes more pronounced.The throughput diﬀerence gap is about 18% and 26%, in
+Figures 8 (c) and (d), respectively.
+The results indicate that when the number of clients in-
+creases, the PIPELINED model outperforms the MT model.This is because the MT model needs many active threadsto satisfy the requests. The synchronization overhead of
+the threads in the MT model with 2500 clients increased
+by 20% (measured as queuing time at the synchronizationpoint) compared to with 500 clients. In addition, the mem-ory consumption of these threads increases, and thus, avail-abledata
+cache size of a server reduces. While the memory
+consumption of the MT model is only 25KBytes per thread,
+it can aﬀect the system performance, when the number of
+threads becomes high. The MP model in all these casesexhibits the worst performance.
+7. CONCLUSIONS
+Design of high performance Web servers is essential for
+providing adequate support to the increasing demand ofInternet-based services. Although several server models havebeen proposed towards this goal, very little attention has
+been paid in exploring the server design space with SMP
+and SoC architectures. In this paper, we have investigatedthe design of a multi-threaded PIPELINED architecture,suitable for SMP/SoC machines.
+To understand the performance implications of current
+server models, we measured the memory overhead of a Flash
+Web server in a Sun Solaris machine, and based on this mea-
+sured data analyzed the data cache and cache overhead ofthe prior MP, MT, SPED and AMPED models. The analysisrevealed that a multi-threaded server model with small num-ber of threads is ideal for providing high performance. The
+proposed multi-threaded PIPELINED Web server consists
+of multiple thread pools, where each thread pool is com-posed of 5 basic threads and 2 helper threads. The mainadvantage of the proposed model is that the threads canshare the global information such as data cache and pathtranslation structure. Thus, like the MT model, it needs
+relatively small memory to maintain the global information.
+However, unlike the MT model, it can alleviate the synchro-nization overhead by limiting the total number of threads to7×N, where N is the number of processors in an SMP/SoC
+machine. In addition, by utilizing separate helper threads,the main threads do not block for I/O operations, thereby
+helping in improving performance.
+738 0 5 10 15020040060080010001200140016001800
+Number of PEsThroughputMP
+MTSPEDAMPEDPIPELINED
+0 5 10 15020040060080010001200140016001800
+Number of PEsThroughputMPMTSPEDAMPEDPIPELINED
+0 5 10 15020040060080010001200140016001800
+Number of PEsThroughputMPMTSPEDAMPEDPIPELINED
+0 5 10 15020040060080010001200140016001800
+Number of PEsThroughputMPMTSPEDAMPEDPIPELINED
+(a) 500 Clients (b) 1500 Clients (c) 2000 Clients (d) 2500 Clients
+Figure 8: Performance Comparison of Web server models by Varying the Number of Clients with the Penn
+State CSE trace
+A simulation-based performance analysis of the prior four
+server models and the proposed PIPELINED model with sixWeb server traces shows that the proposed server architec-ture can deliver the best performance across various systemconﬁgurations and workloads. The MT and AMPED mod-els are close competitors with the PIPELINED model for
+several system conﬁgurations, speciﬁcally when the number
+of processors is small. However, the proposed model out-performed the MT and AMPED designs as the number ofclients or the number of processors increased. Furthermore,while the MT, SPED and AMPED models suﬀered due tolow application locality and inadequate system memory, the
+proposed model exhibited good throughput across all ex-
+perimental conditions. The MP model, as expected, is theworst performer.
+These results indicate that the PIPELINED server archi-
+tecture is a viable design option for SMP/SoC machines.
+We plan to implement the proposed model in an SMP ma-
+chine. In addition, we will analyze the performance impactof dynamic Web contents on the proposed model.
+8. REFERENCES
+[1] M. Arlitt and T. Jin. Workload Characterization of
+the 1998 World Cup Web Site, February 1999.http://www.hpl.hp.com/techreports/1999/HPL-1999-35R1.html.
+[2] M. F. Arlitt and C. L. Williamson. Web Server
+Workload Characterization: The Search for Invariants.ACM SIGMETRICS Performance Evaluation Review ,
+24(1):126–137, 1996.
+[3] L. A. Barroso, J. Dean, and U. Hlzle. Web Search for
+a Planet: The Google Cluster Architecture. IEEE
+Micro , 23(02):22–28, 2003.
+[4] G. Bell and J. Gray. What’s Next in
+High-Performance Computing? Communications of
+the ACM , 45(2):91–95, 2002.
+[5] L. Benini and G. D. Micheli. Networks on Chips: A
+New SoC Paradigm. IEEE Computer , 35(1):70–78,
+2002.
+[6] A. Bestavros, R. L. Carter, M. E. Crovella, C. R.
+Cunha, A. Heddaya, and S. A. Mirdad.Application-level Document Caching in the Internet.
+InProceedings of the 2nd International Workshop on
+Services in Distributed and Networked Environments ,
+page 166, 1995.
+[7] P. Cao and S. Irani. Cost-Aware WWW Proxy
+Caching Algorithms. In Proceedings of the 1997Usenix Symposium on Internet Technologies and
+Systems (USITS-97) .
+[8] V. Cardellini, E. Casalicchio, M. Colajanni, and P. S.
+Yu. The State of the Art in Locally Distributed
+Web-Server Systems. ACM Computing Surveys
+(CSUR) , 34(2):263–311, 2002.
+[ 9 ] E .V .C a r r e r a ,S .R a o ,L .I f t o d e ,a n dR .B i a n c h i n i .
+User-Level Communication in Cluster-Based Servers.
+InProceedings of the Eighth International Symposium
+on High-Performance Computer Architecture(HPCA’02) , pages 248–259, 2002.
+[10] D. Edenfeld, A. B. Kahng, M. Rodgers, and
+Y. Zorian. 2003 Technology Roadmap for
+Semiconductors. IEEE Computer , 37(1):47–56, 2004.
+[11] S. D. Gribble. UC Berkeley Home IP HTTP Traces,
+July 1997. http://www.acm.org/sigcomm/ITA/.
+[12] E. P. Markatos. Main Memory Caching of Web
+Documents. In Proceedings of the ﬁfth international
+World Wide Web conference on Computer networksand ISDN systems , pages 893–905, 1996.
+[13] V. Pai, P. Druschel, and W. Zwaenepoel. Flash: An
+Eﬃcient and Portable Web Server. In Proceedings of
+the USENIX 99 Annual Technical Conference , June
+1999.
+[14] S. PalChaudhuri, R. Kumar, and A. K. Saha. A Web
+Server Architecture for Symmetric MultiprocessorSystem. Project Report for Comp520, Department ofComputer Science, Rice University, December 2000.
+[15] PC Magazine. Intel Serves up Double Chips, Sep.
+2004. http://www.pcmag.co.uk/news/1158033.
+[16] Pennsylvania State University. http://www.psu.edu,
+2004.
+[17] Pennsylvania State University Computer Science &
+Engineering. http://www.cse.psu.edu, 2004.
+[18] The Apache Software Foundation. The Apache HTTP
+Server Project, 2003. http://httpd.apache.org.
+[19] Western Digital Corporation. Enterprise Hard Drives,
+2004. http://www.westerndigital.com/en/products/.
+[20] T. Wilson. E-Biz Bucks Lost Under SSL Strain, May
+1999. Available fromhttp://www.internetwk.com/lead/lead052099.htm .
+[21] Zeus Technology Limited. Zeus Web Server, 2003.
+Available from http://www.zeus.com/ .
+739 
+View publication statsView publication stats

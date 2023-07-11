@@ -1,0 +1,149 @@
+Information Technology and Libraries at 50:  
+The 1980s in Review  Mark Dehmlow  
+ 
+INFORMATION TECHNOLO GY AND LIBRARIES | SEPTEMBER  2018  8 
+ 
+ 
+Mark Dehmlow  (mdehmlow@nd.edu ) is Director, Library Information Technology  at the 
+Hesburgh Libraries, University  of Notre Dame .  
+My view of library technology in the 1980s through the lens of Journal of Library Automation 
+(JOLA)  and its successor Information Technology and Libraries  (ITAL)  is a bit skewed by my age. I 
+am a Gen -Xer and much of my professional perspective has been shaped by the last two decades in 
+libraries. While I am cognizant of our technical past, my perspective is very much grounded in the 
+technical present. In a way, I think that context made my experience reviewing the 1980s in JOLA  
+and ITAL  all the more fun.  
+The most pronounced event for the journal during the 1980s was the transition from the Journal 
+of Library Automation  to Information Technology and Libraries  betwee n 1981 to 1982. The 
+rationale for this change is perhaps best captured through the context set in the guest editorial  
+“Old Wine in New Bottles?” by Kenney in the first issue of ITAL : “Proliferating technologies, the 
+trend toward integration of some of thes e technologies into new systems, and rapidly increasing 
+adoption of technology -base d systems of all types in libraries .…”1 The article grounds us in the 
+anxieties and challenges of the decade  surrounding an accelerating change in technology . Libraries 
+wer e evolving from implementing systems of “automation,” a term that focuses more on 
+processes, to broadening their view to “information technology,” which is more of a discipline — 
+an ecosystem made up of technology, process, systems, standards, policies, et c. In a way, the 
+article acknowledges the departure of libraries from their adolescent technological pasts to their 
+young adult present for which the 80s would be the background.  
+Perhaps no other event is more technologically significant during the decade than the 
+standardization of the internet. While the concept of networks and a network of networks, e.g. the 
+internet, was conceptualized in the 1960s, it was the development of the TCP/IP network protocol 
+that is the most consequential event because it mad e it possible to interconnect computer systems 
+using a common means of communication . While the internet wouldn’t become ubiquitously 
+popularized until the early 1990s with the emergence of the world wide web, the internet was 
+active and alive well before that and, in its early state, was critical  to the emergence and evolution 
+of library technologies. From the first issue through the last of the 1980s, ITAL  reference s the term 
+“online” frequently. The “online” of the 80s however was largely text based, whe re systems were 
+interconnected using lightweight terminal s to navigate browse and search systems. It was not 
+unlike a massive “choose your own adventure book,” skipping from menu to menu to find what 
+you were looking for.  
+Throughout my review, I was happy to see a small, but significant, percentage of international 
+articles that focused on character sets, automation, and collection comparisons in countries like 
+Kuwait, Australia, China, and Israel. Diversity is a cornerstone for LITA and ALA and the journal  
+has continued this trend to encourage the submission of articles from outside of the U.S . The 
+1980s volumes of ITAL  traversed a plethora of topics ranging from measuring system  
+THE 1980S IN R EVIEW  | DEHMLOW  9 
+https://doi.org/10.6017/ital.v37i 3.10749 
+performance (efficiency was important during a time when computing was relativ ely slow and 
+expensive) to how to use library systems to provide data that can be used to make business 
+decisions. Over the decade, there was a significant focus on library organizations coming to terms 
+with new technology , e.g. the automation of circulati on, acquisitions, and the MARC bibliographic 
+record. There were several articles that discussed the complications, costs, and best practices for 
+converting card -catalog metadata to electronic records and several other articles that detailed 
+large barcoding  projects. The largest number of articles on a single topic focused on the 
+automation and management of authority control in automated library systems. There were 
+articles on the emergence of research databases often delivered as applications on CD-ROMs  
+which would then be  installed on microcomputers. The term “microcomputer” was frequently 
+used because the  80s saw the  emergence of the personal computer in the work environment, a 
+transformative step in enabling staff and patrons alike to access online libra ry services and 
+applications to support their research and work. Electronic mail was in its infancy and became a 
+novel way to share information with end users across a campus. Several articles focused on the 
+physical design of search terminals and optimizi ng the ergonomics of computers. There were also 
+many articles about designing the best OPAC interface for users, ranging from how to present 
+bibliographic records to users , to what information should be sent to printers, to early efforts to 
+extend local ca talogs with article -based metadata.  
+Many of these topics have parallels today. Instead of only analyzing statistical usage data we can 
+pull from our systems, libraries are striving to develop predictive analytics, leveraging big -data 
+from across an assortm ent of institutions. I found the 1988 article “Investigating Computer 
+Anxiety in an Academic Library,” which examines staff resistance to technology and change to be 
+as apropos today as it was then.2 CD-ROMs  have gone the way of the feathered and overly ha ir-
+sprayed coifs of the 80s and have largely been superseded by hard drives and solid state flash 
+media that can hold significantly more data and can transfer data more rapidly . The current 
+decade of the 2010s has been dedicated to providing the optimal search experience for our end 
+users as we have broadened our efforts to the discovery of all scholarly information, not just what 
+is held in our collections. And of course, inste ad of adding a few article abstracting  resources to 
+our catalogs in an innovative, but difficult to sustain manner, the commercial sector has created 
+web -scale mega -indexes that are integrated with our catalogs and offer the promise of searching a 
+predomin ant amount of the scholarly record.  
+There was a really interesting thread of articles over the decade that traced the evolution of the 
+ILS in libraries. There were articles about how to develop automation systems for libraries, the 
+various functions that c ould be automated — cataloging, circulation, acquisitions, etc. — and 
+evaluation projects for commercial systems. If the 2000s was the era of consolidation, the early 
+1980s could easily represent the era of proliferation. The decade nicely traces the first  two 
+generations of library systems , starting with  university -developed automation and database 
+back ed systems and the migration of many of those systems to vendors . The Northwestern 
+University -based NOTIS system was referenced a lot and there were some me ntions of OCLC’s 
+acquisition and distribution of the LS/2000 system. This part of our automation history is a 
+palpable reminder that libraries have been innovative leaders in technology  for decades, often 
+developing systems ahead of the commercial industry  in an effort to meet our evolving service 
+portfolios. This early strategy for libraries mirrors recent developments of institutional 
+repositories, Current Research Information Systems ( CRISs ), and faculty profiling systems like 
+VIVO that were developed be fore the commercial sector saw the feasibility of commercialization .  
+INFORMATION TECHNOLO GY AND LIBRARIES | S EPTEMBER 2018  10 
+ 
+The cycle of selecting and implementing a new integrated library system is something that m any 
+organizations are faced with again .  The only difference is that the commercial sector has e ntered 
+into the development of the 4th or 5th generation of integrated library systems, many of which are 
+coming with data services integrated and most of them are implemented in the cloud . 
+In addition to seeing our technically rudimentary past, there were  several articles over the decade 
+that discussed especially innovative ideas or that anticipated future technolog ies. A 1983 article 
+by Tamas Doszkocs which was written long before  the emergence of  Google is an early revelation 
+that regular patrons struggl e to use expert systems that require normalized and Boolean  
+searching strategies. Not surprising is the conclusion that users lean organically toward natural 
+language searching , but even then we were having the expert experience vs. intuitive experience 
+debate in the profession : “The development of alternative interfaces, specifically designed to 
+facilitate direct end user interaction in information retrieval systems, is a relatively new 
+phenomenon .”3 The 1984 article , “Packet Radio for Library Automation,”  is about eliminating the 
+challenges of retrofitting buildings with cabling to connect LAN network s by using radio based 
+interfaces.4 Could this be  an early precursor to WiFi ? There is the 1985 article titled 
+“Microcomputer Based Faculty -Profile” about usi ng a local database management application on a 
+PC to create an index of faculty publications and university publishing trends.5 This is nearly three 
+decades before the popularization of the CRIS and faculty profile system . In 1986 , there is an 
+article “Integrating Subject Pathfinders into a GEAC ILS: A MARC -Formatted Record Approach,” an 
+article that made me think about how library websites are structured, and the current trend of 
+developing online research guides and making them discoverable  in our websites as a research 
+support tool.6 And finally, I was struck by the innovative approach in 1987’s  “Remote Interactive 
+Online Support,” wherein the authors wrote about using hardware to make simultaneous shell 
+connections to a search interface s o they could give live search guidance to researchers remotely.7 
+We take remote technical support for granted now, but in the late 80s, this required several 
+complicated steps to achieve.  
+The 80s were an exciting time for technology development and a decad e that is rife with technical 
+evolution. I think this quote from the article “1981 and Beyond: Visions and Decisions ” by Fasana 
+in the Journal of Library Automation  best elucidates the deep connection between the past and the 
+future, “Library managers are currently confronted with a dynamic environment in which they are 
+attempting simultaneously to plan library services and system s for the future, and to control the 
+rate and direction of change.”8 This still holds true . Library managers are still planning s ervices in 
+a rapidly changing environment, except, I like to think we have learned to live with change that we 
+cannot control the rate nor direction of.  
+ 
+1 B. Kenney, “Guest Editorial: Old Wine in New Bottles?,” Information Technology and Libraries , 1 
+no. 1 (March 1982), p. 3.  
+2 MaryEllen Sievert, Rosie L. Albritton, Paula Roper, and Nina Clayton , “Investigating Computer 
+Anxiety in an Academic Library ,” Information Technology and Libraries 7 no. 3 (September 
+1988), pp. 243 -252.  
+   
+THE 1980S IN R EVIEW  | DEHMLOW  11 
+https://doi.org/10.6017/ital.v37i 3.10749 
+ 
+3 Tamas E. Doszkocs, “ CITE NLM: Natural -Language Searching in an Online Catalog ,” Information 
+Technology and Libraries  2 no. 4 (December 1983), p. 364 . 
+4 Edwin B. Brownrigg, Clifford A. Lynch, and Rebecca Pepper , “Packet Radio for Library 
+Automation ,” Information Technology and Libr aries  3 no. 3 (September 1984 ), pp. 229 -244.  
+5 Vladimir T.  Borovansky  and George S.  Machovec , “Microcomputer Based Faculty -Profile ,” 
+Information Technology and Libraries  4 no. 4 (December 1985 ), pp. 300 -305.  
+6 William E.  Jarvis  and Victoria E.  Dow, “ Integrating Subject Pathfinders into a GEAC ILS: A MARC -
+Formatted Record Approach ,” Information Technology and Libraries  5 no. 3 (September 1986) , 
+pp. 213 -227.  
+7 S. F. Rossouw  and C. van Rooyen , “Remote Interactive Online Support ,” Information Techn ology 
+and Libraries  6 no. 4 (December 1987) , pp. 311 -313.  
+8 Paul J. Fasana, “ 1981 and Beyond: Visions and Decisions ,” Journal of Library Automation  13 no. 2 
+(June 1980) , p. 96. 

@@ -1,0 +1,81 @@
+Content s
+Starting fr om S cratch                                                                                                                              6
+Start with a f eature, not a la yout. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7
+Detail come s later . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10
+Don’t design too much . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 13
+Choose a per sonality . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 17
+Limit y our choice s. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 24
+Hier archy is E verything                                                                                                                      29
+Not all elements ar e equal . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 30
+Size isn ’t everything . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 32
+Don’t use gr ey text on color ed back grounds . . . . . . . . . . . . . . . . . . . . . 36
+Emphasiz e by de-emphasizing . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 39
+Labels ar e a last r esort. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 41
+Separ ate visual hier archy from document hier archy. . . . . . . . . . . . . . . 46
+Balance w eight and contr ast. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 48Semantics ar e secondar y. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 52
+Layout and Spacing                                                                                                                                55
+Start with too much white space . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 56
+Establish a spacing and sizing s ystem . . . . . . . . . . . . . . . . . . . . . . . . . . 60
+You don ’t have to fill the whole scr een . . . . . . . . . . . . . . . . . . . . . . . . . . 65
+Grids ar e overrated . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 72
+Relativ e sizing doe sn’t scale . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 79
+Avoid ambiguous spacing . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 83
+Designing T ext                                                                                                                                           87
+Establish a type scale . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 88
+Use good f onts . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 94
+Keep y our line length in check . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 99
+Baseline , not center . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 102
+Line-height is pr opor tional . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 105
+Not e very link needs a color . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 109
+Align with r eadability in mind . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 111
+Use letter -spacing eS ectiv ely. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 115
+Working with C olor                                                                                                                               118
+Ditch he x for HSL . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 119
+You need mor e color s than y ou think . . . . . . . . . . . . . . . . . . . . . . . . . . . 123
+Define y our shade s up fr ont. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 129
+Don’t let lightne ss kill y our satur ation . . . . . . . . . . . . . . . . . . . . . . . . . . 133
+Greys don ’t have to be gr ey. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 139
+Accessible doe sn’t have to me an ugly . . . . . . . . . . . . . . . . . . . . . . . . . . 142
+Don’t rely on color alone . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 146Creating Depth                                                                                                                                       149
+Emulate a light sour ce. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 150
+Use shado ws to con vey ele vation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 158
+Shado ws can ha ve two par ts. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 163
+Even flat de signs can ha ve depth . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 167
+Overlap elements to cr eate la yers. . . . . . . . . . . . . . . . . . . . . . . . . . . . . 170
+Working with Image s                                                                                                                         173
+Use good photos . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 174
+Text needs consistent contr ast. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 176
+Everything has an intended siz e. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 181
+Beware user -uploaded content . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 187
+Finishing T ouche s                                                                                                                                 191
+Super char ge the def aults . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 192
+Add color with accent bor ders. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 195
+Decor ate y our back grounds . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 198
+Don’t overlook empty st ates. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 203
+Use fewer bor ders. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 206
+Think outside the bo x. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 210
+Leveling U p                                                                                                                                                215Layout and SpacingStart with too much white space
+One of the e asiest ways to cle an up a de sign is to simply giv e every element
+a little mor e room to br eathe .
+Sounds simple enough, right? So ho w come w e don ’t usually do it?White space should be r emo ved, not added
+When de signing f or the w eb, white space is almost alw aysadded to a de sign
+— if something look s little too cr amped, y ou add a bit of mar gin or padding
+until things look better .
+The pr oblem with this appr oach is that elements ar e only giv en the minimum
+amount of br eathing r oom nece ssary to not look activ ely bad . To mak e
+something actually look great, you usually need mor e white space .Start with too much white space 57A better appr oach is to st art by giving something way too m uch space , then
+remo ve it until y ou’re happ y with the r esult.
+Start with too much white space 58You might think y ou’d end up with too much white space this w ay, but in
+practice , what might seem lik e “a little too much ” when f ocused on an
+individual element ends up being closer to “ just enough ” in the conte xt of a
+complete UI.
+Dens e UIs ha ve their place
+While inter faces with a lot of br eathing r oom almost alw ays feel cle aner and
+simpler , ther e are cer tainly situations wher e it mak es sense f or a de sign to be
+much mor e compact.
+For example , if you’re de signing some sor t of dashboar d wher e a lot of
+information needs to be visible at once , packing that inf ormation together so
+it all fits on one scr een might be w orth making the de sign f eel mor e bus y.
+The impor tant thing is to mak e this a deliber ate decision inste ad of just
+being the def ault. It’ s a lot mor e ob vious when y ou need to r emo ve white
+space than it is when y ou need to add it.Start with too much white space 59

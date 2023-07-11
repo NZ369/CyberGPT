@@ -1,0 +1,92 @@
+Functions (Fission)
+This guide aims to help you get started with Hogwarts Functions (Fission). After following this guide, you should be able to create, test, and 
+deploy your first Function on the Hogwarts platform!
+You can view the functions and create your own on Spellbook. Look for the f(x) icon!
+ 
+Vocabulary
+Creating your Function
+Testing your Function
+Examples
+Feedback
+More information & links
+Official docs
+Vocabulary
+Before starting with Fission, here are a few Fission specific concepts you should know about:
+Serverless Framework
+Functions
+Triggers
+Environment
+Creating your Function
+The basics for creating your initial Python Function are the following:
+1. Clone templateA framework for building, packaging, and deploying applications without having to spin up your own REST API. This allows you as the 
+user to develop your code without worrying about any of the infrastructure to support it!
+A Fission Function is what Fission is executing, which in Hogwart's case is the code you develop. These functions are built with the 
+template provided. Functions are then pointed to an entry point that defines the main method of your function. These functions are all 
+based in Flask.
+It is important to note, these functions are stateless. 
+The invocation of functions is controlled by what is called, Triggers. This trigger in Hogwarts is a GET, PUT, POST, PATCH, or DELETE 
+request to your function. Once that request is called, either through the browser or otherwise, your function will be run. You can capture 
+these requests via the Flask library.
+Fission functions can be run in the Hogwarts Pyspark Python environment and have access to all the libraries that are within it. Extra 
+libraries can be installed with the requirements.txt file in the template.
+Extra versions of the Python environment are available: Python 3.7, 3.8, and 3.9. These do not come with preinstalled packages and all 
+packages required by your function will need to be in the requirements.txt.2. Authentication
+3. Logging
+4. Deploy your functionThere is a template repository that you can use to get started. If your repository is inside the CCCS Github, you are ready to go. If you 
+are creating the function under another group or your user, you must allow sa-spellbook as a collaborator and message in the 
+Microsoft Team's channel to get this approved. 
+Built into the Python environment is an authorization package that allows you to control access to the function. The wrapper function 
+defaults to ALPR members but can be any valid Azure security group ID.
+ 
+Custom azure Security Group
+ 
+Note: By default, all functions deployed in U are restricted to the hogwarts-unclass-users-sg and all functions deployed in PB are 
+restricted to the ALPR group.
+1
+2
+3
+4
+5from hogwartsfission import auth
+@auth.requires_auth ()
+def main():
+    return "You have ALPR access!"
+1
+2
+3
+4
+5
+6
+7from hogwartsfission import auth
+AZURE_SEC_GROUP = "abcdef-1234-ghijk-567890"
+@auth.requires_auth (AZURE_SEC_GROUP )
+def main():
+    return "You are in my custom security group!"
+When logging in the Spellbook Functions environment, you must use the flask logger as it does not support print() for logging. To do 
+this, import current_app from flask.
+ 
+1
+2
+3
+4
+5from flask import current_app
+def main():
+    current_app .logger.info("This is a log message" )
+    return "Hello, World"
+When creating a function, you will be required to fill out the following information.Testing your Function
+Here is how to test your Function
+Testing
+Examples
+To quick start your Function journey, the Hogwarts team offers a repository containing Function templates that can help you start your next 
+Function.
+Function ExamplesMore information regarding these fields is in the How to Get Started prompt on the right side of the screen here.  After creating your 
+function, you will have to deploy it to enable it via this button:
+After you have deployed your function, logs will begin to appear as Python validation and logging information become available. This 
+will be shown in Spellbook on the right-hand side after deploying.
+These logs can be filtered and searched via time queries shown below.
+Feedback
+We are always looking to improve our documentation. If you encountered any obstacles while going through this guide, feel free to reach 
+out to us through our Microsoft teams support channel.
+More information & links
+Official docs
+Fission Concepts
+More Fission Functions

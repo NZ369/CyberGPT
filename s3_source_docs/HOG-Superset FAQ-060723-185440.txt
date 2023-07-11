@@ -1,0 +1,20 @@
+Superset FAQ
+Superset Dashboards
+What is a Filter set?
+GWWK User ID Dashboard
+Placeholder Question
+GWWK IP  Dashboard
+Why are there 2 date ranges? One for Time, and another for DNS?
+Superset Dashboards
+What is a Filter set?
+Filter sets allow you to save a predefined state for the filters in a dashboard. For example, if a dashboard has a time filter, and filters on the 
+last 24 hours by default, you can create a filter set that would instead allow you to filter on whatever time period you wanted (such as the 
+last 72 hours). However, filter sets become very useful for times when you are working with dashboards that have multiple filters, and you 
+would like to have multiple pre-defined configurations of the filters.
+GWWK User ID Dashboard
+Placeholder Question
+Placeholder answer
+GWWK IP Dashboard
+Why are there 2 date ranges? One for Time, and another for DNS?
+This is because …
+ 
