@@ -48,8 +48,8 @@ This is the result of `print(df.head())` for each dataframe:
 CODE_PLOT_SUFFIX_WITH_DF = """
 Output only the python code for ploting the result, and not a description.  
 The plot should be assigned to a matplotlib variable called 'fig', 
-and you should not output 'plt.show()'.  Don't load any new data.  
-Include labels on the x and y axes.
+and you should not output 'plt.show()'.  Don't use pd.read_csv to load new data,
+use only the existing variable 'df'.
 This is the result of printing rows from the inital dataframe:
 {df_content}
 
@@ -87,8 +87,8 @@ Question: {input}
 CODE_PLOT_SUFFIX_NO_DF = """
 Output only the python code for ploting the result, and not a description.  
 The plot should be assigned to a matplotlib variable called 'fig', 
-and you should not output 'plt.show()'.  Don't load any new data.  
-Include labels on the x and y axes.
+and you should not output 'plt.show()'.  Don't use pd.read_csv to load new data,
+use only the existing variable 'df'. 
 Question: {input}
 {agent_scratchpad}
 """

@@ -1,3 +1,4 @@
+import os
 import streamlit as st
 import time
 import numpy as np
@@ -6,6 +7,17 @@ import ast
 from streamlit_extras.add_vertical_space import add_vertical_space
 from agents.csv_agent import mitre_csv_agent, df
 from tools.qa_tools import create_qa_retriever
+import importlib
+import sys
+
+
+# plot_file = "plt_tmp.py"
+
+# with open(plot_file, 'w') as f:
+#     print(f"Clearing {plot_file}")
+#     f.write("")
+
+# import plt_tmp
 
 st.set_page_config(page_title="Mitre CSV Demo", page_icon="📈")
 
@@ -14,6 +26,19 @@ st.sidebar.header("Mitre CSV")
 st.write(
     """This page loads information from MITRE ATT&CK for the LLM to query."""
 )
+
+# CC - Display the plot with a few options.
+def display_plot(st, fig):
+    try:
+        print("Plot 1")
+        st.pyplot(fig.figure)
+    except:
+        try:
+            print("Plot 2")
+            st.pyplot(fig.figure_)
+        except:
+            print("Plot 3")
+            st.pyplot(fig)
 
 # PJ - function to check for valid python code
 def is_valid_python(code):
@@ -100,51 +125,44 @@ if user_input:
 
 # Allow to download as well
 download_str = []
+
 # Display the conversation history using an expander, and allow the user to download it
 with st.expander("Conversation", expanded=True):
     for i in range(len(st.session_state['generated'])-1, -1, -1):
         st.info(st.session_state["past"][i],icon="🙂")
-#        st.success(st.session_state["generated"][i], icon="🤖")
+        #st.success(st.session_state["generated"][i], icon="🤖")
         st.write(st.session_state["generated"][i])
-
-# PJ - example plot
-#        ai_content = """
-#import numpy as np
-#import matplotlib.pyplot as plt
-#arr = np.random.normal(1, 1, size=100)
-#fig, ax = plt.subplots()
-#ax.hist(arr, bins=20)
-#"""
 
         ai_content=st.session_state["generated"][i]
         #print(ai_content)
 
         # PJ - remove first and last lines (which are triple quotes)
-        ai_content=ai_content[ai_content.find('\n')+1:ai_content.rfind('\n')]
+        ai_content=ai_content[ai_content.find('```\n')+3:ai_content.rfind('\n')]
+        print("-"*80)
+        print(ai_content)
+        print("-"*80)
 
         if is_valid_python(ai_content):
             ai_content = "\n".join([f"    {line}" for line in ai_content.split("\n")])
             print(ai_content)
-            with open('plt_tmp.py', 'w') as f:
-                f.write(f"""
-def plot_code(df):
-{ai_content}
-    return fig
-"""
-                       )
+            plot_func_str = f"""\ndef plot_code(df):\n{ai_content}\n    return fig\n"""
+            # CC - Save for reference?
+            with open(f"plt_tmp{i}.py", 'w') as f:
+                f.write(plot_func_str)
 
             print("Valid python - about to load plot.")
+            plot_module = importlib.import_module(f"plt_tmp{i}")
 
-            from plt_tmp import plot_code
-            fig=plot_code(df)
+            # print(sys.modules)
 
-            try:
-                st.pyplot(fig.figure)
-            except:
-                try:
-                    st.pyplot(fig.figure_)
-                except:
-                    st.pyplot(fig)
+            # importlib.reload(plt_tmp)
+            # print("Plot functions:")
+            # print(dir(plt_tmp))
+
+            # plot_code = getattr(plt_tmp, f"plot_code{i}")
+            # fig=plot_code(df)
+            fig = plot_module.plot_code(df)
+            display_plot(st, fig)
             
             print("Should have plotted.")
 
