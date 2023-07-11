@@ -25,24 +25,10 @@ def get_text():
     )
     return input_text
 
-# Function for starting a new chat
-def new_chat():
-    """
-    Clears session state and starts a new chat.
-    """
-    save = []
-    for i in range(len(st.session_state['generated'])-1, -1, -1):
-        save.append("User:" + st.session_state["past"][i])
-        save.append("Bot:" + st.session_state["generated"][i])        
-    st.session_state["stored_session"].append(save)
-    st.session_state["generated"] = []
-    st.session_state["past"] = []
-    st.session_state["input"] = ""
-    
 # Set Streamlit page configuration
 st.set_page_config(
     page_title="CyberGPT",
-    page_icon="📃",
+    page_icon="🔎",
     layout='wide'
 )
 image = Image.open('assets/logo.png')
@@ -65,42 +51,43 @@ with st.sidebar:
     st.title('CyberGPT')
     st.markdown('''
     ## About
-    CyberGPT to query and find documents, technical documents and papers stored in our index database.
+    Place holder description
     ''')
-    # Add a button to start a new chat
-    st.button("New Chat", on_click = new_chat, type='primary')
+    
+    # Swapping profiles
+
     add_vertical_space(2)
-    st.write('Made with ❤️ by GeekWeek Team 5.2')
-'''
+    st.write('Made with ❤️ by GeekWeek Team 5.2 & Cyber Stance Team 4.4')
+
 # Get the user input
 user_input = get_text()
 
 # Processes the user input
-if user_input:
-    st.session_state.past.append(user_input)
+#if user_input:
+#    st.session_state.past.append(user_input)
     # Try block handles any error with not parsing LLM output
-    try:
-        # Calls the base agent
-        output = qa_chain.run(question=user_input)
-        st.session_state.generated.append(output)
-    except Exception as e:
-        st.session_state.generated.append(str(e))
+#    try:
+#        # Calls the base agent
+#        output = qa_chain.run(question=user_input)
+#        st.session_state.generated.append(output)
+#    except Exception as e:
+#        st.session_state.generated.append(str(e))
 
 # Allow to download as well
-download_str = []
+#download_str = []
 # Display the conversation history using an expander, and allow the user to download it
-with st.expander("Conversation", expanded=True):
-    for i in range(len(st.session_state['generated'])-1, -1, -1):
-        st.info(st.session_state["past"][i],icon="🙂")
-        st.success(st.session_state["generated"][i], icon="🤖")
-        download_str.append("User: "+st.session_state["past"][i])
-        download_str.append("AI: "+st.session_state["generated"][i])
+#with st.expander("Conversation", expanded=True):
+#    for i in range(len(st.session_state['generated'])-1, -1, -1):
+#        st.info(st.session_state["past"][i],icon="🙂")
+#        st.success(st.session_state["generated"][i], icon="🤖")
+#        download_str.append("User: "+st.session_state["past"][i])
+#        download_str.append("AI: "+st.session_state["generated"][i])
     
     # Can throw error - requires fix
-    download_str = '\n\n'.join(download_str)
-    if download_str:
-        st.download_button('Download',download_str)
-'''
+#    download_str = '\n\n'.join(download_str)
+#    if download_str:
+#        st.download_button('Download',download_str)
+
 hide_menu_style = """
         <style>
         footer {visibility: hidden;}
