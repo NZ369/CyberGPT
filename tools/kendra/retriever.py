@@ -37,7 +37,11 @@ class KendraRetriever(BaseRetriever):
         # map to document
         documents = list(
             map(
+                # Parsing api request into documents
                 lambda doc: Document(page_content = doc[1], metadata={'source': doc[0]}),
+
+                # filtering out all data that is not not from HOG
+                # Code exists only for demo
                 filter(lambda doc: bucket['hog'] in doc[0] or bucket["data"] in doc[0], # 🐷
                        response
                 )
@@ -46,6 +50,17 @@ class KendraRetriever(BaseRetriever):
         print(len(documents))
         print(str(documents)[:1000]);
 
+        # Document list is empty -> then there is no relevant data on the query
+        # provide a single document that explains there is no data on the topic
+        # This significantly reduces hallucination
+        if len(documents) == 0:
+            documents = [
+                Document(
+                    page_content="No information available for the topic",
+                    metadata={'source': "404 Not Found"}
+                )
+            ]
+            
         return documents
     async def _aget_relevant_documents(
         self, query: str
