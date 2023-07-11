@@ -7,7 +7,7 @@ from llms.azure_llms import create_llm
 from tools.get_tools import tools
 
 llm = create_llm(max_tokens=2000, temp=0.5)
-memory = ConversationBufferWindowMemory(memory_key="chat_history", k=4, return_messages=True)
+memory = ConversationBufferWindowMemory(memory_key="chat_history", k=3, return_messages=True)
 base_agent = initialize_agent(tools, llm, agent=AgentType.CHAT_CONVERSATIONAL_REACT_DESCRIPTION, max_iterations=4, verbose=True, memory=memory)
 base_agent.agent.llm_chain.prompt.messages[0].prompt.template = """
 CyberGPT is an intelligent AI developed by the Canadian Center for Cyber Security. It assists users by answering questions, 
