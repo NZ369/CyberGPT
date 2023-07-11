@@ -101,6 +101,13 @@ Question: {input}
 {agent_scratchpad}
 """
 
+CODE_SUFFIX_NO_DF = """
+Output only the python code, not a description.
+Question: {input}
+{agent_scratchpad}
+"""
+
+
 
 CODE_SUFFIX_WITH_MULTI_DF = """
 Output only the python code, not a description.

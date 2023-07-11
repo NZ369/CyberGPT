@@ -11,6 +11,7 @@ from langchain.chains.router.llm_router import LLMRouterChain, RouterOutputParse
 from langchain.chains.router.multi_prompt_prompt import MULTI_PROMPT_ROUTER_TEMPLATE
 from langchain.prompts import PromptTemplate
 from langchain.agents.agent import AgentExecutor
+from pandas import DataFrame
 
 class PandasMultiPromptChain(MultiRouteChain):
     """
@@ -46,6 +47,7 @@ class PandasMultiPromptChain(MultiRouteChain):
     ) -> PandasMultiPromptChain:
 
         """Convenience constructor for instantiating from destination prompts."""
+
         destinations = [f"{p['name']}: {p['description']}" for p in prompt_infos]
         destinations_str = "\n".join(destinations)
         router_template = MULTI_PROMPT_ROUTER_TEMPLATE.format(

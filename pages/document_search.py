@@ -12,15 +12,14 @@ def get_text():
     Returns:
         (str): The text entered by the user
     """
-    input_text = st.text_area(
+    input_text = st.text_input(
         "You: ",
         st.session_state["input"],
         key="input",
         
         placeholder="Ask me anything ...",
         
-        label_visibility='hidden',
-         height=100
+        label_visibility='hidden'
     )
     return input_text
 

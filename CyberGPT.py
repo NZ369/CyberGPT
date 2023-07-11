@@ -5,6 +5,7 @@ from agents.base_agent import base_agent
 from tools.borealis_tools import borealis_processing
 from tools.opencti_tools import openCTI_search_processing
 from streamlit_extras.app_logo import add_logo
+#from utilities.plotting import check_if_display_plot
 from PIL import Image
 
 # Define function to get user input
@@ -14,9 +15,9 @@ def get_text():
     Returns:
         (str): The text entered by the user
     """
-    input_text = st.text_input("You: ", st.session_state["input"], key="input",
+    input_text = st.text_area("You: ", st.session_state["input"], key="input",
                             placeholder="Ask me anything ...", 
-                            label_visibility='hidden')
+                            label_visibility='hidden', height=100)
     return input_text
 
 # Function for starting a new chat
@@ -124,6 +125,7 @@ download_str = []
 for i in range(len(st.session_state['generated'])-1, -1, -1):
     st.info(st.session_state["past"][i],icon="🙂")
     st.success(st.session_state["generated"][i], icon="🤖")
+    #check_if_display_plot(st.session_state["generated"][i], i)
     download_str.append("User: "+st.session_state["past"][i])
     download_str.append("AI: "+st.session_state["generated"][i])
     

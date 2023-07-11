@@ -1,11 +1,8 @@
 # Import things that are needed generically
 from langchain.tools import BaseTool, Tool
 from typing import Any, Optional
-from langchain.chains import RetrievalQA
 from agents.csv_agent import mitre_csv_agent
 from llms.azure_llms import create_llm
-from uploaders.main import get_pdf_text, get_text_chunks, get_vectorstore
-from langchain.chains.conversation.memory import ConversationBufferWindowMemory
 
 tool_llm = create_llm()
 
@@ -16,7 +13,7 @@ from langchain.callbacks.manager import (
 
 class MitreCsvRetrievalTool(BaseTool):
     name = "Mitre Csv Retrieval"
-    description = "Use this tool for interacting with MITRE data. Includes information on malware techniques, software families, and mitigations."
+    description = "Use this tool for interacting with MITRE data. Includes information on malware techniques, software families, and mitigations.  Forward all user text to this tool."
 
     def _run(
         self, query: str, run_manager: Optional[CallbackManagerForToolRun] = None

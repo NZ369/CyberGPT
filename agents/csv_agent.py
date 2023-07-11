@@ -11,13 +11,9 @@ llm = create_llm(temp=0)
 
 llm.request_timeout = 30
 
-
-
 print("Creating CSV Agent.")
 combined_data = os.path.join("data", "combined.csv")
-df = pd.read_csv(combined_data)
-
-
+#df = pd.read_csv(combined_data)
 
 
 # mitre_dir = "../data"
@@ -72,10 +68,6 @@ def get_mitre_agent():
 
 
 mitre_csv_agent = get_mitre_agent()
-
-#mitre_csv_agent.run("What is the number of unique Techniques?")
-
-#mitre_csv_agent.run("What Techniques does FlawedAmmyy use?")
 
 print("Finished Creating CSV Agent.")
 
