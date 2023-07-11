@@ -10,9 +10,9 @@ def get_text():
     Returns:
         (str): The text entered by the user
     """
-    input_text = st.text_input("You: ", st.session_state["input"], key="input",
+    input_text = st.text_area("You: ", st.session_state["input"], key="input",
                             placeholder="Ask me anything ...", 
-                            label_visibility='hidden')
+                            label_visibility='hidden', height=100)
     return input_text
 
 # Function for starting a new chat
