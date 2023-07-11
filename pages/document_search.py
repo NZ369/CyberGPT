@@ -28,10 +28,7 @@ def new_chat():
     """
     Clears session state and starts a new chat.
     """
-    save = []
-    for i in range(len(st.session_state['generated'])-1, -1, -1):
-        save.append("User:" + st.session_state["past"][i])
-        save.append("Bot:" + st.session_state["generated"][i])        
+    save = []      
     st.session_state["stored_session"].append(save)
     st.session_state["generated"] = []
     st.session_state["past"] = []
