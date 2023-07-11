@@ -84,17 +84,16 @@ if user_input:
 # Allow to download as well
 download_str = []
 # Display the conversation history using an expander, and allow the user to download it
-with st.expander("Conversation", expanded=True):
-    for i in range(len(st.session_state['generated'])-1, -1, -1):
-        st.info(st.session_state["past"][i],icon="🙂")
-        st.success(st.session_state["generated"][i], icon="🤖")
-        download_str.append("User: "+st.session_state["past"][i])
-        download_str.append("AI: "+st.session_state["generated"][i])
-    
-    # Can throw error - requires fix
-    download_str = '\n\n'.join(download_str)
-    if download_str:
-        st.download_button('Download',download_str)
+for i in range(len(st.session_state['generated'])-1, -1, -1):
+    st.info(st.session_state["past"][i],icon="🙂")
+    st.success(st.session_state["generated"][i], icon="🤖")
+    download_str.append("User: "+st.session_state["past"][i])
+    download_str.append("AI: "+st.session_state["generated"][i])
+
+# Can throw error - requires fix
+download_str = '\n\n'.join(download_str)
+if download_str:
+    st.download_button('Download',download_str)
         
 hide_menu_style = """
         <style>
