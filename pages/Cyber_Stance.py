@@ -1,11 +1,18 @@
 import streamlit as st
 from streamlit_extras.add_vertical_space import add_vertical_space
 
-from agents.qa_agent import qa_chain
 from streamlit_extras.app_logo import add_logo
 
 from PIL import Image
 
+from tools.CyberStance.profile_form import generate_new_profile_form
+
+from enum import Enum
+
+class PageComponent(Enum):
+    PROFILE_GENERATION = 1
+    FORM_SELECTION = 2
+    DOCUMENT_QUERY = 3
 
 # Define function to get user input
 def get_text():
@@ -19,7 +26,7 @@ def get_text():
         st.session_state["input"],
         key="input",
         
-        placeholder="Ask me anything ...",
+        placeholder="",
         
         label_visibility='hidden'
     )
@@ -33,9 +40,10 @@ st.set_page_config(
 )
 image = Image.open('assets/logo.png')
 st.image(image, width=500)
-st.subheader("Cybersecurity Copilot: 📃 Document Search")
+st.subheader("Cybersecurity Copilot: Cyber Stance")
 
 # Initialize session states
+# AI stuff
 if "generated" not in st.session_state:
     st.session_state["generated"] = []
 if "past" not in st.session_state:
@@ -44,6 +52,13 @@ if "input" not in st.session_state:
     st.session_state["input"] = ""
 if "stored_session" not in st.session_state:
     st.session_state["stored_session"] = []
+
+# Form stuff
+if "user_profile" not in st.session_state:
+    st.session_state["user_profile"] = generate_new_profile_form()
+if "visible_components" not in st.session_state:
+    st.session_state["visible_components"] = set([PageComponent.PROFILE_GENERATION])
+
 
 # Set up sidebar with various options
 with st.sidebar:
@@ -60,7 +75,22 @@ with st.sidebar:
     st.write('Made with ❤️ by GeekWeek Team 5.2 & Cyber Stance Team 4.4')
 
 # Get the user input
-user_input = get_text()
+
+# Name forum
+if PageComponent.PROFILE_GENERATION in st.session_state["visible_components"]:
+    st.write("# User Profile")
+    st.session_state["visible_components"].add(PageComponent.FORM_SELECTION)
+
+    # Add next section once form is completed
+    if st.session_state["user_profile"].completed() and not PageComponent.FORM_SELECTION in st.session_state["visible_components"]:
+        st.session_state["visible_components"].add(PageComponent.FORM_SELECTION)
+
+if PageComponent.FORM_SELECTION in st.session_state["visible_components"]:
+    st.write("# Select Form")
+
+if PageComponent.DOCUMENT_QUERY in st.session_state["visible_components"]:
+    user_input = get_text()
+
 
 # Processes the user input
 #if user_input:
