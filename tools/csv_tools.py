@@ -1,7 +1,7 @@
 # Import things that are needed generically
 from langchain.tools import BaseTool, Tool
 from typing import Any, Optional
-from agents.csv_agent import mitre_csv_agent
+from agents.csv_agent import get_mitre_agent
 from llms.azure_llms import create_llm
 
 tool_llm = create_llm()
@@ -10,6 +10,8 @@ from langchain.callbacks.manager import (
     AsyncCallbackManagerForToolRun,
     CallbackManagerForToolRun,
 )
+
+mitre_csv_agent = get_mitre_agent()
 
 class MitreCsvRetrievalTool(BaseTool):
     name = "Mitre Csv Retrieval"

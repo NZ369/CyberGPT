@@ -22,6 +22,7 @@ def check_if_display_plot(ai_content, i):
 
         print("Valid python - about to load plot.")
         plot_module = importlib.import_module(f"plt_tmp{i}")
+        importlib.reload(plot_module)
 
         df = pd.read_csv("data/combined.csv")
         fig = plot_module.plot_code(df)

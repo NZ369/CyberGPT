@@ -3,7 +3,6 @@ from llms.azure_llms import create_llm
 from tools.prebuilt_tools import python_tool, wikipedia_tool, duckduckgo_tool, human_tool
 #from tools.prebuilt_tools import shell_tool
 from tools.qa_tools import qa_retrieval_tool
-from tools.csv_tools import mitre_retrieve_tool
 
 from tools.borealis_tools import borealis_tool
 from tools.opencti_tools import openCTI_tool
@@ -23,7 +22,6 @@ base_tools=[
     shodan_ip_lookup_tool,
     ipapi_tool,
     kendra_retrieval_tool,
-    mitre_retrieve_tool
 ]
 
 qa_tools=[

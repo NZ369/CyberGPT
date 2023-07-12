@@ -2,8 +2,13 @@ import streamlit as st
 from streamlit_extras.app_logo import add_logo
 from streamlit_extras.add_vertical_space import add_vertical_space
 from tools.qa_tools import create_qa_retriever
-from agents.csv_agent import mitre_csv_agent
+from agents.csv_agent import get_mitre_agent
 from utilities.plotting import check_if_display_plot
+
+mitre_csv_agent = get_mitre_agent()
+# Experimental - use chat_history with memory in prompt
+# Didn't seem to work when I tried it.
+#mitre_csv_agent = get_mitre_agent(use_memory=True)
 
 st.set_page_config(page_title="Mitre CSV Demo", page_icon="📈")
 
