@@ -9,6 +9,8 @@ class Field:
         self.value: str | None = value
 
     def is_valid(self) -> bool:
+        if self.value == None:
+            return False
         cond, _ = self._input_parser(self.value)
         return cond
 
