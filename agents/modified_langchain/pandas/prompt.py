@@ -43,19 +43,30 @@ FUNCTIONS_WITH_MULTI_DF = """
 This is the result of `print(df.head())` for each dataframe:
 {dfs_head}"""
 
-
 # New prompts for prompt switching
+CHAT_HISTORY_SUFFIX = """
+Begin!
+{chat_history}
+Question: {input}
+{agent_scratchpad}
+"""
+
+NO_CHAT_HISTORY_SUFFIX = """
+Begin!
+Question: {input}
+{agent_scratchpad}
+"""
+
+
 CODE_PLOT_SUFFIX_WITH_DF = """
-Output only the python code for ploting the result, and not a description.  
+Output ONLY the python code for ploting the result, and NOT a description.  
 The plot should be assigned to a matplotlib variable called 'fig', 
 and you should not output 'plt.show()'.  Don't use pd.read_csv to load new data,
 use only the existing variable 'df'.
 This is the result of printing rows from the inital dataframe:
 {df_content}
 
-Begin!
-Question: {input}
-{agent_scratchpad}"""
+"""
 
 
 CODE_TABLE_SUFFIX_WITH_DF = """
@@ -65,24 +76,19 @@ two copies of "```" at the start of the block.
 This is the result of printing rows from the inital dataframe:
 {df_content}
 
-Begin!
-Question: {input}
-{agent_scratchpad}"""
+"""
 
 DESC_SUFFIX_WITH_DF = """
 Return a description of the results, not the intermediate code.
 This is the result of printing rows from the inital dataframe:
 {df_content}
 
-Begin!
-Question: {input}
-{agent_scratchpad}"""
+"""
 
 
 DESC_SUFFIX_NO_DF = """
 Return a description of the results, not the intermediate code.
-Question: {input}
-{agent_scratchpad}
+
 """
 
 CODE_PLOT_SUFFIX_NO_DF = """
@@ -90,21 +96,18 @@ Output only the python code for ploting the result, and not a description.
 The plot should be assigned to a matplotlib variable called 'fig', 
 and you should not output 'plt.show()'.  Don't use pd.read_csv to load new data,
 use only the existing variable 'df'. 
-Question: {input}
-{agent_scratchpad}
+
 """
 
 
 CODE_TABLE_SUFFIX_NO_DF = """
 At the end, print the final table you created.
-Question: {input}
-{agent_scratchpad}
+
 """
 
 CODE_SUFFIX_NO_DF = """
 Output only the python code, not a description.
-Question: {input}
-{agent_scratchpad}
+
 """
 
 

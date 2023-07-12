@@ -17,7 +17,7 @@ from langchain.callbacks.manager import (
     CallbackManagerForToolRun,
 )
 
-info_template = """Create a analytical report using this data, be insightful and include all numerical data: {info}"""
+info_template = """Extract data from json into a readable report, include all ips, domains and numerical information if there is any: {info}"""
 info_prompt_template = PromptTemplate(input_variables=["info"], template=info_template)
 answer_chain = LLMChain(llm=tool_llm, prompt=info_prompt_template)
         
