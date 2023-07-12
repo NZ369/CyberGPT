@@ -30,14 +30,9 @@ tool_description = "Queries all tools that require an IP address as the input. P
 tool_llm = create_llm()
 
 template = """You have many IP analysis tools at your disposal.
-At each step, you must summarize the data and generate a technical report based on the output provided from each tool.
-For the technical report, output each module on a new line and provide a detailed, insightful summary of the information provided in as few words as possible.
-Example:
-VIRUSTOTAL:
-    - Associated with 1 malicious file
-    - Address belongs to the Example organization and has an ASN of 11111
-    - VIRUSTOTAL report at https://www.virustotal.com/gui/ip-address/example
-End of example
+At each step, you must update the technical report based on the output provided from each tool.
+The report should be insightful but point form to allow for quick readability.
+
 Report:
 {report}"""
 prompt_template = PromptTemplate(input_variables=["report"], template=template)
@@ -66,7 +61,10 @@ class ip_report_tool(BaseTool):
             for response in responses:
                 # report += summarizer.run(page_content=f"{report}\n{response}")
                 print(response)
-                report += tool_chain.run(f"{template}\n{report}\n{response}")
+                report += tool_chain.run(f"""
+                {report}
+                NEW DATA:
+                {response}""")
                 # print(report)
             return report
         except:
