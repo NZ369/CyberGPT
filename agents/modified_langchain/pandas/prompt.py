@@ -60,8 +60,8 @@ Question: {input}
 
 CODE_PLOT_SUFFIX_WITH_DF = """
 Output ONLY the python code for ploting the result, and NOT a description.  
-The plot should be assigned to a matplotlib variable called 'fig', 
-and you should not output 'plt.show()'.  Don't use pd.read_csv to load new data,
+Use matplotlib, and the plot should be saved to a variable named 'fig'. 
+You should NOT output 'plt.show()'.  Don't use pd.read_csv to load new data,
 use only the existing variable 'df'.
 This is the result of printing rows from the inital dataframe:
 {df_content}
@@ -79,7 +79,9 @@ This is the result of printing rows from the inital dataframe:
 """
 
 DESC_SUFFIX_WITH_DF = """
-Return a description of the results, not the intermediate code.
+Return a description of the results, and also return the python code you used.
+Use `unique()` when answering in python.  Format the output code with '```',
+and put the English description below it.
 This is the result of printing rows from the inital dataframe:
 {df_content}
 
@@ -87,7 +89,9 @@ This is the result of printing rows from the inital dataframe:
 
 
 DESC_SUFFIX_NO_DF = """
-Return a description of the results, not the intermediate code.
+Return a description of the results, not also return the python code you used.
+Use `unique()` when answering in python.  Format the output code with '```',
+and put the English description below it.
 
 """
 

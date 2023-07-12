@@ -7,7 +7,12 @@ import pandas as pd
 def check_if_display_plot(ai_content, i):
 
     # PJ - remove first and last lines (which are triple quotes)
-    ai_content=ai_content[ai_content.find('```\n')+3:ai_content.rfind('\n')]
+    if '```python' in ai_content:
+        cut_length=10
+    else:
+        cut_length=3
+        
+    ai_content=ai_content[ai_content.find('```\n')+cut_length:ai_content.rfind('\n')]
     print("-"*80)
     print(ai_content)
     print("-"*80)
@@ -28,9 +33,9 @@ def check_if_display_plot(ai_content, i):
         fig = plot_module.plot_code(df)
         display_plot(st, fig)
 
-    #     print("\nDEBUG: Should have plotted.")
-    # else:
-    #     print("\nDEBUG: Empty or invalid python - didn't plot anything.")
+        print("\nDEBUG: Should have plotted.")
+    else:
+        print("\nDEBUG: Empty or invalid python - didn't plot anything.")
 
 
 # CC - Display the plot with a few options.
