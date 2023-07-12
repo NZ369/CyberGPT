@@ -6,10 +6,8 @@ class Form:
     def __init__(self, fields: List[Field]) -> None:
         self.fields = fields
     def completed(self) -> bool:
-        return all(
-            lambda f: f is not None,
-            self.fields
-        )
+        return all(f.is_valid() for f in self.fields)
+
     def to_json(self) -> str:
         return dump(self.to_dict())
     def to_dict(self) -> Dict[str, str]:
