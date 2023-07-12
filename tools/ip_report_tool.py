@@ -36,7 +36,7 @@ The report should be insightful but point form to allow for quick readability.
 Report:
 {report}"""
 prompt_template = PromptTemplate(input_variables=["report"], template=template)
-tool_chain = LLMChain(llm=tool_llm, prompt=prompt_template)
+reporter_chain = LLMChain(llm=tool_llm, prompt=prompt_template)
 
 ip_tools=[
     borealis_tool,
@@ -59,13 +59,15 @@ class ip_report_tool(BaseTool):
             # summarizer = load_summarize_chain(tool_llm, chain_type="map_reduce")
             report = ""
             for response in responses:
+                report += f"{response}\n\n"
                 # report += summarizer.run(page_content=f"{report}\n{response}")
-                print(response)
-                report += tool_chain.run(f"""
-                {report}
-                NEW DATA:
-                {response}""")
+                # print(response)
+                # report += tool_chain.run(f"""
+                # {report}
+                # NEW DATA:
+                # {response}""")
                 # print(report)
+            report = reporter_chain.run(template+report)
             return report
         except:
             print_exc()
