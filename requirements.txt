@@ -9,7 +9,12 @@ wikipedia
 duckduckgo-search
 cohere
 tiktoken
+boto3
 shodan
+sklearn
+matplotlib
+umap-learn
+#kedra stuff
 tabulate
 requests
 # uncomment to use huggingface llms
