@@ -10,8 +10,7 @@ duckduckgo-search
 cohere
 tiktoken
 shodan
-
-#kedra stuff
+tabulate
 requests
 # uncomment to use huggingface llms
 # huggingface-hub
