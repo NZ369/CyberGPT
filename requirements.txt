@@ -13,6 +13,11 @@ tabulate
 boto3
 shodan
 
+# MITRE ML stuff
+sklearn
+matplotlib
+umap-learn
+
 #kedra stuff
 requests
 # uncomment to use huggingface llms
