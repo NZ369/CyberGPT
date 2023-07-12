@@ -1,30 +1,42 @@
 from tools.CyberStance.form import Form
 from tools.CyberStance.field import Field
 
-# TODO replace all the lambdas with LLM fun time tool to convert user inputs into something
+import re
+
+from llms.azure_llms import create_llm
+
+from langchain import PromptTemplate, LLMChain
+
+from typing import Tuple, List
+
+#SASS_FLAG = True
+'''
+def prompt_llm(query:str) -> str:
+    llm = create_llm()
+
+    llm_chain = LLMChain(llm=llm,prompt=PromptTemplate.from_template("{query}"))
+
+    print(query)
+
+    return llm_chain(query)["text"]
+
+def options_input_extractor(user_input: str, targets: List[str]) -> Tuple[bool, str]:
+    result = prompt_llm(f"Convert query into one of the following N\A,{','.join(targets)}. query: {user_input}")
+'''
 form = Form([
-    Field(
-        "What is the size of your organization? (How many employees)",
-        lambda x: x in ["Small", "Medium", "Large"], # number extractor -> map number to string (<50: small, 50-500: medium, >500: large)
-        None
+    Field("What is the size of your organization? (How many employees)",
+          lambda user_input: (False, "No numbers detected") if len(nums := re.findall(r'\d+', user_input)) != 1 else (True, "Small") if int(nums[0]) < 50 else (True, "Medium") if int(nums[0]) < 500 else (True, "Large")
     ),
-    Field(
-        "Do you have a dedicated cyber security team or personnel?",
-        lambda x: x in ["Yes", "No"], # simple convert yes or no
-        None
+    Field("Do you have a dedicated cyber security team or personnel? (yes or no)",
+          lambda user_input: (False, "Answer must be yes or no") if len(data := re.findall(r'(yes|no)', user_input.lower())) != 1 else (True, data[0].capitalize())
     ),
-    Field(
-        "What is their IT/Computer expertise level? Please use one of the following options:",
-        lambda x: x in ["Little to no experience", "Moderate experience", "High experience"], # simple convert options
-        None
+    Field("What is their IT/Computer expertise level? Please use one of the following options:",
+        lambda user_input: (False, "Invalid option") if len(data := re.findall(r'(Little to no experience|Moderate experience|High experience)', user_input)) != 1 else (True, data[0])
     ),
-    Field(
-        "What industry sector does your organization fall under? Please use one of the following options:", lambda x: x in ["Consumer Products", "Manufacturing", "Service Providers", "Technologies"], # Simple map to closet
-        None
+    Field("What industry sector does your organization fall under? Please use one of the following options:",
+        lambda user_input: (False, "Invalid option") if len(data := re.findall(r'(Consumer Products|Manufacturing|Service Providers|Technologies)', user_input)) != 1 else (True, data[0])
     ),
-    Field(
-        "Does your organization follow any industry standards or frameworks? Select all that apply:",
-        lambda x: x in ["ISO", "NIST", "ISM", "ITSG", "CIS", "OTHER"], # Simple map to closet
-        None
+    Field("Does your organization follow any industry standards or frameworks? Select all that apply:",
+        lambda user_input: (False, "Invalid option") if len(data := re.findall(r'(ISO|NIST|ISM|ITSG|CIS|OTHER)', user_input.upper())) == 0 else (True, data)
     )
 ])
