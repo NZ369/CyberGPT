@@ -29,7 +29,7 @@ def create_qa_retriever(docs, type="azure", database="FAISS"):
     #qa = RetrievalQA.from_chain_type(llm=tool_llm, chain_type="stuff", retriever=vectorstore.as_retriever(), memory=memory)
 
 class qa_retrieval_tool(BaseTool):
-    name = "Document Retrieval"
+    name = "Local Documents"
     description = "use for getting contextually relevant and accurate information to then use for creating a detailed answer"
 
     def _run(
@@ -54,7 +54,7 @@ class qa_retrieval_tool(BaseTool):
     
 qa_retrieve = qa_retrieval_tool()
 qa_retrieval_tool = Tool(
-    name = "Document Retrieval",
+    name = "Local Documents",
     description = "use for getting contextually relevant and accurate information to then use for creating a detailed answer",
     func= qa_retrieve.run
     )

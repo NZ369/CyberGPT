@@ -7,6 +7,7 @@ from llms.azure_llms import create_llm
 from tools.get_tools import base_tools
 
 llm = create_llm(max_tokens=2000, temp=0.5)
+llm.request_timeout = 240
 memory = ConversationBufferWindowMemory(memory_key="chat_history", k=3, return_messages=True)
 base_agent = initialize_agent(base_tools, llm, agent=AgentType.CHAT_CONVERSATIONAL_REACT_DESCRIPTION, max_iterations=4, verbose=True, memory=memory)
 base_agent.agent.llm_chain.prompt.messages[0].prompt.template = """
