@@ -84,7 +84,7 @@ def process_user_input(user_input):
         else:
             try:
                 openCTI_response = openCTI_search_processing(user_input)
-                response = borealis_response + "\n OpenCTI Scan Report \n" + openCTI_response
+                response = borealis_response + "\n\n OpenCTI Scan Report \n" + openCTI_response
             except:
                 print("OpenCTI not accessible outside CSE networks.")
                 response = borealis_response
