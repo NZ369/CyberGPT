@@ -12,7 +12,7 @@ def check_if_display_plot(ai_content, i):
     else:
         cut_length=3
         
-    ai_content=ai_content[ai_content.find('```\n')+cut_length:ai_content.rfind('\n')]
+    ai_content=ai_content[ai_content.find('```\n')+cut_length:ai_content.rfind('```')]
     print("-"*80)
     print(ai_content)
     print("-"*80)
