@@ -168,7 +168,7 @@ def _get_single_prompt_template(
 ) -> Tuple[BasePromptTemplate, List[PythonAstREPLTool]]:
     
     routes = {
-        "description" : "Good for answering questions about tables with English",
+        "description" : "Good for answering general or math questions when the user doesn't specify a table or plot as output.",
         "code_table" : "Good for answering questions about tables when we want to display results as a table", 
         "code_plot" : "Good for answering questions about tables when we want to display code, plots, and graphs"
     }
