@@ -8,7 +8,7 @@ from tools.borealis_tools import borealis_tool
 from tools.opencti_tools import openCTI_tool
 from tools.shodan_tools import shodan_ip_lookup_tool
 from tools.ipapi_tools import ipapi_tool
-from tools.kendra.tool import kendra_retrieval_tool;
+from tools.kendra.tool import kendra_retrieval_tool
 
 tool_llm = create_llm()
 

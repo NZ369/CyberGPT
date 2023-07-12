@@ -9,16 +9,13 @@ wikipedia
 duckduckgo-search
 cohere
 tiktoken
-tabulate
 boto3
 shodan
-
-# MITRE ML stuff
 sklearn
 matplotlib
 umap-learn
-
 #kedra stuff
+tabulate
 requests
 # uncomment to use huggingface llms
 # huggingface-hub
