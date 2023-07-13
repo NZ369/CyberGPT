@@ -1,4 +1,5 @@
 import streamlit as st
+from PIL import Image
 from streamlit_extras.app_logo import add_logo
 from streamlit_extras.add_vertical_space import add_vertical_space
 from tools.qa_tools import create_qa_retriever
@@ -10,9 +11,11 @@ mitre_csv_agent = get_mitre_agent()
 # Didn't seem to work when I tried it.
 #mitre_csv_agent = get_mitre_agent(use_memory=True)
 
-st.set_page_config(page_title="Mitre CSV Demo", page_icon="📈")
+st.set_page_config(page_title="CyberGPT Mitre CSV Analyzer", page_icon="📈", layout='wide')
+image = Image.open('assets/logo.png')
+st.image(image, width=500)
+st.subheader("CyberGPT Mitre CSV Analyzer 📈")
 
-st.markdown("# Mitre CSV")
 st.sidebar.header("Mitre CSV")
 st.write(
     """This page loads information from MITRE ATT&CK for the LLM to query."""
@@ -95,13 +98,12 @@ if user_input:
 download_str = []
 
 # Display the conversation history using an expander, and allow the user to download it
-with st.expander("Conversation", expanded=True):
-    for i in range(len(st.session_state['generated'])-1, -1, -1):
-        st.info(st.session_state["past"][i],icon="🙂")
-        st.success(st.session_state["generated"][i], icon="🤖")
-        check_if_display_plot(st.session_state["generated"][i], i)
-        download_str.append("User: "+st.session_state["past"][i])
-        download_str.append("AI: "+st.session_state["generated"][i])
+for i in range(len(st.session_state['generated'])-1, -1, -1):
+    st.info(st.session_state["past"][i],icon="🙂")
+    st.success(st.session_state["generated"][i], icon="🤖")
+    check_if_display_plot(st.session_state["generated"][i], i)
+    download_str.append("User: "+st.session_state["past"][i])
+    download_str.append("AI: "+st.session_state["generated"][i])
     
     # Can throw error - requires fix
     download_str = '\n\n'.join(download_str)

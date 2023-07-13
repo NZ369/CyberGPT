@@ -1,15 +1,18 @@
 import streamlit as st
 import time
 import numpy as np
+from PIL import Image
 import matplotlib.pyplot as plt
 import ast
 from streamlit_extras.add_vertical_space import add_vertical_space
 from agents.json_agent import stix_json_agent, df
 from tools.qa_tools import create_qa_retriever
 
-st.set_page_config(page_title="STIX JSON Demo", page_icon="📈")
+st.set_page_config(page_title="CyberGPT STIX JSON", page_icon="📈", layout='wide')
+image = Image.open('assets/logo.png')
+st.image(image, width=500)
+st.subheader("CyberGPT STIX JSON Analyzer 📈")
 
-st.markdown("# STIX JSON")
 st.sidebar.header("STIX JSON")
 st.write(
     """This page loads information from STIX for the LLM to query."""
@@ -101,11 +104,10 @@ if user_input:
 # Allow to download as well
 download_str = []
 # Display the conversation history using an expander, and allow the user to download it
-with st.expander("Conversation", expanded=True):
-    for i in range(len(st.session_state['generated'])-1, -1, -1):
-        st.info(st.session_state["past"][i],icon="🙂")
+for i in range(len(st.session_state['generated'])-1, -1, -1):
+    st.info(st.session_state["past"][i],icon="🙂")
 #        st.success(st.session_state["generated"][i], icon="🤖")
-        st.write(st.session_state["generated"][i])
+    st.write(st.session_state["generated"][i])
 
 # PJ - example plot
 #        ai_content = """
@@ -116,35 +118,33 @@ with st.expander("Conversation", expanded=True):
 #ax.hist(arr, bins=20)
 #"""
 
-        ai_content=st.session_state["generated"][i]
-        #print(ai_content)
+    ai_content=st.session_state["generated"][i]
+    #print(ai_content)
 
-        # PJ - remove first and last lines (which are triple quotes)
-        ai_content=ai_content[ai_content.find('\n')+1:ai_content.rfind('\n')]
+    # PJ - remove first and last lines (which are triple quotes)
+    ai_content=ai_content[ai_content.find('\n')+1:ai_content.rfind('\n')]
 
-        if is_valid_python(ai_content):
-            ai_content = "\n".join([f"    {line}" for line in ai_content.split("\n")])
-            print(ai_content)
-            with open('plt_tmp.py', 'w') as f:
-                f.write(f"""
-def plot_code(df):
-{ai_content}
-    return fig
-"""
-                       )
+    if is_valid_python(ai_content):
+        ai_content = "\n".join([f"    {line}" for line in ai_content.split("\n")])
+        print(ai_content)
+        with open('plt_tmp.py', 'w') as f:
+            f.write(f"""        
+            def plot_code(df):
+            {ai_content}
+            return fig
+            """)
+        print("Valid python - about to load plot.")
+        from plt_tmp import plot_code
+        fig=plot_code(df)
+        st.pyplot(fig.figure)
+        print("Should have plotted.")
 
-            print("Valid python - about to load plot.")
-            from plt_tmp import plot_code
-            fig=plot_code(df)
-            st.pyplot(fig.figure)
-            print("Should have plotted.")
+    else:
+        print("Empty or invalid python - didn't plot anything.")
 
-        else:
-            print("Empty or invalid python - didn't plot anything.")
+    download_str.append("User: "+st.session_state["past"][i])
+    download_str.append("AI: "+st.session_state["generated"][i])
 
-        download_str.append("User: "+st.session_state["past"][i])
-        download_str.append("AI: "+st.session_state["generated"][i])
-    
     # Can throw error - requires fix
     download_str = '\n\n'.join(download_str)
     if download_str:

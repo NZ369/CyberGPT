@@ -47,7 +47,6 @@ def download_files(bucket_name="team5.2-mitre", data_dir="data", files=[]):
 
 download_files(files=["combined.csv"])
 
-
 def get_mitre_agent(use_memory=False):
     llm = create_llm(temp=0)
     llm.request_timeout = 30
