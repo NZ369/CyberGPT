@@ -149,7 +149,7 @@ def fill_in_form(form: Form, next_state: PageState):
         if form.completed():
             change_states(next_state)
         else:
-            next_question = st.session_state[PROFILE].first_unanswered()
+            next_question = form.first_unanswered()
             add_log("🤖", f"{random.choice(POSITIVE_COMMENTS)}\n\n{next_question.question}")
 
 def process_user_input(user_input):
