@@ -1,18 +1,21 @@
+from tools.CyberStance.tool import CyberStance
+
 import streamlit as st
 from streamlit_extras.add_vertical_space import add_vertical_space
-
 from streamlit_extras.app_logo import add_logo
-
 from PIL import Image
-
-from tools.CyberStance.profile_form import generate_new_profile_form
 
 from enum import Enum
 
-class PageComponent(Enum):
+from tools.CyberStance.profile_form import generate_new_profile_form
+
+import random
+
+class PageState(Enum):
     PROFILE_GENERATION = 1
     FORM_SELECTION = 2
-    DOCUMENT_QUERY = 3
+    FORM_GENERATION = 3
+    DOCUMENT_QUERY = 4
 
 # Define function to get user input
 def get_text():
@@ -21,103 +24,187 @@ def get_text():
     Returns:
         (str): The text entered by the user
     """
-    input_text = st.text_input(
-        "You: ",
-        st.session_state["input"],
-        key="input",
-        
-        placeholder="",
-        
-        label_visibility='hidden'
-    )
+    input_text = st.text_input("You: ", st.session_state["input"], key="input",
+                            label_visibility='hidden')
+    
     return input_text
 
+# Function for starting a new chat
+def new_chat():
+    """
+    Clears session state and starts a new chat.
+    """
+    st.session_state[LOG] = []
+    st.session_state["input"] = ""
+    
 # Set Streamlit page configuration
 st.set_page_config(
     page_title="CyberGPT",
-    page_icon="🔎",
+    page_icon="🤖",
     layout='wide'
 )
 image = Image.open('assets/logo.png')
 st.image(image, width=500)
-st.subheader("Cybersecurity Copilot: Cyber Stance")
+st.subheader("Cybersecurity Copilot")
+
+# CONST
+POSITIVE_COMMENTS = [
+    "Great answer, thank you!",
+    "Very helpful and informative!",
+    "I appreciate your insight!",
+    "You nailed it, well done!",
+    "That's a brilliant solution!",
+    "You explained it very clearly!",
+    "I learned something new today!",
+    "You have a great point!",
+    "That's exactly what I needed!",
+    "You are awesome, thanks!"
+]
+NEGATIVE_COMMENTS = [
+    "Wow, you're so smart. Not.",
+    "Did you even read the question?",
+    "That's a nice try, but no.",
+    "You must be fun at parties.",
+    "Are you always this clueless?",
+    "Do you hear yourself talking?",
+    "Bless your heart, honey.",
+    "That's cute, but wrong.",
+    "You're kidding, right?",
+    "You're hilarious, but no."
+]
 
 # Initialize session states
-# AI stuff
-if "generated" not in st.session_state:
-    st.session_state["generated"] = []
-if "past" not in st.session_state:
-    st.session_state["past"] = []
+# Page states
+LOG = "log"
+if LOG not in st.session_state:
+    st.session_state[LOG] = []
+STATE = "state"
+if STATE not in st.session_state:
+    st.session_state[STATE] = None
+
+# Query States
+PROFILE = "profile"
+if PROFILE not in st.session_state:
+    st.session_state[PROFILE] = generate_new_profile_form()
+
 if "input" not in st.session_state:
     st.session_state["input"] = ""
-if "stored_session" not in st.session_state:
-    st.session_state["stored_session"] = []
 
-# Form stuff
-if "user_profile" not in st.session_state:
-    st.session_state["user_profile"] = generate_new_profile_form()
-if "visible_components" not in st.session_state:
-    st.session_state["visible_components"] = set([PageComponent.PROFILE_GENERATION])
+def add_log(id: str, msg: str):
+    st.session_state["log"].append({"id": id, "msg": msg})
+
+def change_states(next_state, callback = None):
+    if next_state.name == PageState.PROFILE_GENERATION.name:
+        current_question = st.session_state[PROFILE].first_unanswered()
+        add_log("🤖", f"{random.choice(POSITIVE_COMMENTS)} We will now be generating your companies profile\n\n{current_question.question}")
+
+    elif next_state.name == PageState.FORM_SELECTION.name:
+        add_log("🤖", f"{random.choice(POSITIVE_COMMENTS)} We are ready to start analyzing your company")
+
+    elif next_state.name ==  PageState.FORM_GENERATION.name:
+        raise NotImplementedError() # tell the name of the form
+        add_log("🤖", f"{random.choice(POSITIVE_COMMENTS)} We are ready to start analyzing your company")
+
+    elif next_state.name ==  PageState.DOCUMENT_QUERY.name:
+        add_log("🤖", f"Big man! We got a report just for you")
+    
+    st.session_state[STATE] = next_state
+    print("new states")
+    print(st.session_state[STATE])
+    
+    
+    if callback is not None:
+        callback()
+
+def process_user_input(user_input):
+    if st.session_state[STATE] is None:
+        change_states(PageState.PROFILE_GENERATION)
+        return
+
+    if st.session_state[STATE].name == PageState.PROFILE_GENERATION.name:
+
+        if st.session_state[PROFILE].completed():
+            change_states(PageState.FORM_SELECTION)
+
+        current_question = st.session_state[PROFILE].first_unanswered()
+        
+        if current_question == None:
+            change_states(PageState.FORM_SELECTION)
+            return
+        
+        cond, msg = current_question.input_parser(user_input)
+
+        if not cond:
+            add_log("🤖", f"{random.choice(NEGATIVE_COMMENTS)}\n\nThats not what I want, {msg}.\n\n{current_question.question}")
+        else:
+            if st.session_state[PROFILE].completed():
+                change_states(PageState.FORM_SELECTION)
+            else:
+                next_question = st.session_state[PROFILE].first_unanswered()
+                add_log("🤖", f"{random.choice(POSITIVE_COMMENTS)}\n\n{next_question.question}")
+                
+    elif st.session_state[STATE].name is PageState.FORM_SELECTION.name:
+        pass
+    elif st.session_state[STATE].name is PageState.FORM_GENERATION.name:
+        pass
+    elif st.session_state[STATE].name is PageState.DOCUMENT_QUERY.name:
+        pass
+
+if "THE TOOL" not in st.session_state:
+    st.session_state["THE TOOL"] = CyberStance()
+
+    add_log("🤖", f'''
+Hello!!
+  
+press Type "{"show me the sh-money".upper()}" to begin
+''')
 
 
 # Set up sidebar with various options
 with st.sidebar:
-    add_logo('assets/logo2.png', height=50)
+    add_logo("assets/logo2.png", height=50)
     st.title('CyberGPT')
     st.markdown('''
     ## About
-    Place holder description
+    CyberGPT is a smart AI assistant for cyber security analysts.
     ''')
-    
-    # Swapping profiles
-
+    st.subheader("Your documents")
+    pdf_docs = st.file_uploader("Select your PDFs here", accept_multiple_files=True)
+    if st.button("Submit"):
+        with st.spinner("Processing"):
+            create_qa_retriever(pdf_docs, type="azure", database="FAISS")
+        st.success("Embeddings completed.", icon="✅")
     add_vertical_space(2)
-    st.write('Made with ❤️ by GeekWeek Team 5.2 & Cyber Stance Team 4.4')
+    # Add a button to start a new chat
+    st.button("New Chat", on_click = new_chat, type='primary')
+    add_vertical_space(2)
+    st.write('Made with ❤️ by GeekWeek Team 5.2')
+
+
 
 # Get the user input
-
-# Name forum
-if PageComponent.PROFILE_GENERATION in st.session_state["visible_components"]:
-    st.write("# User Profile")
-    st.session_state["visible_components"].add(PageComponent.FORM_SELECTION)
-
-    # Add next section once form is completed
-    if st.session_state["user_profile"].completed() and not PageComponent.FORM_SELECTION in st.session_state["visible_components"]:
-        st.session_state["visible_components"].add(PageComponent.FORM_SELECTION)
-
-if PageComponent.FORM_SELECTION in st.session_state["visible_components"]:
-    st.write("# Select Form")
-
-if PageComponent.DOCUMENT_QUERY in st.session_state["visible_components"]:
-    user_input = get_text()
-
+user_input = get_text()
 
 # Processes the user input
-#if user_input:
-#    st.session_state.past.append(user_input)
+if user_input:
+    add_log("🙂", user_input)
     # Try block handles any error with not parsing LLM output
-#    try:
-#        # Calls the base agent
-#        output = qa_chain.run(question=user_input)
-#        st.session_state.generated.append(output)
-#    except Exception as e:
-#        st.session_state.generated.append(str(e))
+    try:
+        process_user_input(user_input)
+    except Exception as e:
+        add_log("🤖", str(e))
 
-# Allow to download as well
-#download_str = []
 # Display the conversation history using an expander, and allow the user to download it
-#with st.expander("Conversation", expanded=True):
-#    for i in range(len(st.session_state['generated'])-1, -1, -1):
-#        st.info(st.session_state["past"][i],icon="🙂")
-#        st.success(st.session_state["generated"][i], icon="🤖")
-#        download_str.append("User: "+st.session_state["past"][i])
-#        download_str.append("AI: "+st.session_state["generated"][i])
-    
-    # Can throw error - requires fix
-#    download_str = '\n\n'.join(download_str)
-#    if download_str:
-#        st.download_button('Download',download_str)
+for i in range(len(st.session_state['log'])):
+    log_val =  st.session_state["log"][::-1][i]
 
+    if log_val["id"] == "🤖":
+        st.success(log_val["msg"], icon=log_val["id"])
+    elif log_val["id"] == "🙂":
+        st.info(log_val["msg"], icon=log_val["id"])
+        
+
+    
 hide_menu_style = """
         <style>
         footer {visibility: hidden;}
