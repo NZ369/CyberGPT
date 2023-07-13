@@ -3,6 +3,7 @@
 ### 1. Vector DB Set-up
 #### 1.1. Creating S3 Bucket
 
+![alt text](/geekweek_docs/kendra/1.png)
 
 #### 1.2. Creating kendra instance
 
