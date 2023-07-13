@@ -9,6 +9,11 @@ from enum import Enum
 
 from tools.CyberStance.profile_form import generate_new_profile_form
 
+from tools.CyberStance.sector_form import generate_form_selection_field, generate_form
+
+from tools.CyberStance.field import Field
+from tools.CyberStance.form import Form
+
 import random
 
 class PageState(Enum):
@@ -87,6 +92,10 @@ PROFILE = "profile"
 if PROFILE not in st.session_state:
     st.session_state[PROFILE] = generate_new_profile_form()
 
+SECTOR_FORM = "sector"
+if SECTOR_FORM not in st.session_state:
+    st.session_state[SECTOR_FORM] = {"selected":generate_form_selection_field(), "form": None}
+
 if "input" not in st.session_state:
     st.session_state["input"] = ""
 
@@ -99,11 +108,17 @@ def change_states(next_state, callback = None):
         add_log("🤖", f"{random.choice(POSITIVE_COMMENTS)} We will now be generating your companies profile\n\n{current_question.question}")
 
     elif next_state.name == PageState.FORM_SELECTION.name:
-        add_log("🤖", f"{random.choice(POSITIVE_COMMENTS)} We are ready to start analyzing your company")
+        current_question = st.session_state[SECTOR_FORM]["selected"].question
+        add_log("🤖", f"{random.choice(POSITIVE_COMMENTS)}\n\n{current_question}")
 
     elif next_state.name ==  PageState.FORM_GENERATION.name:
-        raise NotImplementedError() # tell the name of the form
-        add_log("🤖", f"{random.choice(POSITIVE_COMMENTS)} We are ready to start analyzing your company")
+        form_name = st.session_state[SECTOR_FORM]["selected"].value
+
+        st.session_state[SECTOR_FORM]["form"] = generate_form[form_name]()
+
+        current_question = st.session_state[SECTOR_FORM]["form"].first_unanswered()
+
+        add_log("🤖", f"{random.choice(POSITIVE_COMMENTS)}\n\nWe are ready to start analyzing your company's {form_name} policy\n\n{current_question.question}")
 
     elif next_state.name ==  PageState.DOCUMENT_QUERY.name:
         add_log("🤖", f"Big man! We got a report just for you")
@@ -116,37 +131,49 @@ def change_states(next_state, callback = None):
     if callback is not None:
         callback()
 
+def fill_in_form(form: Form, next_state: PageState):
+    if form.completed():
+        change_states(next_state)
+
+    current_question = form.first_unanswered()
+    
+    if current_question == None:
+        change_states(next_state)
+        return
+    
+    cond, msg = current_question.input_parser(user_input)
+
+    if not cond:
+        add_log("🤖", f"{random.choice(NEGATIVE_COMMENTS)}\n\nThats not what I want, {msg}.\n\n{current_question.question}")
+    else:
+        if form.completed():
+            change_states(next_state)
+        else:
+            next_question = st.session_state[PROFILE].first_unanswered()
+            add_log("🤖", f"{random.choice(POSITIVE_COMMENTS)}\n\n{next_question.question}")
+
 def process_user_input(user_input):
     if st.session_state[STATE] is None:
         change_states(PageState.PROFILE_GENERATION)
         return
 
     if st.session_state[STATE].name == PageState.PROFILE_GENERATION.name:
-
-        if st.session_state[PROFILE].completed():
-            change_states(PageState.FORM_SELECTION)
-
-        current_question = st.session_state[PROFILE].first_unanswered()
-        
-        if current_question == None:
-            change_states(PageState.FORM_SELECTION)
-            return
+        fill_in_form(st.session_state[PROFILE], PageState.FORM_SELECTION)
+                
+    elif st.session_state[STATE].name is PageState.FORM_SELECTION.name:
+        current_question = st.session_state[SECTOR_FORM]["selected"]
         
         cond, msg = current_question.input_parser(user_input)
 
+        if current_question.is_valid():
+            change_states(PageState.FORM_GENERATION)
+            return
+        
         if not cond:
             add_log("🤖", f"{random.choice(NEGATIVE_COMMENTS)}\n\nThats not what I want, {msg}.\n\n{current_question.question}")
-        else:
-            if st.session_state[PROFILE].completed():
-                change_states(PageState.FORM_SELECTION)
-            else:
-                next_question = st.session_state[PROFILE].first_unanswered()
-                add_log("🤖", f"{random.choice(POSITIVE_COMMENTS)}\n\n{next_question.question}")
-                
-    elif st.session_state[STATE].name is PageState.FORM_SELECTION.name:
-        pass
+        
     elif st.session_state[STATE].name is PageState.FORM_GENERATION.name:
-        pass
+        fill_in_form(st.session_state[SECTOR_FORM]["form"], PageState.DOCUMENT_QUERY)
     elif st.session_state[STATE].name is PageState.DOCUMENT_QUERY.name:
         pass
 
