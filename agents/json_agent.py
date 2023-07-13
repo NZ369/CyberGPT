@@ -8,6 +8,7 @@ from langchain.tools.json.tool import JsonSpec
 from langchain.agents.agent_types import AgentType
 
 llm = create_llm(temp=0)
+llm.request_timeout=15
 
 print("Creating JSON Agent.")
 
@@ -34,7 +35,8 @@ stix_json_agent = create_json_agent(
     llm,
     toolkit=json_toolkit,
     verbose=True,
-    agent_type=AgentType.CHAT_ZERO_SHOT_REACT_DESCRIPTION, # Added CHAT_
+    agent_type=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
+    handle_parsing_errors=True
 )
 print("Finished Creating JSON Agent.")
 

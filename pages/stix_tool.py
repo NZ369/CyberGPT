@@ -7,6 +7,7 @@ import ast
 from streamlit_extras.add_vertical_space import add_vertical_space
 from agents.json_agent import stix_json_agent, df
 from tools.qa_tools import create_qa_retriever
+from utilities.plotting import check_if_display_plot
 
 st.set_page_config(page_title="CyberGPT STIX JSON", page_icon="📈", layout='wide')
 image = Image.open('assets/logo.png')
@@ -103,45 +104,12 @@ if user_input:
 
 # Allow to download as well
 download_str = []
+
 # Display the conversation history using an expander, and allow the user to download it
 for i in range(len(st.session_state['generated'])-1, -1, -1):
     st.info(st.session_state["past"][i],icon="🙂")
-#        st.success(st.session_state["generated"][i], icon="🤖")
-    st.write(st.session_state["generated"][i])
-
-# PJ - example plot
-#        ai_content = """
-#import numpy as np
-#import matplotlib.pyplot as plt
-#arr = np.random.normal(1, 1, size=100)
-#fig, ax = plt.subplots()
-#ax.hist(arr, bins=20)
-#"""
-
-    ai_content=st.session_state["generated"][i]
-    #print(ai_content)
-
-    # PJ - remove first and last lines (which are triple quotes)
-    ai_content=ai_content[ai_content.find('\n')+1:ai_content.rfind('\n')]
-
-    if is_valid_python(ai_content):
-        ai_content = "\n".join([f"    {line}" for line in ai_content.split("\n")])
-        print(ai_content)
-        with open('plt_tmp.py', 'w') as f:
-            f.write(f"""        
-            def plot_code(df):
-            {ai_content}
-            return fig
-            """)
-        print("Valid python - about to load plot.")
-        from plt_tmp import plot_code
-        fig=plot_code(df)
-        st.pyplot(fig.figure)
-        print("Should have plotted.")
-
-    else:
-        print("Empty or invalid python - didn't plot anything.")
-
+    st.success(st.session_state["generated"][i], icon="🤖")
+    check_if_display_plot(st.session_state["generated"][i], i)
     download_str.append("User: "+st.session_state["past"][i])
     download_str.append("AI: "+st.session_state["generated"][i])
 
@@ -150,23 +118,3 @@ for i in range(len(st.session_state['generated'])-1, -1, -1):
     if download_str:
         st.download_button('Download',download_str)
 
-
-# progress_bar = st.sidebar.progress(0)
-# status_text = st.sidebar.empty()
-# last_rows = np.random.randn(1, 1)
-# chart = st.line_chart(last_rows)
-
-# for i in range(1, 101):
-#     new_rows = last_rows[-1, :] + np.random.randn(5, 1).cumsum(axis=0)
-#     status_text.text("%i%% Complete" % i)
-#     chart.add_rows(new_rows)
-#     progress_bar.progress(i)
-#     last_rows = new_rows
-#     time.sleep(0.05)
-
-# progress_bar.empty()
-
-# # Streamlit widgets automatically run the script from top to bottom. Since
-# # this button is not connected to any other logic, it just causes a plain
-# # rerun.
-# st.button("Re-run")
