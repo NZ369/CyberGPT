@@ -30,13 +30,13 @@ tool_description = "Queries all tools that require an IP address as the input. P
 tool_llm = create_llm()
 
 template = """You have many IP analysis tools at your disposal.
-At each step, you must update the technical report based on the output provided from each tool.
-The report should be insightful but point form to allow for quick readability.
+Create a brief technical report based on the output provided from each tool.
+The report should include brief but technical details in point form.
 
 Report:
 {report}"""
 prompt_template = PromptTemplate(input_variables=["report"], template=template)
-reporter_chain = LLMChain(llm=tool_llm, prompt=prompt_template)
+reporter_chain = LLMChain(llm=tool_llm, prompt=prompt_template, verbose=True)
 
 ip_tools=[
     borealis_tool,
@@ -67,7 +67,8 @@ class ip_report_tool(BaseTool):
                 # NEW DATA:
                 # {response}""")
                 # print(report)
-            report = reporter_chain.run(template+report)
+            print(report)
+            report = reporter_chain.run(report=report)
             return report
         except:
             print_exc()
