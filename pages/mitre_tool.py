@@ -14,9 +14,7 @@ mitre_csv_agent = get_mitre_agent()
 st.set_page_config(page_title="CyberGPT Mitre CSV Analyzer", page_icon="📈", layout='wide')
 image = Image.open('assets/logo.png')
 st.image(image, width=500)
-st.subheader("CyberGPT Mitre CSV Analyzer 📈")
-
-st.sidebar.header("Mitre CSV")
+st.subheader("Mitre CSV Analyzer 📈")
 st.write(
     """This page loads information from MITRE ATT&CK for the LLM to query."""
 )
@@ -66,7 +64,7 @@ with st.sidebar:
     CyberGPT is a smart AI assistant for cyber security analysts.
     ''')
     st.subheader("Your documents")
-    pdf_docs = st.file_uploader("Select your PDFs here", accept_multiple_files=True)
+    pdf_docs = st.file_uploader("Select your CSVs here", accept_multiple_files=True)
     if st.button("Submit"):
         with st.spinner("Processing"):
             create_qa_retriever(pdf_docs, type="azure", database="FAISS")

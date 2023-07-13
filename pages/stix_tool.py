@@ -11,9 +11,7 @@ from tools.qa_tools import create_qa_retriever
 st.set_page_config(page_title="CyberGPT STIX JSON", page_icon="📈", layout='wide')
 image = Image.open('assets/logo.png')
 st.image(image, width=500)
-st.subheader("CyberGPT STIX JSON Analyzer 📈")
-
-st.sidebar.header("STIX JSON")
+st.subheader("STIX JSON Analyzer 📈")
 st.write(
     """This page loads information from STIX for the LLM to query."""
 )
