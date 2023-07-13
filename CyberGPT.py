@@ -1,5 +1,6 @@
 import streamlit as st
 from streamlit_extras.add_vertical_space import add_vertical_space
+from tools.ip_report_tool import ip_report_tool
 from tools.qa_tools import create_qa_retriever
 from agents.base_agent import base_agent
 from tools.borealis_tools import borealis_processing
@@ -103,8 +104,15 @@ def process_user_input(user_input):
             output = base_agent.run(input=user_input)
             st.session_state.generated.append(output)
             print("OpenCTI not accessible outside CSE networks.")
+    elif ("ip report" in user_input):
+        try:
+            output = ip_report_tool(user_input)
+            st.session_state.generated.append(output)
+        except:
+            print("IP report tool failed")
     else:
         output = base_agent.run(input=user_input)
+        # print(base_agent.memory.json)
         st.session_state.generated.append(output)
 
 # Get the user input

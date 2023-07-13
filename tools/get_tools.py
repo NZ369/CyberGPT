@@ -20,8 +20,9 @@ base_tools=[
     borealis_tool,
     openCTI_tool,
     shodan_ip_lookup_tool,
-    ipapi_tool,
-    kendra_retrieval_tool,
+    ipapi_tool
+    # kendra_retrieval_tool
+    # ip_report_tool
 ]
 
 qa_tools=[
