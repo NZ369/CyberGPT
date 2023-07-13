@@ -54,20 +54,11 @@ class ip_report_tool(BaseTool):
     ) -> str:
         """Use the tool."""
         try:
-            # responses = [SequentialChain(chains=[tool])(query) for tool in ip_tools]
             responses = [f"Tool: {tool.name}\n" + tool(query) for tool in ip_tools]
-            # summarizer = load_summarize_chain(tool_llm, chain_type="map_reduce")
             report = ""
             for response in responses:
                 report += f"{response}\n\n"
-                # report += summarizer.run(page_content=f"{report}\n{response}")
-                # print(response)
-                # report += tool_chain.run(f"""
-                # {report}
-                # NEW DATA:
-                # {response}""")
-                # print(report)
-            print(report)
+            report.replace("User: Analyze above data and report on exposed services and potential vulnerabilities", "")
             report = reporter_chain.run(report=report)
             return report
         except:

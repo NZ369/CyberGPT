@@ -58,7 +58,7 @@ class shodan_ip_lookup_tool(BaseTool):
             ip = re.search(r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}', query).group()
             response = shodan_ip_search(ip)
             prompt = "User: Analyze above data and report on exposed services and potential vulnerabilities"
-            return (response)
+            return (response+prompt)
         except:
             return "Shodan ip host search tool not available for use."
 
