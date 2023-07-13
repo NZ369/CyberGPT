@@ -1,0 +1,817 @@
+ 
+ 1 
+Introduction  
+The Australian Cyber Security Centre (ACSC) has developed prioritised mitigation strategies, in the form of the 
+Strategies to Mitigate Cyber Security Incidents , to help organisations protect themselves against various cyber 
+threats.  The most effective of these mitigation strategies are the Essential Eight.  
+The Es sential Eight has been  designed  to protect Microsoft Windows -based internet -connected networks. While the 
+principles behind the  Essential Eight  may be applied to  cloud services and enterprise mobility , or other operating 
+systems , it was not primarily desig ned for such purposes and alternative  mitigation strategies may be more appropriate  
+to mitigate unique cyber threats to these environments . In such cases, organisations should  consider alternative 
+guidance provided  by the ACSC.  
+The Essential Eight Maturity Model , first published in June 2017 and updated regularly, support s the implement ation 
+of the Essential Eight. It is based on the ACSC’s experience in producing cyber threat intelligence, responding to cyber 
+security incidents, conducting penetration testing and assisting organisations to implement the Essential Eight.  
+Implementation  
+When implementing the Essential Eight, o rganisations should  identify  and plan for  a target maturity level suitable  for 
+their environment . Organisations should then progressively implement  each  maturity level  until that target  is achieved . 
+As the  mitigation strategies that constitute the  Essential Eight ha ve been designed to complement each other, and to 
+provide coverage of various  cyber threats, o rganisations should plan their implementation  to achieve the same 
+maturity level across all eight mitigation stra tegies before moving onto higher maturity level s. 
+Organisations should implement the Essential Eight using a risk -based approach. In doing so, o rganisations should seek 
+to minimise any exceptions  and their scope , for example , by implementing  compensating security controls and ensuring 
+the number of systems or users impacted are minimised . In addition , any exceptions should be  documented and 
+approved through an appropriate process . Subsequently,  the need for any exceptions , and associated  comp ensating 
+security controls , should be  monitored and reviewed  on a regular basis . Note, t he appropriate use of exceptions should 
+not preclude  an organisation from being assessed as meeting  the requirements for a given maturity level.  
+As the Essential Eight outlines  a minimum set of preventative measures, organisations need to implement additional 
+measures to those within this maturity model where it is warranted by their environment. Further, w hile the Essential 
+Eight can help to mitigate the majority of cyb er threats, it will not mitigate all cyber threats. As such, additional 
+mitigation strategies and security controls need to be considered, including those from  the Strategies to Mitigate 
+Cyber Security Incidents  and the  Information Security Manual . Essential Eight  
+Maturity Model  
+First published:  June 2017  
+Last updated:  November 2022   
+ 2 Finally, t here is no requirement for organisations to have their Essential Eight implementatio n certified by an 
+independent party . However, Essential Eight implementations  may need to  be assessed by an independent party if  
+required  by a government directive  or polic y, by a regulatory authority, or as part of contractual arrangements . 
+Maturity levels  
+To assist organisations with their implementation of the Essential Eight, four maturity levels have been defined  
+(Maturity Level Zero through to Maturity Level Three) . With the exception of Maturity Level Zero, the maturity levels 
+are based on mitig ating increasing  levels of adversary tradecraft (i.e. tools, tactics, techniques and procedures)  and 
+targeting , which are discussed in more detail below. Depending on an adversary’s overall capability, they may exhibit 
+different levels of tradecraft for di fferent operations against different targets. For example, an adversary capable of 
+advanced tradecraft may use it against one target while using basic tradecraft against another. As such, organisations 
+should consider what level of tradecraft and targeting , rather than which adversaries,  they are aiming to mitigate.  
+Organisations need to consider that the likelihood of being targeted is influenced by their desirability to adversaries, 
+and the consequences of a cyber security incident will depend on the ir requirement for the confidentiality of their data , 
+as well as  their requirement for the availability and integrity of their systems  and data . This, in combination with the 
+descriptions for each maturity level, can be used to help determine a target maturity level to implement . 
+Finally , Maturity Level Three will not stop adversar ies that are willing and able to invest enough time, money and effort 
+to compromise a target . As such , organisations still need to consider the remainder of the mitigation strategies f rom 
+the Strategies to Mitigate Cyber Security Incidents  and the  Information Security Manual . 
+Maturity Level Zero  
+This maturity level signifies that there are  weakness es in an or ganisation ’s overall cyber security posture . When 
+exploited, these weaknesses  could facilitate the compromise of the confidentiality  of their data, or the  integrity or 
+availability of their systems  and data , as described by the tradecraft and targeting in Maturity Level One below.  
+Maturity Level One  
+The focus of this maturity level is adversaries who  are content to simply leverage commodity  tradecraft  that is widely 
+available in order to gain access  to, and likely control of, systems. For example, adversar ies opportunistically using a 
+publicly -available exploit for a security vulnerability in an internet -facing service which had  not been patched, or 
+authenticating to an internet -facing service using credentials that were stolen, reused, brute forced or guess ed. 
+Generally, adversaries are looking for any victim rather than a specific  victim  and will opportunistically seek common 
+weaknesses in many targets rather than investing heavily in gaining access to a specific  target. Adversaries  will employ 
+common socia l engineering techniques to trick users into weakening the security of a system and launch malicious 
+applications, for example via Microsoft Office macros. If the account that an adversary  compromise s has special 
+privileges they will seek to exploit it. De pending on their intent, adversar ies may also destroy data  (including backups).  
+Maturity Level Two  
+The focus of this maturity level is adversaries operating with a modest step -up in capability from the previous maturity 
+level. These adversaries are willing  to invest more time in a target and, perhaps more importantly, in the effectiveness 
+of their tools. For example, these adversaries  will likely employ well -known tradecraft  in order to better attempt to 
+bypass security controls implemented by  a target and evade detection. This includes actively targeting credentials using 
+phishing and employing technical and social engineering techniques to circumvent weak multi -factor authentication.  
+Generally, adversaries are likely to be more selective in their targeting  but still somewhat conservative in the time , 
+money and effort they may invest in a target. Adversaries  will likely invest time to ensure their phishing is effective and  
+ 3 employ common social engineering techniques to trick users to weaken the security of a  system and launch malicious 
+applications, for example via Microsoft Office macros. If the account that an adversary  compromise s has special 
+privileges they will seek to exploit it, otherwise they will seek accounts with special privileges. Depending on th eir 
+intent, adversar ies may also destroy all data  (including backups) accessible  to an account with special privileges.  
+Maturity Level Three  
+The focus of this maturity level is adversaries  who  are more adaptive and much less reliant on public tools and 
+techniques. These  adversaries  are able to exploit the opportunities provided by weaknesses in their target’s cyber 
+security posture, such as  the existence of older software or inadequate logging and monitoring. Adversaries  do this to 
+not only extend their access once initial access  has been gained to a target , but to evade detection and solidify their 
+presence. Adversaries  make swift use of exploits when they become publicly available as well as o ther tradecraft that 
+can improve their chance of success.  
+Generally, adversaries may be more focused on particular targets  and, more importantly , are willing and able to invest 
+some effort in to circumventing the idiosyncrasies and particular policy and tec hnical security controls implemented by 
+their targets. For example, this includes social engineering a user to not only open a malicious document but also to 
+unknowingly assist  in bypass ing security controls. This can also include circumventing stronger mu lti-factor 
+authentication by stealing authentication token values to impersonate a user. Once a foothold is gained on a system , 
+adversaries  will seek to gain privileged credentials or password hashes, pivot to other parts of a network, and cover 
+their trac ks. Depending on their intent, adversar ies may  also destroy all data  (including backups).  
+Requirements for each maturity level  
+Requirements for Maturity Level One through to Maturity Level Three are outlined in Appendices A to C. A comparison 
+of the maturi ty levels, with changes between maturity levels indicated via bolded text, is outlined in Appendix D.  
+Further information  
+The Essential Eight Maturity Model  is part of a suite of related publications:  
+ Answers to questions about this  maturity model are available in the Essential Eight Maturity Mod el FAQ  
+publication.  
+ Additional mitigation strategies are available  in the Strategies to Mitigate Cyber Security Incidents  publication.  
+ Further Information on implementing application control is available  in the Implementing Application Control  
+publication.  
+ Further Information on patching is available  in the Assessing Security Vulnerabilities and Applying Patches  
+publication.  
+ Further Information on controlling Microsoft Office macros is available  in the Microsoft Office Macro Security  
+publication.  
+ Further Information on controlling privileged accounts is available  in the Restricting Administrator Privileges  
+publication.  
+ Further Information on implementing multi -factor authentication is available in  the Implementing Multi -Factor 
+Authentication  publication.  
+Contact details  
+If you have any questions regarding this guidance you can write to us  or call us on 1300 CYBER1 (1300 292 371) .   
+ 4 Appendix A: Maturity Level One  
+Mitigation Strategy  Description  
+Application control  The execution of executables,  software libraries, scripts, installers, compiled HTML, HTML 
+applications and control panel applets is prevented on workstations from within standard 
+user profiles and temporary folders used by the operating system, web browsers and 
+email clients.  
+Patch applications  An automated method of asset discovery is used at least fortnightly to support the 
+detection of assets for subsequent vulnerability scanning activities.  
+A vulnerability scanner with an up -to-date vulnerability database is used for vulnerability 
+scan ning activitie s. 
+A vulnerability scanner is used at least daily  to identify missing patches or updates for  
+security vulnerabilities in  internet -facing services.  
+A vulnerability scanner is used at least fortnightly to identify missing patches or updates 
+for security vulnerabilities in  office productivity suites, web browsers  and their extensions , 
+email clients, PDF software , and security products.  
+Patches, updates or vendor mitigations for security vulnerabilities in internet -facing 
+services are applied within two weeks of release, or within 48 hours if an exploit exist s. 
+Patches , updates or vendor mitigations for security vulnerabilities in office productivity 
+suites, web browsers  and their extensions , email clients, PDF software , and s ecurity 
+products are applied within one month of release.  
+Internet -facing services, office productivity suites, web browsers  and their extensions , 
+email clients, PDF software , Adobe Flash Player, and security products that are no longer 
+supported by vendor s are removed.  
+Configure Microsoft 
+Office macro settings  Microsoft Office macros are disabled for users that do not have a demonstrated business 
+requirement.  
+Microsoft Office macros in files originating from the internet are blocked.  
+Microsoft Office macr o antivirus scanning is enabled.  
+Microsoft Office macro security settings cannot be changed by users.  
+User application 
+hardening  Web browsers do not process  Java from the internet.  
+Web browsers do not process  web advertisements  from the internet . 
+Internet Explorer 11 does not process  content from the internet.  
+Web browser security settings cannot be changed by users.   
+ 5 Restrict administrative 
+privileges  Requests for privileged access to systems and applications are validated when first 
+requested.  
+Privileged accounts (excluding privileged service accounts) are prevented from accessing 
+the internet, email and web services.  
+Privileged users use separate privileged and unprivileged operating environments.  
+Unprivileged accounts cannot logon to privileged operating environments . 
+Privileged accounts  (excluding local administrator accounts)  cannot logon to unprivileged 
+operating environments.  
+Patch operating 
+systems  An automated method of asset discovery is used at least fortnightly to support the 
+detection of assets for subsequent vulnerability scanning activities.  
+A vulnerability scanner with an up -to-date vulnerability database is used for vulnerability 
+scan ning activitie s. 
+A vulnerability scanner is used at least daily  to identify missing patches or updates for 
+security vulnerabilities in  operating systems of internet -facing services.  
+A vulnerability scanner is used at least fortnightly to identify missing patches or updates 
+for security vulnerabilities in  operating systems of workstations , servers  and network 
+devices . 
+Patches, updates or vendor mitigations for security vulnerabilities in operating systems of 
+internet -facing services are applied within two weeks of release, or within 48 hours if an 
+exploit exist s. 
+Patches, updates or vendor mitigations for security vulnerabilities in  operating systems of 
+workstations , servers  and network devices  are applied within one month of release.  
+Operating systems that are no longer supported by vendors are replaced.  
+Multi -factor 
+authentication  Multi -factor authentication is used by an organisation's users if they authenticate to their 
+organisation’s internet -facing services.  
+Multi -factor authentication is used by an organisation’s users if they authenticate to third -
+party inte rnet -facing services that process, store or communicate their organisation's 
+sensitive data.  
+Multi -factor authentication (where available) is used by an organisation’s users if they 
+authenticate to third -party internet -facing services that process, store o r communicate 
+their organisation's non -sensitive data.  
+Multi -factor authentication is enabled by default for non -organisational users (but users 
+can choose to opt out) if they authenticate to an organisation’s internet -facing services.  
+Regular b ackup s Backups of important data, software and configuration settings are performed and 
+retained with a frequency and retention timeframe in accordance with business continuity 
+requirements.   
+ 6 Backups of important  data , software and configuration settings are  synch ronised to enable 
+restoration to a common point in time . 
+Backups of important data, software and configuration settings are retained in a  secure 
+and resilient manner . 
+Restoration of important data, software and configuration settings  from backups to a 
+common point in time  is tested as part of disaster recovery exercises.  
+Unprivileged accounts cannot access backups belonging to other accounts.  
+Unprivileged accounts  are prevented from modifying and deleting backups.  
+   
+ 7 Appendix B: Maturity Level Two  
+Mitigation Strategy  Description  
+Application control  Application control is implemented on workstations and internet -facing servers . 
+Application control  restrict s the execution of executables, software libraries, scripts, installers, 
+compiled HTML, HTML applications and control panel applets to an organisation -approved 
+set. 
+Allowed and blocked execution  event s on workstations and internet -facing servers are logged.  
+Patch applications  An automated method of asset discovery  is used at least fortnightly to support the detection 
+of assets for subsequent vulnerability scanning activities.  
+A vulnerability scanner with an up -to-date vulnerability database is used for vuln erability 
+scan ning activitie s. 
+A vulnerability scanner is used at least daily to identify missing patches or updates for security 
+vulnerabilities in internet -facing services.  
+A vulnerability scanner is used at least weekly to identify missing patches or updates for 
+security vulnerabilities in office productivity suites, web browsers and their extensions, email 
+clients, PDF software, and security products.  
+A vulnerability scanner is used at least fortnightly to identify missing patches or updates for 
+secur ity vulnerabilities in other applications.  
+Patches, updates or vendor mitigations for security vulnerabilities in internet -facing services 
+are applied within two weeks  of release , or within 48 hours if an exploit  exist s. 
+Patches, updates or vendor mitigati ons for security vulnerabilities in office productivity suites, 
+web browsers  and their extensions , email clients, PDF software , and security products are 
+applied within two weeks of release.  
+Patches, updates or vendor mitigations for security vulnerabiliti es in other applications are 
+applied within one month  of release . 
+Internet -facing services, office productivity suites, web browsers  and their extensions , email 
+clients, PDF software , Adobe Flash Player, and security products that are no longer supported 
+by vendors are removed.  
+Configure 
+Microsoft Office 
+macro settings  Microsoft Office macros are disabled for users that do not have a demonstrated business 
+requirement.  
+Microsoft Office macros in files originating from the internet are blocked.  
+Microsoft Office macro antivirus scanning is enabled.  
+Microsoft Office macros are blocked from making Win32 API calls.  
+Microsoft Office macro security settings cannot be changed by users.   
+ 8 Allowed and blocked Microsoft Office macro execution  event s are logged.  
+User application 
+hardening  Web browsers do not process Java from the internet.  
+Web browsers do not process web advertisements from the internet.  
+Internet Explorer 11 does not process content from the internet.  
+Web browser  security settings cannot be changed by users.  
+Microsoft Office is blocked from creating child processes.  
+Microsoft Office is blocked from creating executable content.  
+Microsoft Office is blocked from injecting code into other processes.  
+Microsoft Office is configured to prevent activation of OLE packages.  
+Microsoft Office security settings cannot be changed by users.  
+PDF software is blocked from creating child processes.  
+PDF software security settings cannot be changed by users.  
+ACSC or vendor hardening guidance for web browsers, Microsoft Office and PDF software is 
+implemented.  
+Blocked PowerShell script execution  event s are logged.  
+Restrict 
+administrative 
+privileges  Requests for privileged access to systems and applications are validated when first requested.  
+Privileged access to systems a nd applications is automatically disabled after 12 months unless 
+revalidated.  
+Privileged access to systems and applications is automatically disabled after 45 days of 
+inactivity.  
+Privileged accounts (excluding privileged service accounts) are prevented from accessing the 
+internet, email and web services.  
+Privileged users use separate privileged and unprivileged operating environments.  
+Privileged operating environments are not virtualised within unprivileged operating 
+environments.  
+Unprivileged accounts c annot logon to privileged operating environments . 
+Privileged accounts (excluding local administrator accounts) cannot logon to unprivileged 
+operating environments.  
+Administrative activities are conducted through jump server s. 
+Credentials for local administrator accounts and service accounts are long, unique, 
+unpredictable and managed.  
+Privileged access events are  logged.  
+Privileged account  and group management  events are logged.   
+ 9 Patch operating 
+systems  An automated method of asset discovery  is used at least fortnightly to support the detection 
+of assets for subsequent vulnerability scanning activities.  
+A vulnerability scanner with an up -to-date vulnerability database is used for vulnerability 
+scan ning activitie s. 
+A vulnerabili ty scanner is used at least daily to identify missing patches or updates for security 
+vulnerabilities in operating systems of internet -facing services.  
+A vulnerability scanner is used at least weekly to identify missing patches or updates for 
+security vuln erabilities in operating systems of workstations, servers and network devices.  
+Patches, updates or vendor mitigations for security vulnerabilities in operating systems of 
+internet -facing services are applied within two weeks of release, or within 48 hours if an 
+exploit exist s. 
+Patches, updates or vendor mitigations for security vulnerabilities in operating systems of 
+workstations, servers and network devices are applied within two weeks of release.  
+Operating systems that are no longer supported by vendors are replaced.  
+Multi -factor 
+authentication  Multi -factor authentication is used by an organisation's users if they authenticate to their 
+organisation’s internet -facing services.  
+Multi -factor authentication is used by an organisation’s users if they authenticate to third -
+party internet -facing services that process, store or communicate their organisation's 
+sensitive data.  
+Multi -factor authentication (where available) is used by an organisation’s users if they 
+authenticate to third -party internet -facin g services that process, store or communicate their 
+organisation's non -sensitive data.  
+Multi -factor authentication is enabled by default for non -organisational users (but users can 
+choose to opt out) if they authenticate to an organisation’s internet -facin g services.  
+Multi -factor authentication is used to authenticate privileged users  of systems . 
+Multi -factor authentication uses either: something users have and something users know, or 
+something users have that is unlocked by something users know or are.  
+Successful and unsuccessful multi -factor authentication  event s are logged.  
+Regular b ackup s Backups of important data, software and configuration settings are performed and retained 
+with a frequency and retention timeframe in accordance with business continu ity 
+requirements.  
+Backups of important  data , software and configuration settings are  synchronised to enable 
+restoration to a common point in time . 
+Backups of important data, software and configuration settings are retained in a  secure and  
+resilient manner . 
+Restoration of important data, software and configuration settings  from backups to a 
+common point in time  is tested as part of disaster recovery exercises.  
+Unprivileged accounts cannot access backups belonging to other accounts.   
+ 10 Privileged accounts (excluding backup administrator  account s) cannot access backups 
+belonging to other accounts.  
+Unprivileged accounts are prevented from modifying and deleting backups.  
+Privileged accounts (excluding backup administrator  account s) are prevented from modifying  
+and deleting backups.  
+   
+ 11 Appendix C: Maturity Level Three  
+Mitigation Strategy  Description  
+Application control  Application control is implemented on workstations and servers . 
+Application control  restrict s the execution of executables, software libraries, scripts, installers, 
+compiled HTML, HTML applications, control panel applets and drivers to an organisation -
+approved set.  
+Microsoft’s ‘recommended block rules ’ are implemented.  
+Microsoft’s ‘recommended driver block rules ’ are implemented.  
+Application control rulesets are validated on an annual or more frequent basis.  
+Allowed and blocked execution  event s on workstations and servers are centrally logged . 
+Event logs  are protected  from unauthorised modification  and deletion . 
+Event logs are  monitored  for signs  of compromise  and actioned  when any signs  of 
+compromise  are detected . 
+Patch applications  An automated method of asset discovery  is used at least fortnightly to support the detection 
+of assets for subsequent vulnerability scanning activities.  
+A vulnerability scanner with an up -to-date vulnerability database is used for vulnerability 
+scan ning activitie s. 
+A vulnerability scanner is used at least daily to identify missing patches or updates for security 
+vulnerabilities in internet -facing services.  
+A vulnerability scanner is used at least weekly to identify missing patches or updates for 
+security vulnerabilities in office productivity suites, web browsers and their extensions, email 
+clients, PDF s oftware, and security products.  
+A vulnerability scanner is used at least fortnightly to identify missing patches or updates for 
+security vulnerabilities in other applications.  
+Patches, updates or vendor mitigations for security vulnerabilities in internet -facing services 
+are applied within two weeks of release, or within 48 hours if an exploit exist s. 
+Patches, updates or vendor mitigations for security vulnerabilities in office productivity suites, 
+web browsers  and their extensions , email clients, PDF softw are, and security products are 
+applied within two weeks of release , or within 48 hours if an exploit exist s. 
+Patches, updates or vendor mitigations for security vulnerabilities in other applications are 
+applied within one month  of release . 
+Applications that are no longer supported by vendors are removed.   
+ 12 Configure 
+Microsoft Office 
+macro settings  Microsoft Office macros are disabled for users that do not have a demonstrated business 
+requirement.  
+Only Microsoft Office macros running from within a sandboxe d environment, a Trusted 
+Location or that are digitally signed by a trusted publisher are allowed to execute.  
+Only privileged users responsible for validating that Microsoft Office macros are free of 
+malicious code can write to and modify content within Tr usted Locations.  
+Microsoft Office macros digitally signed by an untrusted publisher cannot be enabled via the 
+Message Bar or Backstage View.  
+Microsoft Office’s list of trusted publishers is validated on an annual or more frequent basis.  
+Microsoft Office ma cros in files originating from the internet are blocked.  
+Microsoft Office macro antivirus scanning is enabled.  
+Microsoft Office macros are blocked from making Win32 API calls.  
+Microsoft Office macro security settings cannot be changed by users.  
+Allowed and  blocked Microsoft Office macro execution  event s are centrally logged . 
+Event logs  are protected  from unauthorised modification  and deletion . 
+Event logs are  monitored for signs of compromise  and actioned when any signs  of 
+compromise are detected.  
+User application 
+hardening  Web browsers do not process Java from the internet.  
+Web browsers do not process web advertisements from the internet.  
+Internet Explorer  11 is disabled or removed.  
+Web browser  security settings cannot be changed by users.  
+Microsoft Off ice is blocked from creating child processes.  
+Microsoft Office is blocked from creating executable content.  
+Microsoft Office is blocked from injecting code into other processes.  
+Microsoft Office is configured to prevent activation of O LE pa ckages.  
+Microsoft Office security settings cannot be changed by users.  
+PDF software is blocked from creating child processes.  
+PDF software security settings cannot be changed by users.  
+ACSC or vendor hardening guidance for web browsers, Microsoft Office and PDF so ftware is 
+implemented.  
+.NET Framework 3.5 (includes  .NET 2.0 and 3.0)  is disabled or removed . 
+Windows PowerShell 2.0  is disabled or removed . 
+PowerShell is configured to use Constrained Language Mode.  
+Blocked PowerShell script execution  event s are centrally logged .  
+ 13 Event logs  are protected  from unauthorised modification  and deletion . 
+Event logs are  monitored for signs of compromise  and actioned when any signs  of 
+compromise are detected.  
+Restrict 
+administrative 
+privileges  Requests for privileged access to systems and applications are validated when first requested.  
+Privileged access to systems and applications is automatically disabled after 12 months unless 
+revalidated.  
+Privileged access to systems and applications is automatically disabled after  45 days of 
+inactivity.  
+Privileged access to systems and applications is limited to only what is required for users  and 
+services to undertake their duties.  
+Privileged accounts are prevented from accessing the internet, email and web services.  
+Privileged us ers use separate privileged and unprivileged operating environments.  
+Privileged operating environments are not virtualised within unprivileged operating 
+environments.  
+Unprivileged accounts cannot logon to privileged operating environments . 
+Privileged accou nts (excluding local administrator accounts) cannot logon to unprivileged 
+operating environments.  
+Just-in-time administration is used for administering systems and applications.  
+Administrative activities are conducted through jump server s. 
+Credentials for local administrator accounts and service accounts are long, unique, 
+unpredictable and managed.  
+Windows Defender Credential Guard and Windows Defender Remote Credential Guard are 
+enabled.  
+Privileged access events are  centrally logged . 
+Privileged  account  and group management  events are centrally logged . 
+Event logs  are protected  from unauthorised modification  and deletion . 
+Event logs are  monitored for signs of compromise  and actioned when any signs  of 
+compromise are detected.  
+Patch operating 
+systems  An automated method of asset discovery  is used at least fortnightly to support the detection 
+of assets for subsequent vulnerability scanning activities.  
+A vulnerability scanner with an up -to-date vulnerability database is used for vulnerability 
+scanning activitie s. 
+A vulnerability scanner is used at least daily to identify missing patches or updates for security 
+vulnerabilities in operating systems of internet -facing services.  
+A vulnerability scanner is used at least weekly to identify missing patches or updates for 
+security vulnerabilities in operating systems of workstations, servers and network devices.   
+ 14 Patches, updates or vendor mitigations for security vulnerabilities in op erating systems of 
+internet -facing services are applied within two weeks of release, or within 48 hours if an 
+exploit exist s. 
+Patches, updates or vendor mitigations for security vulnerabilities in operating systems of 
+workstations, servers and network devi ces are applied within two weeks of release , or within 
+48 hours if an exploit  exist s. 
+The latest release, or the previous  release, of operating systems are used.  
+Operating systems that are no longer supported by vendors are replaced.  
+Multi -factor 
+authenti cation  Multi -factor authentication is used by an organisation's users if they authenticate to their 
+organisation’s internet -facing services.  
+Multi -factor authentication is used by an organisation’s users if they authenticate to third -
+party internet -facing services that process, store or communicate their organisation's 
+sensitive data.  
+Multi -factor authentication (where available) is used by an organisation’s users if they 
+authenticate to third -party internet -facing services that process, store or communicat e their 
+organisation's non -sensitive data.  
+Multi -factor authentication is enabled by default for non -organisational users (but users can 
+choose to opt out) if they authenticate to an organisation’s internet -facing services.  
+Multi -factor authentication is u sed to authenticate privileged users of systems.  
+Multi -factor authentication is used to authenticate users accessing important data 
+repositories.  
+Multi -factor authentication is phishing -resistant and uses either: something users have and 
+something users know, or something users have that is unlocked by something users know or 
+are. 
+Successful and unsuccessful multi -factor authentication  event s are centrally logged . 
+Event logs  are protected  from unauthorised modification  and deletion . 
+Event logs are  monitor ed for signs of compromise  and actioned when any signs  of 
+compromise are detected.  
+Regular b ackup s Backups of important data, software and configuration settings are performed and retained 
+with a frequency and retention timeframe in accordance with business continuity 
+requirements.  
+Backups of important  data , software and configuration settings are  synchronised to enable 
+restoration to a common point in time . 
+Backups of important data, software and configuration settings are retained in a  secure and  
+resilient manner . 
+Restoration of important data, software and configuration settings  from backups to a 
+common point in time  is tested as part of disaster recovery exercises.   
+ 15 Unprivileged accounts cannot access backups belonging to other accounts , nor their own 
+account s. 
+Privileged accounts (excluding backup administrator  account s) cannot access backups 
+belonging to other accounts , nor their own account s. 
+Unprivileged accounts are prevented from modifying and deleting backups.  
+Privileged accounts (including backup administrator accounts) are prevented from modifying 
+and deleting backups  during their retention period .  
+ 16 Appendix D: Comparison of  maturity levels  
+Strategy  Maturity Level One  Maturity Level Two  Maturity Level Three  
+Application 
+control  The execution of executables, software libraries, scripts, installers, compiled 
+HTML, HTML applications and control panel applets is prevented on workstations 
+from within standard user profiles and temporary folders used by the operating 
+system, web browsers and email clients.  Application control is implemented on workstations and internet -facing servers . 
+Application control restrict s the execution of executables, software libraries, 
+scripts, installers, compiled HTML, HTML applications and control panel applets  to 
+an organisation -approved set . 
+Allowed and blocked execution  event s on workstations and internet -facing 
+servers are logged.  Application control is impleme nted on workstations and servers . 
+Application control  restrict s the execution of executables, software libraries, 
+scripts, installers, compiled HTML, HTML applications, control panel applets and 
+drivers  to an organisation -approved set.  
+Microsoft’s ‘recomme nded block rules ’ are implemented.  
+Microsoft’s ‘recommended driver block rules ’ are implemented.  
+Application control rulesets are validated on an annual or more frequent basis.  
+Allowed and blocked execution  event s on workstations and servers  are centrally  
+logged . 
+Event logs  are protected  from  unauthorised modification  and deletion . 
+Event logs are  monitored  for signs of compromise and actioned when any signs 
+of compromise are  detected . 
+Patch 
+applications  An automated method of asset discovery  is used at least fortnightly to support the 
+detection of assets for subsequent vulnerability scanning activities.  
+A vulnerability scanner with an up -to-date vulnerability database is used for 
+vulnerability scan ning activities . 
+A vulnerability scanner is used at le ast daily  to identify missing patches or updates 
+for security vulnerabilities in internet -facing services.  
+A vulnerability scanner is used at least fortnightly to identify missing patches or 
+updates for security vulnerabilities in office productivity suite s, web browsers  and 
+their extensions , email clients, PDF software , and security products.  
+Patches, updates or vendor mitigations for security vulnerabilities in internet -
+facing services are applied within two weeks of release, or within 48 hours if an 
+exploit exist s. 
+Patches, updates or vendor mitigations for security vulnerabilities in office 
+productivity suites, web browsers  and the ir extensions , email clients, PDF 
+software , and security products are applied within one month of release.  
+Internet -facin g services, office productivity suites, web browsers  and their 
+extensions , email clients, PDF software , Adobe Flash Player, and security products 
+that are no longer supported by vendors are removed.  An automated method of asset discovery  is used at least f ortnightly to support the 
+detection of assets for subsequent vulnerability scanning activities.  
+A vulnerability scanner with an up -to-date vulnerability database is used for 
+vulnerability scan ning activitie s. 
+A vulnerability scanner is used at least daily  to identify missing patches or updates 
+for security vulnerabilities in internet -facing services.  
+A vulnerability scanner is used at least weekly  to identify missing patches or 
+updates for security vulnerabilities in office productivity suites, web browser s and 
+their extensions , email clients, PDF software , and security products.  
+A vulnerability scanner is used at least fortnightly to identify missing patches or 
+updates for security vulnerabilities in other applications.  
+Patches, updates or vendor mitigatio ns for security vulnerabilities in internet -
+facing services are applied within two weeks  of release , or within 48 hours if an 
+exploit exist s. 
+Patches, updates or vendor mitigations for security vulnerabilities in office 
+productivity suites, web browsers  and their extensions , email clients, PDF 
+software , and security products are applied within two weeks  of release.  
+Patches, updates or vendor mitigations for security vulnerabilities in other 
+applications are applied within one month  of release . 
+Internet -facing services, office productivity suites, web browsers  and their 
+extensions , email clients, PDF software , Adobe Flash Player, and security products 
+that are no longer supported by vendors are removed.  An automated method of asset discovery  is used at least fortnightly to support the 
+detection of assets for subsequent vulnerability scanning activities.  
+A vulnerability scanner with an up -to-date vulnerability database is used for 
+vulnerability scan ning activitie s. 
+A vulnerability scanner is used at le ast daily  to identify missing patches or updates 
+for security vulnerabilities in internet -facing services.  
+A vulnerability scanner is used at least weekly to identify missing patches or 
+updates for security vulnerabilities in office productivity suites, we b browsers  and 
+their extensions , email clients, PDF software , and security products.  
+A vulnerability scanner is used at least fortnightly to identify missing patches or 
+updates for security vulnerabilities in other applications.  
+Patches, updates or vendor mitigations for security vulnerabilities in internet -
+facing services are applied within two weeks  of release , or within 48 hours if an 
+exploit exist s. 
+Patches, updates or vendor mitigations for security vulnerabilities in office 
+productivity suites, web br owsers  and their extensions , email clients, PDF 
+software , and security products are applied within two weeks of release , or within 
+48 hours if an exploit exist s. 
+Patches, updates or vendor mitigations for security vulnerabilities in other 
+applications are applied within one month  of release . 
+Applications  that are no longer supported by vendors are removed.   
+ 17 Strategy  Maturity Level One  Maturity Level Two  Maturity Level Three  
+Configure 
+Microsoft 
+Office macro 
+settings  Microsoft Office macros are disabled for users that do not have a demonstrated 
+business requirement.  
+Microsoft  Office macros in files originating from the internet are blocked.  
+Microsoft Office macro antivirus scanning is enabled.  
+Microsoft Office macro security settings cannot be changed by users.  Microsoft Office macros are disabled for users that do not have a demonstrated 
+business requirement.  
+Microsoft Office macros in files originating from the internet are blocked.  
+Microsoft Office macro antivirus scanning is enabled.  
+Microsoft Office macros are blocked from making Win32 API calls.  
+Microsoft Office macro sec urity settings cannot be changed by users.  
+Allowed and blocked Microsoft Office macro execution  event s are logged.  Microsoft Office macros are disabled for users that do not have a demonstrated 
+business requirement.  
+Only Microsoft Office macros running from within a sandboxed environment, a 
+Trusted Location or that are digitally signed by a trusted publisher are allowed to 
+execute.  
+Only privileged users responsible for validating that Microsoft Office macros are 
+free of malicious code can write to and mo dify content within Trusted Locations.  
+Microsoft Office macros digitally signed by an untrusted publisher cannot be 
+enabled via the Message Bar or Backstage View.  
+Microsoft Office’s list of trusted publishers is validated on an annual or more 
+frequent basi s. 
+Microsoft Office macros in files originating from the internet are blocked.  
+Microsoft Office macro antivirus scanning is enabled.  
+Microsoft Office macros are blocked from making Win32 API calls.  
+Microsoft Office macro security settings cannot be changed  by users.  
+Allowed and blocked Microsoft Office macro execution  event s are centrally  
+logged . 
+Event logs  are protected  from unauthorised modification  and deletion . 
+Event logs are  monitored  for signs of compromise and actioned when any signs 
+of compromise are detected .  
+ 18 Strategy  Maturity Level One  Maturity Level Two  Maturity Level Three  
+User 
+application 
+hardening  Web browsers do not process  Java from the internet.  
+Web browsers do not process  web advertisements  from the internet . 
+Internet Explorer  11 does not process  content from the internet.  
+Web browser security settings c annot be changed by users.  Web browsers do not process  Java from the internet.  
+Web browsers do not process  web advertisements  from the internet . 
+Internet Explorer 11 does not process  content from the internet.  
+Web browser security settings cannot be changed by users.  
+Microsoft Office is blocked from creating child processes.  
+Microsoft Office is blocked from creating executable content.  
+Microsoft Office is blocked from injecting code into other processes.  
+Microsoft Office is configured to prevent activation of OLE packages.  
+Microsoft Office security settings cannot be changed by users.  
+PDF software is blocked from creating child processes.  
+PDF software security settings cannot be changed by users.  
+ACSC or v endor hardening guidance for web browsers, Microsoft Office and PDF 
+software is implemented.  
+Blocked PowerShell script execution  event s are logged.  Web browsers do not process  Java from the internet.  
+Web browsers do not process  web advertisements  from the internet . 
+Internet Explorer  11 is disabled or removed . 
+Web browser security settings cannot be changed by users.  
+Microsoft Office is blocked from creating child processes.  
+Microsoft Office is blocked from creating executable content.  
+Microsoft Of fice is blocked from injecting code into other processes.  
+Microsoft Office is configured to prevent activation of O LE packages.  
+Microsoft Office security settings cannot be changed by users.  
+PDF software is blocked from creating child processes.  
+PDF software security settings cannot be changed by users.  
+ACSC or vendor hardening guidance for web browsers, Microsoft Office and PDF 
+software is implemented.  
+.NET Framework 3.5  (includes  .NET 2.0 and 3.0)  is disabled or removed . 
+Windows PowerShell 2.0  is disabled or  removed . 
+PowerShell is configured to use Constrained Language Mode.  
+Blocked PowerShell script execution  event s are centrally  logged . 
+Event logs  are protected  from unauthorised modification  and deletion . 
+Event logs are  monitored  for signs of compromise and actioned when any signs 
+of compromise are  detected .  
+ 19 Strategy  Maturity Level One  Maturity Level Two  Maturity Level Three  
+Restrict 
+administrative 
+privileges  Requests for privileged access to systems and applications are validated when first 
+requested.  
+Privileged accounts  (excluding privileged service accounts)  are prevented from 
+accessing the internet, email and web services.  
+Privileged users use separate privileged and unprivileged operating environments.  
+Unprivileged accounts cannot logon to privileged operating environ ments . 
+Privileged accounts (excluding local administrator accounts) cannot logon to 
+unprivileged operating environments.  Requests for privileged access to systems and applications are validated when first 
+requested.  
+Privileged access to systems and applica tions is automatically disabled after 12 
+months unless revalidated.  
+Privileged access to systems and applications is automatically disabled after 45 
+days of inactivity.  
+Privileged accounts (excluding privileged service accounts) are prevented from 
+accessin g the internet, email and web services.  
+Privileged users use separate privileged and unprivileged operating environments.  
+Privileged operating environments are not virtualised within unprivileged 
+operating environments.  
+Unprivileged accounts cannot logon t o privileged operating environments . 
+Privileged accounts (excluding local administrator accounts) cannot logon to 
+unprivileged operating environments.  
+Administrative activities are conducted through jump server s. 
+Credentials for local administrator account s and service accounts are long, 
+unique, unpredictable and managed.  
+Privileged access  events are  logged.  
+Privileged account  and group management  events are logged.  Requests for privileged access to systems and applications are validated when first 
+requested.  
+Privileged access to systems and applications is automatically disabled after 12 
+months unless revalidated.  
+Privileged access to systems and applications is automatically disabled after 45 
+days of inactivity.  
+Privileged access to systems and app lications is limited to only what is required 
+for users  and services to undertake their duties.  
+Privileged accounts  are prevented from accessing the internet, email and web 
+services.  
+Privileged users use separate privileged and unprivileged operating environments.  
+Privileged operating environments are not virtualised within unprivileged 
+operating environments.  
+Unprivileged accounts cannot logon to privileged operating environments . 
+Privileged accounts (excluding local administrator accounts) cannot log on to 
+unprivileged operating environments.  
+Just-in-time administration is used for administering systems and applications.  
+Administrative activities are conducted through jump server s. 
+Credentials for local administrator accounts and service accounts are long, unique, 
+unpredictable and managed.  
+Windows Defender Credential Guard and Windows Defender Remote Credential 
+Guard are enabled.  
+Privileged access events are  centrally  logged . 
+Privileged  account  and group  management  events are centrally  logged . 
+Event logs are protected  from unauthorised modification  and deletion . 
+Event logs are  monitored  for signs of compromise and actioned when any signs 
+of compromise are  detected .  
+ 20 Strategy  Maturity Level One  Maturity Level Two  Maturity Level Three  
+Patch 
+operating 
+systems  An automated method of asset discovery  is used at least fortnightly to support the 
+detection of assets for subsequent vulnerability scanning activities.  
+A vulnerability scanner with an up -to-date vulnerability database is used for 
+vulnerability scan ning activitie s. 
+A vulnerability scanner is used at le ast daily  to identify missing patches  or updates  
+for security vulnerabilities in operating systems of internet -facing services.  
+A vulnerability scanner is used at least fortnightly to identify missing patches or 
+updates for security vulnerabilities in operating systems of workstations , servers  
+and network devices . 
+Patches, updates or vendor mitigations for security vulnerabilities in operating 
+systems of internet -facing services are applied within two weeks of release , or 
+within 48 hours if an exploit e xists. 
+Patches, updates or vendor mitigations for security vulnerabilities in operating 
+systems of workstations , servers  and network devices  are applied within one 
+month of release.  
+Operating systems that are no longer supported by vendors are replaced.  An automated method of asset discovery  is used at least fortnightly to support the 
+detection of assets for subsequent vulnerability scanning activities.  
+A vulnerability scanner with an up -to-date vulnerability database is used for 
+vulnerability scan ning acti vitie s. 
+A vulnerability scanner is used at least daily  to identify missing patches or updates 
+for security vulnerabilities in operating systems of internet -facing services.  
+A vulnerability scanner is used at least weekly  to identify missing patches or 
+updates for security vulnerabilities in operating systems of workstations, servers 
+and network devices.  
+Patches, updates or vendor mitigations for security vulnerabilities in operating 
+systems of internet -facing services are applied within two weeks  of release , or 
+within 48 hours if  an exploit exist s. 
+Patches, updates or vendor mitigations for security vulnerabilities in operating 
+systems of workstations, servers and network devices  are applied within two 
+weeks  of release.  
+Operating systems that are no longer supported by vendors are replaced.  An automated method of asset discovery  is used at least fortnightly to support the 
+detection of assets for subsequent vulnerability scanning activities.  
+A vulnerability scanner with an up -to-date vulnerability data base is used for 
+vulnerability scan ning activitie s. 
+A vulnerability scanner is used at least daily  to identify missing patches or updates 
+for security vulnerabilities in operating systems of internet -facing services.  
+A vulnerability scanner is used at leas t weekly to identify missing patches or 
+updates for security vulnerabilities in operating systems of workstations, servers 
+and network devices.  
+Patches, updates or vendor mitigations for security vulnerabilities in operating 
+systems of internet -facing serv ices are applied within two weeks  of release , or 
+within 48 hours if an exploit  exist s. 
+Patches, updates or vendor mitigations for security vulnerabilities in operating 
+systems of workstations, servers and network devices are applied within two 
+weeks of rel ease , or within 48 hours if an exploit  exist s. 
+The latest release, or the previous  release, of operating systems are used.  
+Operating systems that are no longer supported by vendors are replaced.  
+Multi -factor 
+authentication  Multi -factor authentication is used by an organisation's users if they authenticate 
+to their organisation’s internet -facing services.  
+Multi -factor authentication is used by an organisation’s users if they authenticate 
+to third -party internet -facing services that process, store or commun icate their 
+organisation's sensitive data.  
+Multi -factor authentication (where available) is used by an organisation’s users if 
+they authenticate to third -party internet -facing services that process, store or 
+communicate their organisation's non -sensitive d ata. 
+Multi -factor authentication is enabled by default for non -organisational users (but 
+users can choose to opt out) if they authenticate to an organisation’s internet -
+facing services.  Multi -factor authentication is used by an organisation's users if they  authenticate 
+to their organisation’s internet -facing services.  
+Multi -factor authentication is used by an organisation’s users if they authenticate 
+to third -party internet -facing services that process, store or communicate their 
+organisation's sensitive da ta. 
+Multi -factor authentication (where available) is used by an organisation’s users if 
+they authenticate to third -party internet -facing services that process, store or 
+communicate their organisation's non -sensitive data.  
+Multi -factor authentication is ena bled by default for non -organisational users (but 
+users can choose to opt out) if they authenticate to an organisation’s internet -
+facing services.  
+Multi -factor authentication is used to authenticate privileged users of systems.  
+Multi -factor authentication uses  either : something users have and something 
+users know , or something users have that is unlocked by something users know 
+or are . 
+Successful and unsuccessful multi -factor authentication  event s are logged.  Multi -factor authentication is used by an organi sation's users if they authenticate 
+to their organisation’s internet -facing services.  
+Multi -factor authentication is used by an organisation’s users if they authenticate 
+to third -party internet -facing services that process, store or communicate their 
+organisation's sensitive data.  
+Multi -factor authentication (where available) is used by an organisation’s users if 
+they authenticate to third -party internet -facing services that process, store or 
+communicate their organisation's non -sensitive data.  
+Multi -factor authentication is enabled by default for non -organisational users (but 
+users can choose to opt out) if they authenticate to an organisation’s internet -
+facing services.  
+Multi -factor authentication is used to authenticate privileged users of systems.  
+Multi-factor authentication is used to authenticate users accessing important 
+data repositories.  
+Multi -factor authentication is phishing -resistan t and  uses  either : something users 
+have and something users know, or something users have that is unlocked by 
+something users know or are.  
+Successful and unsuccessful multi -factor authentication  event s are centrally  
+logged . 
+Event logs  are protected  from unauthorised modification  and deletion . 
+Event logs are  monitored  for signs of compromise and actioned when any signs 
+of compromise are  detected .  
+ 21 Strategy  Maturity Level One  Maturity Level Two  Maturity Level Three  
+Regular 
+backup s Backups of important data, software and configuration settings are performed and 
+retained with a frequency and retention timeframe  in accordance with business 
+continuity requirements.  
+Backups of important  data , software and configuration settings are  synchronised 
+to enable restoration to a common point in time . 
+Backups of important data, software and configuration settings are  retained in a 
+secure and resilient manner . 
+Restoration of important data, software and  configuration settings  from backups  
+to a common point in time  is tested as part of disaster recovery exercises.  
+Unprivileged accounts cannot access backups belonging to other accounts . 
+Unprivileged accounts  are prevented from modifying and deleting backups.  Backups of important data, software an d configuration settings are performed and 
+retained with a frequency and retention timeframe in accordance with business 
+continuity requirements.  
+Backups of important  data , software and configuration settings are  synchronised 
+to enable restoration to a common point in time . 
+Backups of important data, software and configuration settings are retained in a 
+secure and resilient manner . 
+Restoration of important data, software and configuration settings  from backups 
+to a common point in time  is tested as part of disaster recovery exercises.  
+Unprivileged accounts cannot access backups belonging to other accounts.  
+Privileged accounts (excluding backup administrator  account s) cannot access 
+backups belonging to other accounts.  
+Unprivileged accounts  are prevented fr om modifying and deleting backups.  
+Privileged accounts (excluding backup administrator  accounts ) are prevented 
+from modifying and deleting backups.  Backups of important data, software and configuration settings are performed and 
+retained with a frequency and retention timeframe in accordance with business 
+continuity requirements.  
+Backups of important  data , software and configuration settings are  synchronised 
+to enable restoration to a common point in time . 
+Backups of important data, software and configurat ion settings are retained in a 
+secure and resilient manner . 
+Restoration of important data, software and configuration settings  from backups 
+to a common point in time  is tested as part of disaster recovery exercises.  
+Unprivileged accounts cannot access back ups belonging to other accounts , nor 
+their own account s. 
+Privileged accounts (excluding backup administrator  account s) cannot access 
+backups belonging to other accounts , nor their own account s. 
+Unprivileged accounts are prevented from modifying and deleting backups.  
+Privileged accounts ( including  backup administrator accounts) are prevented from 
+modifying and deleting backups  during their retention period . 
+ 

@@ -1,0 +1,32 @@
+ 
+ 1 
+Introduction  
+The Australian Cyber Security Centre (ACSC) has developed prioritised mitigation strategies, in the form of the 
+Strategies to Mitigate Cyber Security Incidents , to help organisations protect themselves against various cyber 
+threats. The most effective of these mitigation strategies are the Essential Eight.  
+The Es sential Eight has been designed to protect Microsoft Windows -based internet -connected networks. While the 
+principles behind the Essential Eight may be applied to cloud services and enterprise mobility, or other operating 
+systems, it was not primarily desig ned for such purposes and alternative mitigation strategies may be more appropriate 
+to mitigate unique cyber threats to these environments . 
+The Essential Eight  
+The mitigation strategies that constitute  the Essential Eight are:  
+ application control  
+ patch applications  
+ configure Microsoft Office macro  settings  
+ user application hardening  
+ restrict administrative privileges  
+ patch operating systems  
+ multi -factor authentication  
+ regular backups.  
+Implementing the Essential Eight  
+The Essential Eight Maturity Model  articulates requirements for the implement ation of the Essential Eight.  
+Assessing implementation s of the Essential Eight  
+Assessment s against the Essential Eight should be  conducted using the  Essential Eight Assessment Process Guide . Essential Eight Explained  
+First published:  February  2017  
+Last updated:  May 2023   
+ 2 
+Further infor mation  
+Further information on the Essential Eight Maturity Model  and its implementation is available in the Essential Eight 
+Maturity Model FAQ  publication.  
+Cont act details  
+If you have any questions regarding this guidance you can write to us  or call us on 1300 CYBER1 (1300 292 371).  
