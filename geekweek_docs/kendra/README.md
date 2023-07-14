@@ -85,13 +85,16 @@ To index and sync your vector data from S3 to Kendra, follow these steps:
 
 ### 2. Connecting To Kendra
 
-#### 2.1 Create an API endpoint
+#### 2.1 Create AWS Lambda function
 
-#### 2.2 Linking AWS endpoint
+#### 2.2 Getting info from Kendra using Boto3
 
-#### 2.3 Getting info from Kendra using Boto3
+#### 2.3 Create an API endpoint
+ - Create AWS API Endpoint
+ - Link to Lambda function to get
 
-#### 2.5 Accessing API endpoint
+#### 2.4 Accessing API endpoint
+ - Simple HTTP request
 
 ### 3. LLM Integration
 
