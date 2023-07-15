@@ -271,23 +271,26 @@ qa_chain = ConversationalRetrievalChain.from_llm(
 
 The former approach is better when you want the retriever to be used with a variety of other tools, while the latter is better when you want the chain not to use any other tool or retriever.
 
-## Problems
+## Challenges
 
- - AWS permissions
- - A lot of AWS permission
- - Hallucinating when no documents are found
+During the development of the Kendra integration, we faced some challenges that we would like to share and discuss possible solutions.
 
-## What we learned
+1. AWS Setup
+The most time-consuming part of the project was setting up the AWS infrastructure. We had to deal with various issues related to accessing AWS services and configuring permissions for Kendra, S3, Lambda, and API Gateway.
 
- - AWS is a pain to set up & connect to
-
+2. Hallucinations
+The LLM sometimes hallucinated when no documents were retrieved by Kendra for a given query. We tried to mitigate this by adding a dummy document that says "No information available for the topic", but this did not completely eliminate the problem. The hallucinations were more likely to occur when querying in an ongoing conversation, as the LLM tried to use the previous context to generate an answer. A possible solution might be to reduce the conversation history or maintain context blocks and only use previous questions when they are relevant to the current query.
 
 ## What We Achieved
 
- - Setting up AWS kendra DB
- - Learned about the foundational schema classes for langchain - to create more complex and custom tools, retrievers & chains
+In this project, we accomplished the following goals:
 
-## Future improvements
- - Set up another vector DB and compare & contrast different models against Kendra
- - Hosting on AWS
-   - Has access to secret keys to directly connect to kendra rather than using an insecure api endpoint
+- We set up an AWS Kendra index to store and search our vector data. We configured the permissions, data sources, and sync settings for our index.
+- We learned about the foundational schema classes for Langchain, such as Retriever, Document, and Tool. We used these classes to create more complex and custom tools, retrievers, and chains for our LLMs.
+
+## Future Improvements
+
+For future work, we suggest the following improvements:
+
+- We can set up another vector-based search engine and compare its performance and features with Kendra. This will help us evaluate the strengths and weaknesses of different models and choose the best one for our needs.
+- We can host our application on AWS and use secret keys to directly connect to Kendra. This will improve the security and reliability of our API endpoint and avoid exposing sensitive data to unauthorized users.
