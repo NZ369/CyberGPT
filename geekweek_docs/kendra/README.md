@@ -155,13 +155,121 @@ To access your API endpoint and query your Kendra index, follow these steps:
 
 - Copy the **Invoke URL** from the top of the page. This is the URL of your API endpoint.
 
+
 ### 3. LLM Integration
+
+Langchain allows you to integrate external tools to enhance your LLMs. One of the tools you can use is Kendra, a vector-based search engine that can retrieve relevant documents for your queries.
 
 #### 3.1 Retriever
 
+A [Retriever](https://github.com/hwchase17/langchain/blob/master/langchain/schema/retriever.py) class defines methods to get documents from a data source. To create a Retriever class for Kendra, you need to do the following:
+
+- Define a class that inherits from Retriever and implements the abstract methods `_get_relevant_documents` and `_aget_relevant_documents`. These methods should return a list of [Documents](https://github.com/hwchase17/langchain/blob/master/langchain/schema/document.py), which are objects that contain the content and metadata of a document.
+- In the implementation of these methods, you need to perform the following steps:
+  - Send a GET request to the API endpoint of your Kendra index with the query as a parameter. For example, in Python, you can use the `requests` library:
+
+  ```python
+  response = requests.get(
+    'https://nc6toszo09.execute-api.ca-central-1.amazonaws.com/dev',
+    headers= {"content-type":"application/json"},
+    data = json.dumps({"query":query})
+  )
+  ```
+
+  - Parse the JSON response and map each result to a Document object. For example, in Python, you can use the `json` and `map` libraries:
+
+  ```python 
+  response = json.loads(response.text)
+
+  # map to document
+  documents = list(
+    map(
+      # Parsing api request into documents
+      lambda doc: Document(page_content = doc[1], metadata={'source': doc[0]}),
+      response
+    )
+  )
+  ```
+
+  - Check if any documents were retrieved. If not, add a dummy document that says "No information available for the topic" to prevent the LLM from hallucinating.
+
+  ```python
+  if len(documents) == 0:
+    documents = [
+      Document(
+        page_content="No information available for the topic",
+        metadata={'source': "404 Not Found"}
+      )
+    ]
+  ```
+
+  - Return the list of documents.
+
+  ```python
+  return documents
+  ```
+
 #### 3.2 Tool
 
-#### 3.3 LLM integration
+A [Tool](https://github.com/hwchase17/langchain/blob/master/langchain/tools/base.py#L132) is a class that defines methods and variables required for an LLM chain to use the Kendra retrieval tool over other tools. To create a Tool class for Kendra, you need to do the following:
+
+- Define a class that inherits from BaseTool and implements the abstract methods `_run` and `_arun`. These methods should take an input query and return an output answer.
+- Define the static variables `name` and `description` for your tool. These variables will help the LLM decide whether or not to use your tool.
+- In the implementation of these methods, you need to perform the following steps:
+  - Create a [QA chain](https://python.langchain.com/docs/modules/chains/popular/vector_db_qa) to process Kendra data. This chain will use your LLM and other components to generate an answer from the retrieved documents. For example, in Python, you can use the `load_qa_chain` function:
+
+  ```python
+  chain = load_qa_chain(tool_llm, chain_type="stuff");
+  ```
+
+  - Use your Retriever class to query a list of documents from Kendra. For example, in Python, you can instantiate your class and call its method:
+
+  ```python
+  retriever=KendraRetriever()
+
+  docs = retriever.get_relevant_documents(query)
+  ```
+
+  - Feed the documents into the QA chain and get the answer. For example, in Python, you can call the chain's method:
+
+  ```python
+  return chain.run(input_documents=docs, question=query)
+  ```
+
+#### 3.3 LLM Integration
+
+You can integrate your Tool and Retriever classes into your LLM in two ways:
+
+- You can add your Tool class to a list of tools when instantiating an agent. This way, your tool will be available for any chain that uses that agent. For example, in Python, you can use the `initialize_agent` function:
+
+```python
+llm = create_llm(max_tokens=2000, temp=0.5)
+
+base_agent = initialize_agent(
+  [KendraTool()],
+  llm,
+  agent=AgentType.CHAT_CONVERSATIONAL_REACT_DESCRIPTION,
+  max_iterations=4,
+  verbose=True,
+  memory=memory
+  )
+```
+
+- You can pass your Retriever class to a chain when instantiating it. This way, your retriever will be used only by that chain and no other tool or retriever will be used. For example, in Python, you can use the `ConversationalRetrievalChain.from_llm` function:
+
+```python
+llm = create_llm()
+
+memory = ConversationBufferWindowMemory(memory_key="chat_history", k=3, return_messages=True)
+qa_chain = ConversationalRetrievalChain.from_llm(
+  llm,
+  retriever=KendraRetriever(),
+  memory=memory,
+  verbose=True
+  )
+```
+
+The former approach is better when you want the retriever to be used with a variety of other tools, while the latter is better when you want the chain not to use any other tool or retriever.
 
 ## Problems
 
