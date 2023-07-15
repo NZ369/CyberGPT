@@ -85,16 +85,75 @@ To index and sync your vector data from S3 to Kendra, follow these steps:
 
 ### 2. Connecting To Kendra
 
-#### 2.1 Create AWS Lambda function
+To connect to your Kendra index and query your vector data, you need to create an API endpoint and a Lambda function.
 
-#### 2.2 Getting info from Kendra using Boto3
+#### 2.1 Create AWS Lambda Function
 
-#### 2.3 Create an API endpoint
- - Create AWS API Endpoint
- - Link to Lambda function to get
+A Lambda function is a serverless function that can execute your code in response to an event, such as an API request. To create a Lambda function for querying Kendra, follow these steps:
 
-#### 2.4 Accessing API endpoint
- - Simple HTTP request
+- Go to the [Lambda console](https://console.aws.amazon.com/lambda/) and click **Create function**.
+
+![Create function button](/geekweek_docs/kendra/22.png)
+
+- Choose **Author from scratch**, enter a name for your function, and select **Python 3.8** as the runtime. Click **Create function**.
+
+![Function settings](/geekweek_docs/kendra/36.png)
+
+- On your local machine, create a folder for your Lambda function and install `boto3` in it using `pip install boto3 -t .`. This is because Amazon's Lambda function does not use the latest version of `boto3`, which is the AWS SDK for Python.
+- In the same folder, create a file named `lambda_function.py` and write a function named `lambda_handler` that will handle requests for queries on the Kendra index. You can use the file `tools\kendra\lambda_function.py` as a reference on what needs to be done.
+- Zip the folder and upload it to your Lambda function using the **Upload from** option.
+
+![Upload zip file](/geekweek_docs/kendra/23.png)
+
+- Go to the **Configuration** tab of your Lambda function and select **Permissions**. Click on the role name under **Execution role**. This will take you to the IAM console where you can add permissions for your Lambda function to access Kendra.
+
+![Execution role](/geekweek_docs/kendra/25.png)
+
+- In the IAM console, click **Attach policies** and search for Kendra in the filter. Select `AmazonKendraFullAccess` and click **Attach policy**. Note: It is unknown if `AmazonKendraReadOnlyAccess` would work, but if it does, it might be a better permission.
+
+![Attach policy](/geekweek_docs/kendra/27.png)
+
+#### 2.3 Create an API Endpoint
+
+An API endpoint is a URL that allows you to interact with your Lambda function over the internet. To create an API endpoint for your Lambda function, follow these steps:
+
+- Go to the [API Gateway console](https://console.aws.amazon.com/apigateway/) and click **Create API**.
+
+![Create API button](/geekweek_docs/kendra/29.png)
+
+- Choose **REST API** and click **Build**.
+
+![REST API option](/geekweek_docs/kendra/30.png)
+
+- Enter a name for your API and click **Create API**.
+
+![API name](/geekweek_docs/kendra/31.png)
+
+- Under **Resources**, select **/** and click **Actions**. Then select **Create Method** and choose **GET** from the dropdown menu.
+
+![Create method](/geekweek_docs/kendra/32.png)
+
+- Under **Integration type**, select **Lambda Function** and enter the name of your Lambda function. Click **Save**.
+
+![Integration settings](/geekweek_docs/kendra/32.png)
+
+- Click **Actions** again and select **Deploy API**.
+
+![Deploy API](/geekweek_docs/kendra/33.png)
+
+- Choose **[New Stage]** from the dropdown menu, enter a name for your stage, and click **Deploy**.
+
+![Stage settings](/geekweek_docs/kendra/34.png)
+
+#### 2.4 Accessing API Endpoint
+
+To access your API endpoint and query your Kendra index, follow these steps:
+
+- Go to the **Stages** tab of your API and select your stage name.
+
+![Stages tab](/geekweek_docs/kendra/35.png)
+
+- Copy the **Invoke URL** from the top of the page. This is the URL of your API endpoint.
 
 ### 3. LLM Integration
 
