@@ -9,7 +9,6 @@ from streamlit_extras.app_logo import add_logo
 #from utilities.plotting import check_if_display_plot
 from PIL import Image
 
-# Define function to get user input
 def get_text():
     """
     Get the user input text.
@@ -21,7 +20,6 @@ def get_text():
                             label_visibility='hidden', height=100)
     return input_text
 
-# Function for starting a new chat
 def new_chat():
     """
     Clears session state and starts a new chat.
@@ -35,7 +33,6 @@ def new_chat():
     st.session_state["past"] = []
     st.session_state["input"] = ""
     
-# Set Streamlit page configuration
 st.set_page_config(
     page_title="CyberGPT",
     page_icon="🤖",
@@ -45,7 +42,6 @@ image = Image.open('assets/logo.png')
 st.image(image, width=500)
 st.subheader("Cybersecurity Copilot")
 
-# Initialize session states
 if "generated" not in st.session_state:
     st.session_state["generated"] = []
 if "past" not in st.session_state:
@@ -55,7 +51,6 @@ if "input" not in st.session_state:
 if "stored_session" not in st.session_state:
     st.session_state["stored_session"] = []
 
-# Set up sidebar with various options
 with st.sidebar:
     add_logo("assets/logo2.png", height=50)
     st.title('CyberGPT')
@@ -70,7 +65,6 @@ with st.sidebar:
             create_qa_retriever(pdf_docs, type="azure", database="FAISS")
         st.success("Embeddings completed.", icon="✅")
     add_vertical_space(2)
-    # Add a button to start a new chat
     st.button("New Chat", on_click = new_chat, type='primary')
     add_vertical_space(2)
     st.write('Made with ❤️ by GeekWeek Team 5.2')
@@ -79,7 +73,6 @@ def process_user_input(user_input):
     if (("ip scan" and "borealis") in user_input):
         borealis_response = borealis_processing(user_input)
         if borealis_response == None:
-            # Calls the base agent
             output = base_agent.run(input=user_input)
             st.session_state.generated.append(output)
         else:
@@ -94,7 +87,6 @@ def process_user_input(user_input):
         try:
             openCTI_response = openCTI_search_processing(user_input)
             if openCTI_response == None:
-                # Calls the base agent
                 output = base_agent.run(input=user_input)
                 st.session_state.generated.append(output)
             else:
@@ -112,32 +104,24 @@ def process_user_input(user_input):
             print("IP report tool failed")
     else:
         output = base_agent.run(input=user_input)
-        # print(base_agent.memory.json)
         st.session_state.generated.append(output)
 
-# Get the user input
 user_input = get_text()
 
-# Processes the user input
 if user_input:
     st.session_state.past.append(user_input)
-    # Try block handles any error with not parsing LLM output
     try:
         process_user_input(user_input)
     except Exception as e:
         st.session_state.generated.append(str(e))
 
-# Allow to download as well
 download_str = []
-# Display the conversation history using an expander, and allow the user to download it
 for i in range(len(st.session_state['generated'])-1, -1, -1):
     st.info(st.session_state["past"][i],icon="🙂")
     st.success(st.session_state["generated"][i], icon="🤖")
-    #check_if_display_plot(st.session_state["generated"][i], i)
     download_str.append("User: "+st.session_state["past"][i])
     download_str.append("AI: "+st.session_state["generated"][i])
     
-# Can throw error - requires fix
 download_str = '\n\n'.join(download_str)
 if download_str:
     st.download_button('Download',download_str)
