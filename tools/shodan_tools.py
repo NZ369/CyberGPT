@@ -14,7 +14,7 @@ from langchain.callbacks.manager import (
 )
 
 # your shodan API key
-SHODAN_API_KEY = 'QPWbPNV5UODo5TMNvUdFpXEiSG8DbnWm'
+SHODAN_API_KEY = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
 api = shodan.Shodan(SHODAN_API_KEY)
 
 def shodan_ip_search(ip):
